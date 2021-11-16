@@ -1,17 +1,12 @@
+import { Button, Paper } from "@mui/material";
 import React from "react";
 import Carousel from "react-material-ui-carousel";
-
-import { Paper, Button } from "@material-ui/core";
-
-// import "../style/SecondExample.scss";
 
 function Project(props) {
   return (
     <Paper
       className="Project"
-      style={{
-        backgroundColor: props.item.color,
-      }}
+      style={{ backgroundColor: props.item.color }}
       elevation={10}
     >
       <div
@@ -73,37 +68,33 @@ const items = [
   },
 ];
 
-export default class MyProjectsExample extends React.Component {
-  constructor(props) {
-    super(props);
+const MyProjectsExample = () => {
+  return (
+    <div style={{ marginTop: "50px", color: "#494949" }}>
+      <Carousel
+        className="Home-carousel"
+        autoPlay={true}
+        animation="slide"
+        indicators={false}
+        duration={500}
+        navButtonsAlwaysVisible={true}
+        navButtonsAlwaysInvisible={false}
+        cycleNavigation={true}
+        fullHeightHover={true}
+        swipe={true}
+        key={items.index}
+        navButtonsProps={{
+          style: {
+            backgroundColor: "#ffdd00",
+          },
+        }}
+      >
+        {items.map((item, index) => {
+          return <Project item={item} key={index} />;
+        })}
+      </Carousel>
+    </div>
+  );
+};
 
-    this.state = {
-      autoPlay: true,
-      animation: "slide",
-      indicators: true,
-      timeout: 500,
-      navButtonsAlwaysVisible: true,
-      navButtonsAlwaysInvisible: false,
-    };
-  }
-
-  render() {
-    return (
-      <div style={{ backgroundColor: "#000000" }}>
-        <Carousel
-          className="Home-carousel"
-          autoPlay={this.state.autoPlay}
-          animation={this.state.animation}
-          indicators={this.state.indicators}
-          timeout={this.state.timeout}
-          navButtonsAlwaysVisible={this.state.navButtonsAlwaysVisible}
-          navButtonsAlwaysInvisible={this.state.navButtonsAlwaysInvisible}
-        >
-          {items.map((item, index) => {
-            return <Project item={item} key={index} />;
-          })}
-        </Carousel>
-      </div>
-    );
-  }
-}
+export default MyProjectsExample;

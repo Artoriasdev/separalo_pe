@@ -1,388 +1,149 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
+import { ItemCarousel } from "../components/CarouselItem";
+import { MyModal } from "../components/Modal";
+import { useDispatch } from "react-redux";
+import { loadCategorys } from "../actions/category";
+import { useSelector } from "react-redux";
+
 import Carousel from "../components/Carousel";
-import CarouselItem from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-import Flippy, { FrontSide, BackSide } from "react-flippy";
-import "animate.css";
-
-import axios from "axios";
-import {
-  Backdrop,
-  Button,
-  Fade,
-  InputAdornment,
-  MenuItem,
-  Modal,
-  Paper,
-  TextField,
-} from "@material-ui/core";
-import { Search } from "@material-ui/icons";
-import { ArrowLeftSVG, ArrowRightSVG } from "../assets/images/svg";
-import trb1 from "../assets/images/trabaja con nosotros 1325 x 267.jpg";
 import trb2 from "../assets/images/trabaja con nosotros 1325 x 325.jpg";
-import trb3 from "../assets/images/Transforma tu negocio 273 x 236.jpg";
 import trb4 from "../assets/images/Transforma tu negocio 273 x 271.jpg";
-// import FullPageLoader from "./FullPageLoader";
+import "animate.css";
+import { MySearchHomeInput } from "../components/Fields";
+import { loadSearch } from "../actions/search";
 
-const responsive = {
-  desktop: {
-    breakpoint: { max: 3000, min: 1700 },
-    items: 4,
-    slidesToSlide: 4, // optional, default to 1.
-  },
-  tablet: {
-    breakpoint: { max: 1700, min: 1200 },
-    items: 3,
-    slidesToSlide: 3, // optional, default to 1.
-  },
-  mobile: {
-    breakpoint: { max: 1200, min: 0 },
-    items: 1,
-    slidesToSlide: 1, // optional, default to 1.
-  },
-};
+import { logout } from "../actions/auth";
+import { useHistory } from "react-router";
 
-const CustomLeftArrow = ({ onClick }) => {
-  return (
-    <div className="arrow-container_left">
-      <button onClick={() => onClick()}>
-        <ArrowLeftSVG />
-      </button>
-    </div>
-  );
-};
+export const HomePage = () => {
+  const history = useHistory();
 
-const CustomRightArrow = ({ onClick }) => {
-  return (
-    <div className="arrow-container_right">
-      <button onClick={() => onClick()}>
-        <ArrowRightSVG />
-      </button>
-    </div>
-  );
-};
+  const { categorys } = useSelector((state) => state.category);
+  const dispatch = useDispatch();
+  const [windowWith, setWindowWith] = useState(window.innerWidth);
+  var values;
 
-class HomePage extends Component {
-  constructor(props) {
-    super(props);
+  useEffect(() => {
+    dispatch(loadCategorys());
+  }, [dispatch]);
 
-    this.state = {
-      typeCategorys: [],
-      enterprises: [],
-      isLoading: false,
-      modal: false,
-      message: "",
-      list: false,
-      identificadorName: "",
-      logo: [],
-    };
-  }
-
-  componentDidMount() {
-    if (sessionStorage.getItem("workflow") === "B") {
-      this.props.history.push("/business/category");
-    } else {
-      try {
-        (async () => {
-          await this.handleGetCategorys();
-        })();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  }
-
-  handleGetCategorys = () => {
-    var headers = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: "",
-    };
-
-    let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/category/getCategories`;
-
-    const rspApi = axios
-      .get(linkDocumentsApi, {
-        headers: headers,
-      })
-      .then((response) => {
-        const { data } = response.data;
-
-        this.setState({
-          typeCategorys: data,
-        });
-
-        return response;
-      })
-      .catch((error) => {
-        console.log(error);
-        this.setState({
-          modal: true,
-          message:
-            "Ha ocurrido un error, porfavor refresque la página o intentelo más tarde",
-        });
-      });
-    return rspApi;
-  };
-
-  handleGetBusinessByFilter = async (e) => {
-    const { value, name } = e.target;
-    this.setState({
-      identificadorName: name,
+  useEffect(() => {
+    window.addEventListener("resize", function (event) {
+      setWindowWith(window.innerWidth);
     });
-    console.log(this.state.identificadorName, this.state.enterprises);
+  }, [windowWith]);
 
-    setTimeout(() => {
-      if (value.length > 2) {
-        var headers = {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: ``,
-        };
-
-        let empresaApi = `${process.env.REACT_APP_PATH_SERVICE}/business/getBusinessByFilter/${value}`;
-
-        const responseEmp = axios
-          .get(empresaApi, {
-            headers: headers,
-          })
-          .then((response) => {
-            const { data } = response.data;
-
-            this.setState({
-              enterprises: data,
-            });
-
-            return response;
-          })
-          .catch((error) => {
-            console.log(error);
-            this.setState({
-              modal: true,
-              message:
-                "Ha ocurrido un error, porfavor refresque la página o intentelo más tarde",
-            });
-          });
-
-        return responseEmp;
-      } else if (value.length < 3) {
-        this.setState({
-          enterprises: [],
-        });
-      }
-    }, 1000);
+  const handleInputChange = ({ target }) => {
+    const val = target.value;
+    values = val;
+    dispatch(loadSearch(values));
   };
 
-  handleRedirect = (id) => {
-    this.props.history.push(`/services-menu/${id}`);
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
-  handleRedirectBusiness = (id, category) => {
-    this.props.history.push(`/services-menu-category/${id}/${category}`);
+  const toLogin = () => {
+    history.push("/login/C");
+  };
+  const toLoginb = () => {
+    history.push("/login/B");
   };
 
-  handleClose = () => {
-    this.setState({
-      modal: false,
-    });
-  };
+  return (
+    <div>
+      <MyModal />
 
-  render() {
-    return (
-      <div>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          open={this.state.modal}
-          closeAfterTransition
-          onClose={this.handleClose}
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-          className="modal-container"
-        >
-          <Fade in={this.state.modal}>
-            <div className="modal-message-container">
-              <p>{this.state.message}</p>
-              <Button
-                size="large"
-                color="primary"
-                variant="contained"
-                className="btn-primary"
-                onClick={this.handleClose}
-              >
-                Aceptar
-              </Button>
-            </div>
-          </Fade>
-        </Modal>
-        {/* <FullPageLoader isLoading={this.state.isLoading} /> */}
-        <Carousel />
-        <div className="page-container">
-          <div className="home-container">
-            <div>
-              {this.state.typeCategorys.map(({ id, logo, name }) =>
+      <Carousel />
+      <div className="page-container">
+        <div className="home-container">
+          <div>
+            {categorys &&
+              categorys.map(({ id, logo, name }) =>
                 logo !== undefined ? (
                   <img key={id} id={id} src={logo} alt={name} />
                 ) : null
               )}
-            </div>
-            <div className="home-text">
-              <h1>Nuestras categorías</h1>
-
-              <h3 className="register__subtitle">
-                Encuentra el servicio que estás buscando y sepáralo donde estés
-                con toda seguridad
-              </h3>
-            </div>
-            <div className="home-search">
-              <TextField
-                name="search"
-                label="Buscar negocios"
-                id="filled-start-adornment"
-                autoComplete="off"
-                className="font-p"
-                variant="outlined"
-                onChange={(e) => this.handleGetBusinessByFilter(e)}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Search />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              {this.state.identificadorName === "search" && (
-                <Paper className="autocomplete">
-                  {this.state.enterprises.map(
-                    ({ id, tradeName, idCategory }) => (
-                      <MenuItem
-                        // className="animate__animated animate__slideInUp"
-                        onClick={(e) => {
-                          this.handleRedirectBusiness(id, idCategory);
-                        }}
-                        key={id}
-                      >
-                        {tradeName}
-                      </MenuItem>
-                    )
-                  )}
-                </Paper>
-              )}
-            </div>
           </div>
-          <br />
-          <div className="carousel">
-            <CarouselItem
-              swipeable={["mobile"] ? true : false}
-              draggable={false}
-              showDots={false}
-              responsive={responsive}
-              // ssr={true} // means to render carousel on server-side.
-              infinite={false}
-              autoPlay={false}
-              // autoPlaySpeed={1000}
-              transitionDuration={500}
-              containerClass="carousel-container"
-              removeArrowOnDeviceType={["mobile"]}
-              deviceType={this.props.deviceType}
-              itemClass="carousel-item-padding-100-px"
-              renderButtonGroupOutside={true}
-              // customRightArrow={<CustomLefttArrow />}
-              customLeftArrow={<CustomLeftArrow />}
-              customRightArrow={<CustomRightArrow />}
-            >
-              {this.state.typeCategorys &&
-                this.state.typeCategorys.map(
-                  ({ id, image, name, description }) => (
-                    <div
-                      className="flip-home"
-                      onClick={() => this.handleRedirect(id)}
-                      key={id}
-                    >
-                      <Flippy
-                        flipOnHover={true}
-                        flipOnClick={false}
-                        flipDirection="horizontal"
-                        className="flip-home-container"
-                      >
-                        <FrontSide
-                          className="flip-home-front"
-                          style={{
-                            backgroundImage: `url(${image})`,
-                          }}
-                        ></FrontSide>
-                        <BackSide className="flip-home-back">
-                          <div
-                            dangerouslySetInnerHTML={{ __html: description }}
-                          />
-                        </BackSide>
-                      </Flippy>
-                      <h3>{name}</h3>
-                    </div>
-                  )
-                )}
-            </CarouselItem>
-          </div>
+          <div className="home-text">
+            <h1>Nuestras categorías</h1>
 
-          {window.innerWidth > 1200 ? (
-            <a
-              href="https://wa.link/oki91a"
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                cursor: "pointer",
-                marginLeft: "50px",
-                marginRight: "50px",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <img
-                src={trb2}
-                alt="Trabaja con nosotros"
-                title="Trabaja con nosotros"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  marginTop: "20px",
-                  maxWidth: "1325px",
-                  maxHeight: "325px",
-                }}
-              />
-            </a>
-          ) : (
-            <a
-              href="https://wa.link/oki91a"
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                cursor: "pointer",
-                marginLeft: "50px",
-                marginRight: "50px",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <img
-                src={trb4}
-                alt="Trabaja con nosotros"
-                title="Trabaja con nosotros"
-                style={{
-                  width: "270px",
-                  height: "100%",
-                  marginLeft: window.innerWidth <= 360 ? "20px" : "0",
-                  marginTop: "20px",
-                  maxHeight: "325px",
-                }}
-              />
-            </a>
-          )}
+            <h3 className="register__subtitle">
+              Encuentra el servicio que estás buscando y sepáralo donde estés
+              con toda seguridad
+            </h3>
+          </div>
+          <div className="home-search">
+            <MySearchHomeInput
+              label="Busca tus negocios"
+              name="values"
+              value={values}
+              onChange={handleInputChange}
+            />
+          </div>
         </div>
-      </div>
-    );
-  }
-}
+        <br />
+        <div className="carousel">
+          <ItemCarousel />
+        </div>
 
-export default HomePage;
+        {windowWith > 1200 ? (
+          <a
+            href="https://wa.link/oki91a"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              cursor: "pointer",
+              marginLeft: "50px",
+              marginRight: "50px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <img
+              src={trb2}
+              alt="Trabaja con nosotros"
+              title="Trabaja con nosotros"
+              style={{
+                width: "100%",
+                height: "100%",
+                marginTop: "20px",
+                maxWidth: "1325px",
+                maxHeight: "325px",
+              }}
+            />
+          </a>
+        ) : (
+          <a
+            href="https://wa.link/oki91a"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              cursor: "pointer",
+              marginLeft: "50px",
+              marginRight: "50px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <img
+              src={trb4}
+              alt="Trabaja con nosotros"
+              title="Trabaja con nosotros"
+              style={{
+                width: "270px",
+                height: "100%",
+                marginLeft: window.innerWidth <= 360 ? "20px" : "0",
+                marginTop: "20px",
+                maxHeight: "325px",
+              }}
+            />
+          </a>
+        )}
+        <button onClick={handleLogout}>logout</button>
+        <button onClick={toLogin}>cliente</button>
+        <button onClick={toLoginb}>business</button>
+      </div>
+    </div>
+  );
+};

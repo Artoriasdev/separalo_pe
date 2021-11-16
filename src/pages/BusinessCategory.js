@@ -1,182 +1,64 @@
-import React from "react";
-import { Component } from "react";
-import Axios from "axios";
-import Container from "../Modal/Container/Container";
-import {
-  Backdrop,
-  Breadcrumbs,
-  Button,
-  Fade,
-  Link,
-  Modal,
-  TextField,
-} from "@material-ui/core";
-import { NavigateNext } from "@material-ui/icons";
+import React, { useEffect } from "react";
+// import Axios from "axios";
+// import Container from "../Modal/Container/Container";
+// import {
+//   Backdrop,
+//   Breadcrumbs,
+//   Button,
+//   Fade,
+//   Link,
+//   Modal,
+//   TextField,
+// } from "@material-ui/core";
+import { NavigateNext } from "@mui/icons-material";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router";
+import { Breadcrumbs, Link } from "@mui/material";
+import { loadCategorys } from "../actions/category";
+import { logout } from "../actions/auth";
+import { MyModal } from "../components/Modal";
 
-class BusinessCategory extends Component {
-  constructor(props) {
-    super(props);
+export const BusinessCategory = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { categorys } = useSelector((state) => state.category);
 
-    this.state = {
-      typeCategorys: [],
-      triggerText: "Agregar categoría",
-      message: "",
-      modal: false,
-    };
-  }
-
-  componentDidMount() {
-    try {
-      const tk = sessionStorage.getItem("tk");
-      var headers = {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${tk}`,
-      };
-
-      let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/business/getBusiness`;
-
-      const rspApi = Axios.get(linkDocumentsApi, {
-        headers: headers,
-      })
-        .then((response) => {
-          if (response.data.response === "true") {
-            const { data } = response.data;
-
-            sessionStorage.setItem("id", data[0].id);
-            sessionStorage.setItem("tradename", data[0].name);
-            sessionStorage.setItem("logo", data[0].logo);
-
-            this.handleGetCategorys();
-          } else {
-            this.setState({
-              modal: true,
-              message: "Usted no esta autorizado para ver esta información",
-            });
-          }
-
-          return response;
-        })
-        .catch((error) => {
-          const { status } = error.response;
-          if (status === 401) {
-            sessionStorage.removeItem("tk");
-            sessionStorage.removeItem("logo");
-            sessionStorage.removeItem("logged");
-            sessionStorage.removeItem("workflow");
-            sessionStorage.removeItem("tradename");
-            sessionStorage.removeItem("info");
-            sessionStorage.removeItem("id");
-            this.setState({
-              modal: true,
-              message: "Sesión expirada, porfavor vuelva a iniciar sesión",
-            });
-          } else {
-            this.setState({
-              modal: true,
-              message:
-                "Ha ocurrido un error, porfavor refresque la página o intentelo más tarde",
-            });
-          }
-        });
-      return rspApi;
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    if (categorys.length === 0) {
+      dispatch(loadCategorys());
     }
-  }
+  }, [dispatch, categorys.length]);
 
-  handleGetCategorys = () => {
-    var headers = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: "",
-    };
-
-    let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/category/getCategories`;
-
-    const rspApi = Axios.get(linkDocumentsApi, {
-      headers: headers,
-    })
-      .then((response) => {
-        const { data } = response.data;
-        this.setState({
-          typeCategorys: data,
-        });
-
-        return response;
-      })
-      .catch((error) => {
-        console.log(error);
-        this.setState({
-          modal: true,
-          message:
-            "Ha ocurrido un error, porfavor refresque la página o intentelo más tarde",
-        });
-      });
-    return rspApi;
+  const handleRedirect = (id) => {
+    history.push(`/business/services-category/${id}`);
   };
 
-  handleRedirect = (id) => {
-    this.props.history.push(`/business/services-category/${id}`);
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
-  handleClose = () => {
-    this.setState({
-      modal: false,
-    });
-    this.props.history.push("/login/B");
-    this.props.history.go();
-  };
-
-  render() {
-    return (
-      <div className="page-container" style={{ padding: "0" }}>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          open={this.state.modal}
-          closeAfterTransition
-          onClose={this.handleClose}
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-          className="modal-container"
+  return (
+    <div className="page-container" style={{ padding: "0" }}>
+      <MyModal />
+      <div className="category">
+        <Breadcrumbs
+          separator={<NavigateNext fontSize="medium" />}
+          aria-label="breadcrumb"
+          className="font"
         >
-          <Fade in={this.state.modal}>
-            <div className="modal-message-container">
-              <p>{this.state.message}</p>
-              <Button
-                size="large"
-                color="primary"
-                variant="contained"
-                className="btn-primary"
-                onClick={this.handleClose}
-              >
-                Aceptar
-              </Button>
-            </div>
-          </Fade>
-        </Modal>
-        <div className="category">
-          <Breadcrumbs
-            separator={<NavigateNext fontSize="medium" />}
-            aria-label="breadcrumb"
-            className="font"
+          <Link href="/" color="textPrimary">
+            Inicio
+          </Link>
+          <Link
+            color="textSecondary"
+            href="/business/category"
+            // onClick={handleClick}
           >
-            <Link href="/" color="textPrimary">
-              Inicio
-            </Link>
-            <Link
-              color="textSecondary"
-              href="/business/category"
-              // onClick={handleClick}
-            >
-              Categorías
-            </Link>
-          </Breadcrumbs>
-          <h1>Categorías</h1>
-          {/* <div>
+            Categorías
+          </Link>
+        </Breadcrumbs>
+        <h1>Categorías</h1>
+        {/* <div>
             <h3
               style={{ marginTop: "30px", marginBottom: "5px" }}
               className="register__subtitle"
@@ -204,39 +86,37 @@ class BusinessCategory extends Component {
             </Button>
           </div> */}
 
-          <Container
+        {/* <Container
             triggerText={this.state.triggerText}
             history={this.props.history}
-          />
+          /> */}
 
-          <div className="category-container">
-            <ul>
-              {this.state.typeCategorys &&
-                this.state.typeCategorys.map(({ id, image, logo, name }) => (
-                  <li key={id} onClick={() => this.handleRedirect(id)}>
-                    <div
-                      style={{
-                        backgroundImage: `url(${image})`,
-                      }}
-                      className="card"
-                    >
-                      <div className="container">
-                        <span className="svg">
-                          <img src={logo} alt={name} title={name} />
-                        </span>
-                        <span className="name">
-                          <p>{name}</p>
-                        </span>
-                      </div>
+        <div className="category-container">
+          <ul>
+            {categorys &&
+              categorys.map(({ id, image, logo, name }) => (
+                <li key={id} onClick={() => handleRedirect(id)}>
+                  <div
+                    style={{
+                      backgroundImage: `url(${image})`,
+                    }}
+                    className="card"
+                  >
+                    <div className="container">
+                      <span className="svg">
+                        <img src={logo} alt={name} title={name} />
+                      </span>
+                      <span className="name">
+                        <p>{name}</p>
+                      </span>
                     </div>
-                  </li>
-                ))}
-            </ul>
-          </div>
+                  </div>
+                </li>
+              ))}
+          </ul>
         </div>
+        <button onClick={handleLogout}>logout</button>
       </div>
-    );
-  }
-}
-
-export default BusinessCategory;
+    </div>
+  );
+};
