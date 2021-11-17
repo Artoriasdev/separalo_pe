@@ -7,6 +7,7 @@ import { dialogReducer } from "../reducers/dialogReducer";
 import { modalReducer } from "../reducers/modalReducer";
 import { searchReducer } from "../reducers/searchReducer";
 import { categorysByBusiness } from "../reducers/categoryByBusiness";
+import { categorysByServices } from "../reducers/categoryByServices";
 
 const composeEnhancers =
   (typeof window !== "undefined" &&
@@ -21,6 +22,7 @@ const reducers = combineReducers({
   auth: authReducer,
   checking: checkingReducer,
   categoryBusiness: categorysByBusiness,
+  categoryServices: categorysByServices,
 });
 
 export const store = createStore(

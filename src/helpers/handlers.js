@@ -251,6 +251,29 @@ export const handleGetBusinessByCategory = (cat) => {
   return rspApi;
 };
 
+export const handleGetServicesByBusiness = (id, cat) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "",
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/service/getServicesByBusinessAndCategory/${id}/${cat}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
+  return rspApi;
+};
+
 // handleLogin = async (LoginModel) => {
 //   var headers = {
 //     "Content-Type": "application/json",

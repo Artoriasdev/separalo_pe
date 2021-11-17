@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 
 import { checkAuth } from "../actions/auth";
+import { loadCategorys } from "../actions/category";
 import { BusinessAuthRouter } from "./BusinessAuthRouter";
 import { BusinessRoute } from "./BusinessRouter";
 import { ClientAuthRouter } from "./ClientAuthRouter";
@@ -24,6 +25,7 @@ export const SeparalopeRouter = () => {
   const { check } = useSelector((state) => state.checking);
   useEffect(() => {
     dispatch(checkAuth());
+    dispatch(loadCategorys());
   }, [dispatch]);
 
   if (check) {

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { ItemCarousel } from "../components/CarouselItem";
 import { MyModal } from "../components/Modal";
 import { useDispatch } from "react-redux";
-import { loadCategorys } from "../actions/category";
 import { useSelector } from "react-redux";
 
 import Carousel from "../components/Carousel";
@@ -15,6 +14,8 @@ import { loadSearch } from "../actions/search";
 import { logout } from "../actions/auth";
 import { useHistory } from "react-router";
 
+// import { loadCategorys } from "../actions/category";
+
 export const HomePage = () => {
   const history = useHistory();
 
@@ -22,10 +23,6 @@ export const HomePage = () => {
   const dispatch = useDispatch();
   const [windowWith, setWindowWith] = useState(window.innerWidth);
   var values;
-
-  useEffect(() => {
-    dispatch(loadCategorys());
-  }, [dispatch]);
 
   useEffect(() => {
     window.addEventListener("resize", function (event) {

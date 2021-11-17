@@ -3,6 +3,8 @@ export const types = {
 
   loadBusinessByCategory: "[Category Business] Load business by category",
 
+  loadServicesByCategory: "[Category Services] Load services by category",
+
   searchBusiness: "[Search] Business Searched",
   searchClean: "[Search] Searched clear",
 
