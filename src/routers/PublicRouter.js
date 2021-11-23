@@ -2,6 +2,7 @@ import React from "react";
 import { Redirect, Route, Switch } from "react-router";
 import { HomePage } from "../pages/HomePage";
 import { MenuBusinessCategory } from "../pages/MenuBusinessCategory";
+import { MenuServicesBusiness } from "../pages/MenuServicesBusiness";
 
 export const PublicRouter = () => {
   return (
@@ -13,6 +14,12 @@ export const PublicRouter = () => {
             exact
             path="/services-menu/:value"
             component={MenuBusinessCategory}
+          />
+
+          <Route
+            exact
+            path="/services-menu-category/:id/:category"
+            component={MenuServicesBusiness}
           />
 
           <Redirect to="/" />

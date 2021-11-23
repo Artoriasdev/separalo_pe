@@ -1,6 +1,6 @@
 import Carousel from "react-material-ui-carousel";
 
-import { Paper } from "@material-ui/core";
+import { Paper } from "@mui/material";
 
 import React, { Component } from "react";
 

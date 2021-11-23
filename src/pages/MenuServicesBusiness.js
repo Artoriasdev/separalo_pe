@@ -1,11 +1,21 @@
-import React from "react";
-import { Backdrop, Button, Fade, Modal } from "@material-ui/core";
-import { BackSide, Flippy, FrontSide } from "react-flippy";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-import { RatingService } from "../helpers/RatingService";
-import Banner from "../components/BannerBusiness";
+// import { BackSide, Flippy, FrontSide } from "react-flippy";
+// import { RatingService } from "../helpers/RatingService";
+// import Banner from "../components/BannerBusiness";
+import { MyModal } from "../components/Modal";
+import { loadServicesCategorys } from "../actions/categoryByServices";
+import { useParams } from "react-router";
 
 export const MenuServicesBusiness = () => {
+  const dispatch = useDispatch();
+  const params = useParams();
+
+  useEffect(() => {
+    dispatch(loadServicesCategorys(params.id, params.category));
+  }, [dispatch, params.id, params.category]);
+
   // constructor(props) {
   //   super(props);
 
@@ -86,41 +96,15 @@ export const MenuServicesBusiness = () => {
 
   return (
     <>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={this.state.modal}
-        closeAfterTransition
-        onClose={this.handleClose}
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-        className="modal-container"
-      >
-        <Fade in={this.state.modal}>
-          <div className="modal-message-container">
-            <p>{this.state.message}</p>
-            <Button
-              size="large"
-              color="primary"
-              variant="contained"
-              className="btn-primary"
-              onClick={this.handleClose}
-            >
-              Aceptar
-            </Button>
-          </div>
-        </Fade>
-      </Modal>
-      <Banner negocio={this.state.business} imagen={this.state.image} />
-
+      <h1>Hola</h1>
+      <MyModal />
+      {/* <Banner negocio={this.state.business} imagen={this.state.image} /> */}
       <div
         className="page-container"
         style={{ padding: "50px 0 0 0 ", width: "90%", margin: " auto" }}
       >
         <div className="flip-container">
-          {this.state.typeCategorys.map(
+          {/* {this.state.typeCategorys.map(
             ({ id, title, description, currencySymbol, price, duration }) => (
               <Flippy
                 flipOnHover={true} // default false
@@ -172,7 +156,7 @@ export const MenuServicesBusiness = () => {
                 </BackSide>
               </Flippy>
             )
-          )}
+          )} */}
         </div>
       </div>
     </>
