@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 
-import { LoginClient } from "../pages/LoginClient";
+import { LoginClient } from "../pages/Public/LoginClient";
 // import { RegisterCustomer } from "../pages/RegisterCustomer";
 // import { RegisterBusiness } from "../pages/RegisterBusiness";
 

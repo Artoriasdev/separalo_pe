@@ -10,16 +10,16 @@ import {
   Select,
   TextField,
 } from "@material-ui/core";
-import { handleRegexDisable } from "../utils/utilitaries";
+import { handleRegexDisable } from "../../utils/utilitaries";
 import Edit from "@material-ui/icons/Edit";
 import axios from "axios";
 import { Save } from "@material-ui/icons";
-import { EMAIL_REGEXP } from "../utils/regexp";
+import { EMAIL_REGEXP } from "../../utils/regexp";
 import {
   EMAIL_INVALID,
   EMAIL_MINLENGTH,
   E_MINLENGTH,
-} from "../utils/constants";
+} from "../../utils/constants";
 
 class ClientProfile extends Component {
   constructor(props) {

@@ -274,6 +274,114 @@ export const handleGetServicesByBusiness = (id, cat) => {
   return rspApi;
 };
 
+export const handleGetServicesById = (id) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: ``,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/service/getServicesById/${id}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleGetAvailableDateService = (id) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: ``,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/reservation/getAvailableDateService/${id}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleGetAvailableScheduleService = (id, date) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: ``,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/reservation/getAvailableScheduleService/${id}/${date}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleRegisterReservationInvited = (reserveModel) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: ``,
+  };
+
+  let linkRegisterApi = `${process.env.REACT_APP_PATH_SERVICE}/reservation/registerReservationInvited`;
+
+  const rspApi = axios
+    .post(linkRegisterApi, reserveModel, {
+      headers: headers,
+    })
+    .then((response) => {
+      // localStorage.setItem("data", JSON.stringify(data));
+      // this.setState({ isLoading: true });
+
+      // if (data.response === "true") {
+      //   setTimeout(() => {
+      //     this.setState({
+      //       isLoading: false,
+      //       modal: true,
+      //       message: "¡Registro grabado satisfactoriamente!",
+      //       response: true,
+      //     });
+      //   }, 500);
+      // } else if (data.response === "false") {
+      //   this.setState({
+      //     modal: true,
+      //     message: data.message,
+      //     isLoading: false,
+      //   });
+      // }
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
+  return rspApi;
+};
+
 // handleLogin = async (LoginModel) => {
 //   var headers = {
 //     "Content-Type": "application/json",

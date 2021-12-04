@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { ItemCarousel } from "../components/CarouselItem";
-import { MyModal } from "../components/Modal";
+import { ItemCarousel } from "../../components/CarouselItem";
+import { MyModal } from "../../components/Modal";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
-import Carousel from "../components/Carousel";
-import trb2 from "../assets/images/trabaja con nosotros 1325 x 325.jpg";
-import trb4 from "../assets/images/Transforma tu negocio 273 x 271.jpg";
+import Carousel from "../../components/Carousel";
+import trb2 from "../../assets/images/trabaja con nosotros 1325 x 325.jpg";
+import trb4 from "../../assets/images/Transforma tu negocio 273 x 271.jpg";
 import "animate.css";
-import { MySearchHomeInput } from "../components/Fields";
-import { loadSearch } from "../actions/search";
+import { MySearchHomeInput } from "../../components/Fields";
+import { loadSearch } from "../../actions/search";
 
-import { logout } from "../actions/auth";
+import { logout } from "../../actions/auth";
 import { useHistory } from "react-router";
 
 // import { loadCategorys } from "../actions/category";

@@ -8,20 +8,20 @@ import {
   Backdrop,
   Fade,
 } from "@material-ui/core";
-import { handleRegexDisable } from "../utils/utilitaries";
+import { handleRegexDisable } from "../../utils/utilitaries";
 import { ErrorMessage, Formik } from "formik";
 import axios from "axios";
-import { EMAIL_REGEXP } from "../utils/regexp";
+import { EMAIL_REGEXP } from "../../utils/regexp";
 import {
   EMAIL_INVALID,
   EMAIL_MINLENGTH,
   E_MINLENGTH,
-} from "../utils/constants";
-import FullPageLoader from "../components/FullPageLoader";
+} from "../../utils/constants";
+import FullPageLoader from "../../components/FullPageLoader";
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import { pickerTheme } from "../utils/constants";
+import { pickerTheme } from "../../utils/constants";
 import esLocale from "date-fns/locale/es";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import classnames from "classnames";

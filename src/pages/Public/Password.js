@@ -2,12 +2,12 @@ import React from "react";
 import { Component } from "react";
 import { ErrorMessage, Formik } from "formik";
 import { Backdrop, Button, Fade, Modal, TextField } from "@material-ui/core";
-import { handleRegexDisable } from "../utils/utilitaries";
+import { handleRegexDisable } from "../../utils/utilitaries";
 
 import { Save, Visibility, VisibilityOff } from "@material-ui/icons";
 import axios from "axios";
-import { PASSWORD_REGEXP } from "../utils/regexp";
-import { MATCH, PASSN_MINLENGTH, PASS_INVALID } from "../utils/constants";
+import { PASSWORD_REGEXP } from "../../utils/regexp";
+import { MATCH, PASSN_MINLENGTH, PASS_INVALID } from "../../utils/constants";
 
 class Password extends Component {
   constructor(props) {

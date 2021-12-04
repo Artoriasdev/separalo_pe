@@ -10,6 +10,8 @@ export const types = {
 
   modalOpen: "[Modal] Modal opened",
   modalClose: "[Modal] Modal closed",
+  modalRedirect: "[Modal] Modal Redirect",
+  modalRedirectDone: "[Modal] Modal Redirect done",
 
   dialogOpen: "[Dialog] Dialog opened",
   dialogClose: "[Dialog] Dialog closed",
@@ -19,4 +21,10 @@ export const types = {
 
   startChecking: "[Checking] Checking started",
   finishChecking: "[Checking] Checking finished",
+
+  serviceById: "[Service] Service by id loaded",
+
+  hoursById: "[Hours] Hours for service loaded",
+
+  reservation: "[Reservation] Reservation user done",
 };

@@ -17,7 +17,7 @@ import { NavigateNext } from "@material-ui/icons";
 import Axios from "axios";
 import React from "react";
 import { Component } from "react";
-import Container from "../Modal/Container/ContainerService";
+import Container from "../../Modal/Container/ContainerService";
 
 const styles = (theme) => ({
   renderMobile: {
@@ -27,7 +27,7 @@ const styles = (theme) => ({
   },
 });
 
-class BusinessServices extends Component {
+class BusinessServicesCategory extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,6 +35,7 @@ class BusinessServices extends Component {
       triggerText: "Agregar servicio",
       message: "",
       modal: false,
+      typeCategorys: [],
       forceRedirect: false,
       response: false,
     };
@@ -57,6 +58,7 @@ class BusinessServices extends Component {
         .then((response) => {
           if (response.data.response === "true") {
             this.handleGetList();
+            this.handleGetCategorys();
           } else {
             this.setState({
               modal: true,
@@ -95,23 +97,59 @@ class BusinessServices extends Component {
       console.log(error);
     }
   }
-
-  handleGetList = () => {
-    const id = sessionStorage.getItem("id");
+  handleGetCategorys = () => {
     var headers = {
       "Content-Type": "application/json",
       Accept: "application/json",
       Authorization: "",
     };
 
-    let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/service/getServicesByBusiness/${id}`;
+    let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/category/getCategories`;
 
     const rspApi = Axios.get(linkDocumentsApi, {
       headers: headers,
     })
       .then((response) => {
         const { data } = response.data;
-        console.log(data);
+        const category = data.find(
+          (id) => id.id === JSON.parse(this.props.match.params.value)
+        );
+        console.log(category);
+        this.setState({
+          typeCategorys: category,
+        });
+
+        return response;
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          modal: true,
+          message:
+            "Ha ocurrido un error, porfavor refresque la página o intentelo más tarde",
+        });
+      });
+    return rspApi;
+  };
+
+  handleGetList = () => {
+    const id = sessionStorage.getItem("id");
+    const cat = this.props.match.params.value;
+    const tk = sessionStorage.getItem("tk");
+
+    var headers = {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${tk}`,
+    };
+
+    let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/service/getServicesByBusinessAndCategory/${id}/${cat}`;
+
+    const rspApi = Axios.get(linkDocumentsApi, {
+      headers: headers,
+    })
+      .then((response) => {
+        const { data } = response.data;
 
         this.setState({
           dataList: data,
@@ -140,12 +178,20 @@ class BusinessServices extends Component {
     }
   };
 
+  handleTemp = () => {
+    this.props.history.push("/business/services/details");
+  };
+
   handleEdit = (id) => {
-    this.props.history.push(`/business/services/details/${id}/1/0`);
+    this.props.history.push(
+      `/business/services/details/${id}/2/${this.props.match.params.value}`
+    );
   };
 
   handleAppointment = (id) => {
-    this.props.history.push(`/business/services/appointment/${id}/1/0`);
+    this.props.history.push(
+      `/business/services/appointment/${id}/2/${this.props.match.params.value}`
+    );
   };
 
   render() {
@@ -186,25 +232,36 @@ class BusinessServices extends Component {
             aria-label="breadcrumb"
             className="font"
           >
-            <Link href="/" color="textPrimary">
+            <Link color="inherit" href="/">
               Inicio
             </Link>
             <Link
-              color="textSecondary"
-              href="/business/services"
+              color="textPrimary"
+              href={`/business/services-category/${this.props.match.params.value}`}
               // onClick={handleClick}
             >
               Mis servicios
             </Link>
+            <Link
+              color="textPrimary"
+              href={`/business/services-category/${this.props.match.params.value}`}
+              // onClick={handleClick}
+            >
+              {this.state.typeCategorys.name}
+            </Link>
           </Breadcrumbs>
           <h1>Mis servicios</h1>
-
+          <h3>Tus servicios</h3>
           <Container
             triggerText={this.state.triggerText}
+            value={this.props.match.params.value}
             history={this.props.history}
           />
 
-          <h3>Estos son los servicios que han sido registrados</h3>
+          <div style={{ display: "block" }}>
+            <h3>Estos son los servicios que han sido registrados</h3>
+          </div>
+
           <TableContainer className="table">
             <Table sx={{ minWidth: 650 }}>
               <TableHead className="table-head">
@@ -235,7 +292,6 @@ class BusinessServices extends Component {
                     duration,
                     currencySymbol,
                     price,
-                    category,
                   }) => (
                     <TableRow key={id}>
                       <TableCell className="font">{title}</TableCell>
@@ -245,7 +301,9 @@ class BusinessServices extends Component {
                       >
                         {description}
                       </TableCell>
-                      <TableCell className="font">{category}</TableCell>
+                      <TableCell className="font">
+                        {this.state.typeCategorys.name}
+                      </TableCell>
                       <TableCell className="font">{duration}</TableCell>
                       <TableCell className="font">
                         {currencySymbol + " " + price}
@@ -278,4 +336,4 @@ class BusinessServices extends Component {
   }
 }
 
-export default withStyles(styles)(BusinessServices);
+export default withStyles(styles)(BusinessServicesCategory);

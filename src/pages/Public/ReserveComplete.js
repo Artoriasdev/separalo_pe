@@ -1,3 +1,6 @@
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -6,16 +9,18 @@ import {
   TableRow,
   TableCell,
   Button,
-} from "@material-ui/core";
-import React from "react";
-import { useHistory } from "react-router-dom";
+} from "@mui/material";
+
 // import Logo from "../assets/images/separalo-logo-for-email.svg";
 
 export const ReserveComplete = () => {
   const history = useHistory();
+  const { reservationUser } = useSelector((state) => state.reservation);
+  console.log(reservationUser);
 
-  const { message } = JSON.parse(localStorage.getItem("data"));
-  const { data } = JSON.parse(localStorage.getItem("data"));
+  useEffect(() => {
+    if (reservationUser.length === 0) history.push("/");
+  });
 
   const handleRedirect = () => {
     if (
@@ -48,7 +53,7 @@ export const ReserveComplete = () => {
             }}
           >
             Con el siguiente código{" "}
-            <p
+            <span
               style={{
                 color: "#5829dd",
                 display: "inline-block",
@@ -56,8 +61,8 @@ export const ReserveComplete = () => {
                 paddin: "0",
               }}
             >
-              {message}
-            </p>{" "}
+              {reservationUser[0] && reservationUser[0].codeReservation}
+            </span>{" "}
             confirmamos que hemos separado tu cita. Para continuar debes hacer
             la transferencia bancaria.
           </p>
@@ -131,11 +136,15 @@ export const ReserveComplete = () => {
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <div>
                   <p>Nombre del servicio</p>
-                  <p style={{ fontWeight: "bold" }}>{data[0].titleService}</p>
+                  <p style={{ fontWeight: "bold" }}>
+                    {reservationUser[0] && reservationUser[0].titleService}
+                  </p>
                 </div>
                 <div>
                   <p>Categoría</p>
-                  <p style={{ fontWeight: "bold" }}>{data[0].nameCategory}</p>
+                  <p style={{ fontWeight: "bold" }}>
+                    {reservationUser[0] && reservationUser[0].nameCategory}
+                  </p>
                 </div>
               </div>
               <hr
@@ -149,13 +158,13 @@ export const ReserveComplete = () => {
                 <div>
                   <p>Fecha de su cita</p>
                   <p style={{ fontWeight: "bold" }}>
-                    {data[0].dateReservation}
+                    {reservationUser[0] && reservationUser[0].dateReservation}
                   </p>
                 </div>
                 <div>
                   <p>Hora de su cita</p>
                   <p style={{ fontWeight: "bold" }}>
-                    {data[0].timeReservation}
+                    {reservationUser[0] && reservationUser[0].timeReservation}
                   </p>
                 </div>
               </div>
@@ -170,13 +179,14 @@ export const ReserveComplete = () => {
                 <div>
                   <p>Duración de su cita</p>
                   <p style={{ fontWeight: "bold" }}>
-                    {data[0].durationReservation}
+                    {reservationUser[0] &&
+                      reservationUser[0].durationReservation}
                   </p>
                 </div>
                 <div>
                   <p>Costo por la cita</p>
                   <p style={{ fontWeight: "bold", color: "#5829dd" }}>
-                    {data[0].price}
+                    {reservationUser[0] && reservationUser[0].price}
                   </p>
                 </div>
               </div>

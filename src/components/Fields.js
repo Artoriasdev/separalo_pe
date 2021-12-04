@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useField } from "formik";
+import React, { useEffect, useState } from "react";
+import { useField, useFormikContext } from "formik";
 import {
   Button,
   Checkbox,
@@ -18,12 +18,18 @@ import { useHistory } from "react-router";
 import { cleanSearch } from "../actions/search";
 
 export const MyTextInput = ({ label, ...props }) => {
-  // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
-  // which we can spread on <input>. We can use field meta to show an error
-  // message if the field is invalid and it has been touched (i.e. visited)
+  const [value, setValue] = useState("");
+  const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(props);
+
+  useEffect(() => {
+    if (props.accion === 1 && value !== props.data) {
+      setFieldValue(field.name, props.data, true);
+      setValue(props.data);
+    }
+  }, [props.accion, props.data, value, setFieldValue, field.name]);
   return (
-    <div className="input">
+    <div>
       <TextField
         label={label}
         variant="outlined"
@@ -49,7 +55,7 @@ export const MyPasswordInput = ({ label, ...props }) => {
     setShow(!show);
   };
   return (
-    <div className="input">
+    <div>
       <OutlinedInput
         {...field}
         {...props}
@@ -80,34 +86,61 @@ export const MyPasswordInput = ({ label, ...props }) => {
   );
 };
 
-export const MyCheckbox = ({ children, ...props }) => {
-  // React treats radios and checkbox inputs differently other input types, select, and textarea.
-  // Formik does this too! When you specify `type` to useField(), it will
-  // return the correct bag of props for you -- a `checked` prop will be included
-  // in `field` alongside `name`, `value`, `onChange`, and `onBlur`
-  const [field, meta] = useField({ ...props, type: "checkbox" });
+export const MyCheckbox = ({
+  children,
+  checked,
+  setChecked,
+  setTermsModal,
+  ...props
+}) => {
+  const { touched, values, setFieldValue } = useFormikContext();
+  const handleCheck = () => {
+    // const Formik = this.form;
+    if (checked === true) {
+      setChecked(false);
+      setFieldValue("checkbox", false, true);
+    } else if (checked === false) {
+      setTermsModal(true);
+    }
+  };
 
   return (
     <div>
       <FormControlLabel
         className={
-          meta.touched && meta.error
+          !values.checkbox && touched.checkbox
             ? "animate__animated animate__shakeX"
             : null
         }
-        control={<Checkbox {...field} {...props} color="primary" />}
+        control={
+          <Checkbox
+            {...props}
+            checked={checked}
+            onChange={handleCheck}
+            color="primary"
+          />
+        }
         label={children}
       />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
+      {!values.checkbox && touched.checkbox ? (
+        <div className="error">Requerido</div>
       ) : null}
     </div>
   );
 };
 
-export const MySelect = ({ children, label, ...props }) => {
+export const MySelect = ({ children, label, despachador, ...props }) => {
+  const dispatch = useDispatch();
   const [field, meta] = useField(props);
-  //   console.log(props.children.length);
+  const [value, setValue] = useState("");
+
+  if (props.accion === 1 && field.value !== value) {
+    setValue(field.value);
+    if (props.elements === 2) {
+      if (props.first !== "" && props.second !== "")
+        dispatch(despachador(props.first, props.second));
+    }
+  }
   return (
     <div>
       <Select
@@ -159,7 +192,7 @@ export const MySearchHomeInput = ({ label, ...props }) => {
   };
   const { business } = useSelector((state) => state.search);
   return (
-    <div className="input">
+    <div>
       <OutlinedInput
         {...props}
         fullWidth

@@ -9,10 +9,10 @@ import {
   Tabs,
 } from "@material-ui/core";
 import React, { Component } from "react";
-import { LinkTab } from "../Nav Tabs/LinkTab";
-import FutureAppointments from "../Nav Tabs/Appointment Tabs/FutureAppointments";
-import PastAppointments from "../Nav Tabs/Appointment Tabs/PastAppointments";
-import { TabPanel } from "../Nav Tabs/TabPanel";
+import { LinkTab } from "../../Nav Tabs/LinkTab";
+import FutureAppointments from "../../Nav Tabs/Appointment Tabs/FutureAppointments";
+import PastAppointments from "../../Nav Tabs/Appointment Tabs/PastAppointments";
+import { TabPanel } from "../../Nav Tabs/TabPanel";
 import { NavigateNext } from "@material-ui/icons";
 import axios from "axios";
 

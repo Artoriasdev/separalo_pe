@@ -7,3 +7,10 @@ export const modalOpen = (message) => ({
 export const modalClose = () => ({
   type: types.modalClose,
 });
+
+export const modalRedirect = () => ({
+  type: types.modalRedirect,
+});
+export const modalRedirectFinished = () => ({
+  type: types.modalRedirectDone,
+});

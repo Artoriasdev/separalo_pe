@@ -1,4 +1,4 @@
-import { createTheme } from "@material-ui/core/styles";
+import { createTheme } from "@mui/material/styles";
 export const INITIAL_ASYNC_STATE = {
   payload: null,
   error: null,

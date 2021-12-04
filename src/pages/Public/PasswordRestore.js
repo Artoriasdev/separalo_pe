@@ -12,8 +12,8 @@ import { Visibility, VisibilityOff } from "@material-ui/icons";
 import axios from "axios";
 import { ErrorMessage, Formik } from "formik";
 import React, { Component } from "react";
-import { MATCH, PASSN_MINLENGTH, PASS_INVALID } from "../utils/constants";
-import { PASSWORD_REGEXP } from "../utils/regexp";
+import { MATCH, PASSN_MINLENGTH, PASS_INVALID } from "../../utils/constants";
+import { PASSWORD_REGEXP } from "../../utils/regexp";
 
 class PasswordRestore extends Component {
   constructor(props) {

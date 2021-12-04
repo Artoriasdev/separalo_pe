@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 
 // import Banner from "../components/BannerCategory";
-import { MyModal } from "../components/Modal";
-import { PublicBusiness } from "../components/PublicBusiness";
-import { MySearchHomeInput } from "../components/Fields";
-import { loadSearch } from "../actions/search";
-import { loadBusinessCategorys } from "../actions/categoryByBusiness";
+import { MyModal } from "../../components/Modal";
+import { PublicBusiness } from "../../components/PublicBusiness";
+import { MySearchHomeInput } from "../../components/Fields";
+import { loadSearch } from "../../actions/search";
+import { loadBusinessCategorys } from "../../actions/categoryByBusiness";
 
 export const MenuBusinessCategory = () => {
   const dispatch = useDispatch();

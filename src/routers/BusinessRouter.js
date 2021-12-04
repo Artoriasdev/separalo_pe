@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router";
-import { BusinessCategory } from "../pages/BusinessCategory";
+import { BusinessCategory } from "../pages/B2B/BusinessCategory";
 
 export const BusinessRoute = () => {
   return (

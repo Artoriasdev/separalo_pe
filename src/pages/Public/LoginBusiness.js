@@ -3,13 +3,17 @@ import React from "react";
 import * as Yup from "yup";
 
 import { Formik, Form } from "formik";
-import { ArrowCircleSVG } from "../assets/images/svg";
+import { ArrowCircleSVG } from "../../assets/images/svg";
 
-import { MyModal } from "../components/Modal";
+import { MyModal } from "../../components/Modal";
 import { useHistory, useParams } from "react-router";
-import { MyButton, MyPasswordInput, MyTextInput } from "../components/Fields";
+import {
+  MyButton,
+  MyPasswordInput,
+  MyTextInput,
+} from "../../components/Fields";
 import { useDispatch } from "react-redux";
-import { login, logout } from "../actions/auth";
+import { login, logout } from "../../actions/auth";
 import { Link } from "react-router-dom";
 
 export const LoginBusiness = () => {
@@ -17,8 +21,6 @@ export const LoginBusiness = () => {
   const params = useParams();
   const dispatch = useDispatch();
   // const { workflow, logged } = useSelector((state) => state.auth) || "";
-
-  console.log(params);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -41,37 +43,29 @@ export const LoginBusiness = () => {
 
             <Formik
               initialValues={{
-                email: "",
+                username: "",
                 password: "",
+                workflow: params.B,
               }}
               validationSchema={Yup.object({
-                email: Yup.string()
+                username: Yup.string()
                   .email("Correo invalido")
                   .required("Requerido"),
                 password: Yup.string().required("Requerido"),
               })}
               onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(false);
-                const LoginModel = {
-                  username: "",
-                  password: "",
-                  workflow: "",
-                };
-
-                LoginModel.username = values.email;
-                LoginModel.password = values.password;
-                LoginModel.workflow = params.B;
-                dispatch(login(LoginModel, params.B));
+                dispatch(login(values, params.B));
               }}
             >
               {({ errors, touched, isSubmitting }) => (
                 <Form name="formLogin">
                   <MyTextInput
                     label="Correo"
-                    name="email"
-                    type="email"
+                    name="username"
+                    type="username"
                     placeholder="jane@gmail.com"
-                    error={errors.email && touched.email}
+                    error={errors.username && touched.username}
                     fullWidth
                     style={{ marginBottom: "10px" }}
                   />
@@ -95,7 +89,7 @@ export const LoginBusiness = () => {
               )}
             </Formik>
             <div className="recover-password-button">
-              <Link to={`/password-recovery/${params.value}`}>
+              <Link to={`/password-recovery/${params.B}`}>
                 Olvidé mi contraseña
               </Link>
             </div>

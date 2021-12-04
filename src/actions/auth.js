@@ -12,7 +12,6 @@ export const login = (infoLogin, workflow) => {
     try {
       dispatch(startChecking());
       const info = await handleLogin(infoLogin);
-      console.log(info);
       if (info.data.response === "false") {
         dispatch(modalOpen(info.data.message));
         dispatch(finishChecking());
@@ -25,6 +24,11 @@ export const login = (infoLogin, workflow) => {
       }
     } catch (error) {
       console.log(error);
+      dispatch(
+        modalOpen(
+          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
+        )
+      );
     }
   };
 };
@@ -60,6 +64,11 @@ export const checkAuth = () => {
       }
     } catch (error) {
       console.log(error);
+      dispatch(
+        modalOpen(
+          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
+        )
+      );
     }
   };
 };

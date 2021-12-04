@@ -12,6 +12,8 @@ import { loadCategorys } from "../actions/category";
 import { BusinessAuthRouter } from "./BusinessAuthRouter";
 import { BusinessRoute } from "./BusinessRouter";
 import { ClientAuthRouter } from "./ClientAuthRouter";
+import { ConfirmLoginRedirectRoute } from "./ConfirmLoginRedirectRoute";
+import { ConfirmLoginRedirectRouter } from "./ConfirmLoginRedirectRouter";
 import { PublicRouter } from "./PublicRouter";
 import { RedirectBusinessAuthRoute } from "./RedirectBusinessAuthRoute";
 import { RedirectBusinessRoute } from "./RedirectBusinessRoute";
@@ -48,6 +50,12 @@ export const SeparalopeRouter = () => {
             path="/login/B"
             workflow={workflow}
             component={BusinessAuthRouter}
+          />
+          <ConfirmLoginRedirectRouter
+            exact
+            path="/confirm/:title/:id"
+            workflow={workflow}
+            component={ConfirmLoginRedirectRoute}
           />
           <RedirectBusinessRoute
             path="/business/"

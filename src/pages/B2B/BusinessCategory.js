@@ -14,9 +14,9 @@ import { NavigateNext } from "@mui/icons-material";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { Breadcrumbs, Link } from "@mui/material";
-import { loadCategorys } from "../actions/category";
-import { logout } from "../actions/auth";
-import { MyModal } from "../components/Modal";
+import { loadCategorys } from "../../actions/category";
+import { logout } from "../../actions/auth";
+import { MyModal } from "../../components/Modal";
 
 export const BusinessCategory = () => {
   const dispatch = useDispatch();

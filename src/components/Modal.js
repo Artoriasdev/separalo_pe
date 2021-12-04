@@ -11,7 +11,10 @@ import {
 } from "@mui/material";
 import { MyButton } from "./Fields";
 import { useDispatch, useSelector } from "react-redux";
-import { modalClose } from "../actions/modal";
+import { modalClose, modalRedirectFinished } from "../actions/modal";
+import { useFormikContext } from "formik";
+import { makeStyles } from "@mui/styles";
+import { useHistory } from "react-router";
 
 const style = {
   position: "absolute",
@@ -25,12 +28,26 @@ const style = {
   p: 4,
 };
 
-export const MyModal = () => {
-  const { opened, message } = useSelector((state) => state.modal);
+const useStyles = makeStyles({
+  root: {
+    "& .MuiDialog-paperWidthSm": {
+      maxWidth: "700px",
+    },
+  },
+});
+
+export const MyModal = ({ link }) => {
+  const { opened, message, redirect } = useSelector((state) => state.modal);
+  const history = useHistory();
   const dispatch = useDispatch();
   const handleClose = () => {
     dispatch(modalClose());
+    if (redirect) {
+      history.push(link);
+      dispatch(modalRedirectFinished());
+    }
   };
+
   return (
     <div>
       <Modal
@@ -95,6 +112,68 @@ export const MyDialog = ({ modal, text, ...props }) => {
             onClick={handleClose}
           >
             Aceptar
+          </MyButton>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+};
+
+export const MyFormikDialog = ({ modal, text, setChecked, setTermsModal }) => {
+  const classes = useStyles();
+  const { setFieldValue } = useFormikContext();
+  const handleClose = () => {
+    setTermsModal(false);
+  };
+
+  const handleTerms = (id) => {
+    // const Formik = this.form;
+    if (id === 1) {
+      setChecked(true);
+      setTermsModal(false);
+      setFieldValue("checkbox", true, true);
+    } else if (id === 2) {
+      setTermsModal(false);
+    }
+  };
+  const wrapper = React.createRef(null);
+  return (
+    <div>
+      <Dialog
+        ref={wrapper}
+        open={modal}
+        onClose={handleClose}
+        scroll="paper"
+        className={classes.root}
+      >
+        {/* {text.map((text) => {
+          return (
+            <DialogContent key={"1"}>
+              <div dangerouslySetInnerHTML={{ __html: text.value }} />
+            </DialogContent>
+          );
+        })} */}
+        <DialogContent>
+          <h1>Hola</h1>
+        </DialogContent>
+        <DialogActions style={{ justifyContent: "center" }}>
+          <MyButton
+            onClick={() => handleTerms(1)}
+            style={{
+              margin: "5px 5px 3px 0",
+              textTransform: "capitalize",
+            }}
+          >
+            Aceptar
+          </MyButton>
+          <MyButton
+            onClick={() => handleTerms(2)}
+            style={{
+              margin: "5px 0 3px 5px",
+              textTransform: "capitalize",
+            }}
+          >
+            Cancelar
           </MyButton>
         </DialogActions>
       </Dialog>

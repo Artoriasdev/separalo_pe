@@ -11,16 +11,16 @@ import {
   Backdrop,
   Fade,
 } from "@material-ui/core";
-import { handleRegexDisable } from "../utils/utilitaries";
+import { handleRegexDisable } from "../../utils/utilitaries";
 import { Save } from "@material-ui/icons";
 import axios from "axios";
-import { EMAIL_REGEXP } from "../utils/regexp";
+import { EMAIL_REGEXP } from "../../utils/regexp";
 import {
   EMAIL_INVALID,
   EMAIL_MINLENGTH,
   E_MINLENGTH,
-} from "../utils/constants";
-import FullPageLoader from "../components/FullPageLoader";
+} from "../../utils/constants";
+import FullPageLoader from "../../components/FullPageLoader";
 
 class RegisterDataBank extends Component {
   constructor(props) {

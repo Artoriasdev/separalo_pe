@@ -1,5 +1,5 @@
 import React from "react";
-import { BUSINESS_NAME, COMERCIAL_NAME } from "../utils/constants";
+import { BUSINESS_NAME, COMERCIAL_NAME } from "../../utils/constants";
 
 export const CookiePolicy = () => {
   return (
