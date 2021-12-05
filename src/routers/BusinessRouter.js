@@ -4,9 +4,11 @@ import { BusinessCategory } from "../pages/B2B/BusinessCategory";
 
 export const BusinessRoute = () => {
   return (
-    <Switch>
-      <Route exact path="/business/category" component={BusinessCategory} />
-      <Redirect to="/business/category" />
-    </Switch>
+    <div style={{ marginTop: "3.15rem" }}>
+      <Switch>
+        <Route exact path="/business/category" component={BusinessCategory} />
+        <Redirect to="/business/category" />
+      </Switch>
+    </div>
   );
 };

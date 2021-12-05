@@ -70,7 +70,7 @@ const items = [
 
 const MyProjectsExample = () => {
   return (
-    <div style={{ marginTop: "50px", color: "#494949" }}>
+    <div style={{ color: "#494949" }}>
       <Carousel
         className="Home-carousel"
         autoPlay={true}

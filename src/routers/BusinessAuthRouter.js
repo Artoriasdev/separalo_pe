@@ -7,17 +7,15 @@ import { LoginBusiness } from "../pages/Public/LoginBusiness";
 
 export const BusinessAuthRouter = () => {
   return (
-    <div>
-      <div>
-        <Switch>
-          <Route exact path="/login/:B" component={LoginBusiness} />
+    <div style={{ marginTop: "5.9rem" }}>
+      <Switch>
+        <Route exact path="/login/:B" component={LoginBusiness} />
 
-          {/* <Route exact path="/register/customer" component={RegisterCustomer} />
+        {/* <Route exact path="/register/customer" component={RegisterCustomer} />
           <Route exact path="/register/business" component={RegisterBusiness} /> */}
 
-          <Redirect to="/" />
-        </Switch>
-      </div>
+        <Redirect to="/" />
+      </Switch>
     </div>
   );
 };

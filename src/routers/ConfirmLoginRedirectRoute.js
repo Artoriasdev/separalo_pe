@@ -4,14 +4,12 @@ import { ConfirmLogin } from "../pages/Public/ConfirmLogin";
 
 export const ConfirmLoginRedirectRoute = () => {
   return (
-    <div>
-      <div>
-        <Switch>
-          <Route exact path="/confirm/:title/:id" component={ConfirmLogin} />
+    <div style={{ marginTop: "5.9rem" }}>
+      <Switch>
+        <Route exact path="/confirm/:title/:id" component={ConfirmLogin} />
 
-          <Redirect to="/" />
-        </Switch>
-      </div>
+        <Redirect to="/" />
+      </Switch>
     </div>
   );
 };

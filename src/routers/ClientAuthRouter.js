@@ -7,17 +7,15 @@ import { LoginClient } from "../pages/Public/LoginClient";
 
 export const ClientAuthRouter = () => {
   return (
-    <div>
-      <div>
-        <Switch>
-          <Route exact path="/login/:C" component={LoginClient} />
+    <div style={{ marginTop: "5.9rem" }}>
+      <Switch>
+        <Route exact path="/login/:C" component={LoginClient} />
 
-          {/* <Route exact path="/register/customer" component={RegisterCustomer} />
+        {/* <Route exact path="/register/customer" component={RegisterCustomer} />
           <Route exact path="/register/business" component={RegisterBusiness} /> */}
 
-          <Redirect to="/" />
-        </Switch>
-      </div>
+        <Redirect to="/" />
+      </Switch>
     </div>
   );
 };

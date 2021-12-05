@@ -57,15 +57,15 @@ export const SeparalopeRouter = () => {
             workflow={workflow}
             component={ConfirmLoginRedirectRoute}
           />
-          <RedirectBusinessRoute
-            path="/business/"
-            workflow={workflow}
-            component={BusinessRoute}
-          />
           <RedirectPublicRoute
             path="/"
             workflow={workflow}
             component={PublicRouter}
+          />
+          <RedirectBusinessRoute
+            path="/business/"
+            workflow={workflow}
+            component={BusinessRoute}
           />
           {/* <Route exact path="/" component={PublicRouter} /> */}
 
