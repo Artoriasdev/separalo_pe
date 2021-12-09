@@ -84,6 +84,15 @@ export const logout = () => {
   return (dispatch) => {
     localStorage.removeItem("data");
     localStorage.removeItem("workflow");
-    dispatch(logoutSync());
+    dispatch(startChecking());
+    setTimeout(() => {
+      try {
+        dispatch(logoutSync());
+        dispatch(finishChecking());
+      } catch (error) {
+        console.log(error);
+        dispatch(finishChecking());
+      }
+    }, 500);
   };
 };

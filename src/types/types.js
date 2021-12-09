@@ -27,4 +27,13 @@ export const types = {
   hoursById: "[Hours] Hours for service loaded",
 
   reservation: "[Reservation] Reservation user done",
+
+  loadServiceList: "[Service List] Service List Loaded",
+  loadServiceListCategory: "[Service List] Service List by Category Loaded",
+
+  businessData: "[Business Data] Business Data Loaded",
+
+  reservationConfirmList:
+    "[Reservation List] Reservation Confirmed List Loaded",
+  reservationHistoryList: "[Reservation List] Reservation History List Loaded",
 };

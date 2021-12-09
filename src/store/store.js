@@ -11,6 +11,10 @@ import { categorysByServices } from "../reducers/categoryByServicesReducer";
 import { servicesById } from "../reducers/servicesByIdReducer";
 import { hoursById } from "../reducers/hoursByIdReducer";
 import { reservation } from "../reducers/reservationReducer";
+import { servicesList } from "../reducers/serviceListReducer";
+import { servicesListByCategory } from "../reducers/serviceListByCategoryReducer";
+import { businessData } from "../reducers/businessDataReducer";
+import { reservationList } from "../reducers/reservationListReducer";
 
 const composeEnhancers =
   (typeof window !== "undefined" &&
@@ -27,8 +31,12 @@ const reducers = combineReducers({
   categoryBusiness: categorysByBusiness,
   categoryServices: categorysByServices,
   serviceById: servicesById,
+  serviceList: servicesList,
+  serviceListByCategory: servicesListByCategory,
   hoursById: hoursById,
   reservation: reservation,
+  businessData: businessData,
+  reservationList: reservationList,
 });
 
 export const store = createStore(

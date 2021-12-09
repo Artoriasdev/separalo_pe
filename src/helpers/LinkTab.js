@@ -1,4 +1,4 @@
-import { Tab } from "@material-ui/core";
+import { Tab } from "@mui/material";
 import React from "react";
 
 export function LinkTab(props) {

@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 
-// import Banner from "../components/BannerCategory";
 import { MyModal } from "../../components/Modal";
 import { PublicBusiness } from "../../components/PublicBusiness";
 import { MySearchHomeInput } from "../../components/Fields";
 import { loadSearch } from "../../actions/search";
 import { loadBusinessCategorys } from "../../actions/categoryByBusiness";
+import Banner from "../../components/BannerCategory";
 
 export const MenuBusinessCategory = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,6 @@ export const MenuBusinessCategory = () => {
   const category = cat.find(
     (typeCategory) => typeCategory.id === JSON.parse(params.value)
   );
-  console.log(category);
   var values;
 
   const handleInputChange = ({ target }) => {
@@ -36,11 +35,13 @@ export const MenuBusinessCategory = () => {
   return (
     <>
       <MyModal />
-      {/* <Banner
-        image={category.imageBig}
-        name={category.name}
-        description={category.description}
-      /> */}
+      {category && (
+        <Banner
+          image={JSON.stringify(category.imageBig)}
+          name={category.name}
+          description={category.description}
+        />
+      )}
       <div className="page-container" style={{ margin: "0 auto" }}>
         <div className="home-container">
           <div className="home-text">

@@ -80,61 +80,10 @@ export const handleGetDataBusiness = async (tk) => {
       headers: headers,
     })
     .then((response) => {
-      // if (response.data.response === "true") {
-      //   const { data } = response.data;
-      //   console.log(data);
-      //   sessionStorage.setItem("tradename", data[0].name);
-      //   this.setState({
-      //     typeData: data,
-      //     logo: data[0].logo,
-      //     name: data[0].name,
-      //   });
-      //   sessionStorage.setItem("logo", this.state.typeData[0].logo);
-
-      //   const Formik = this.form;
-      //   Formik.setFieldValue("nombreCompañia", this.state.typeData[0].name);
-      //   Formik.setFieldValue(
-      //     "nombreComercial",
-      //     this.state.typeData[0].tradename
-      //   );
-      //   Formik.setFieldValue(
-      //     "numeroDocumento",
-      //     this.state.typeData[0].documentNumber
-      //   );
-      //   Formik.setFieldValue("correo", this.state.typeData[0].email);
-      // } else {
-      //   this.setState({
-      //     modal: true,
-      //     message: "Usted no está autorizado para ver esta información",
-      //     forceRedirect: true,
-      //   });
-      // }
       return response;
     })
     .catch(({ response }) => {
       return response;
-      // const { status } = error.response;
-      // if (status === 401) {
-      //   sessionStorage.removeItem("tk");
-      //   sessionStorage.removeItem("logo");
-      //   sessionStorage.removeItem("logged");
-      //   sessionStorage.removeItem("workflow");
-      //   sessionStorage.removeItem("tradename");
-      //   sessionStorage.removeItem("info");
-      //   sessionStorage.removeItem("id");
-      //   this.setState({
-      //     modal: true,
-      //     message: "Sesión expirada, porfavor vuelva a iniciar sesión",
-      //     isLoading: false,
-      //     forceRedirect: true,
-      //   });
-      // } else {
-      //   this.setState({
-      //     modal: true,
-      //     message:
-      //       "Ha ocurrido un error, porfavor refresque la página o intentelo más tarde",
-      //   });
-      // }
     });
   return rspApi;
 };
@@ -455,3 +404,113 @@ export const handleRegisterReservationInvited = (reserveModel) => {
 //     });
 //   return rspApi;
 // };
+
+export const handleGetList = (id) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "",
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/service/getServicesByBusiness/${id}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleGetListByCategory = (id, cat, tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/service/getServicesByBusinessAndCategory/${id}/${cat}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleGetServiceForEdit = (id, tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/service/getServiceForEdit/${id}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleGetReservationConfirmByBusiness = (id, tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/reservation/getReservationConfirmByBusiness/${id}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleGetReservationHistoryByBusiness = (id, tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/reservation/getReservationHistoryByBusiness/${id}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};

@@ -1,29 +1,25 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useHistory, useParams } from "react-router";
 
 import * as Yup from "yup";
 
 import { Formik, Form } from "formik";
-import { ArrowCircleSVG } from "../../assets/images/svg";
 
 import { MyModal } from "../../components/Modal";
-import { useHistory, useParams } from "react-router";
+import { ArrowCircleSVG } from "../../assets/images/svg";
 import {
   MyButton,
   MyPasswordInput,
   MyTextInput,
 } from "../../components/Fields";
-import { useDispatch } from "react-redux";
-import { login, logout } from "../../actions/auth";
-import { Link } from "react-router-dom";
+import { login } from "../../actions/auth";
 
 export const LoginClient = () => {
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
-
-  const handleLogout = () => {
-    dispatch(logout());
-  };
 
   return (
     <>
@@ -91,7 +87,6 @@ export const LoginClient = () => {
                 Olvidé mi contraseña
               </Link>
             </div>
-            <button onClick={handleLogout}>logout</button>
           </div>
         </div>
       </div>

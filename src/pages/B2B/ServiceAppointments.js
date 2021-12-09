@@ -1,239 +1,116 @@
-import {
-  AppBar,
-  Backdrop,
-  Breadcrumbs,
-  Button,
-  Fade,
-  Link,
-  Modal,
-  Tabs,
-} from "@material-ui/core";
-import React, { Component } from "react";
-import { LinkTab } from "../../Nav Tabs/LinkTab";
-import FutureAppointments from "../../Nav Tabs/Appointment Tabs/FutureAppointments";
-import PastAppointments from "../../Nav Tabs/Appointment Tabs/PastAppointments";
-import { TabPanel } from "../../Nav Tabs/TabPanel";
-import { NavigateNext } from "@material-ui/icons";
-import axios from "axios";
+import React, { useState } from "react";
+import { useHistory, useParams } from "react-router";
+import { useSelector } from "react-redux";
 
-class ServiceAppointment extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: 0,
-      title: "",
-      modal: false,
-      message: "",
-      forceRedirect: false,
-    };
-  }
+import { AppBar, Breadcrumbs, Link, Tabs } from "@mui/material";
+import { NavigateNext } from "@mui/icons-material";
 
-  componentDidMount() {
-    if (sessionStorage.getItem("workflow") !== "B") {
-      this.props.history.push("/");
-    } else {
-      this.handleGetServiceForEdit();
-    }
-  }
+import { FutureAppointments } from "./FutureAppointments";
+import { PastAppointments } from "./PastAppointments";
 
-  handleGetServiceForEdit = () => {
-    const tk = sessionStorage.getItem("tk");
-    const id = this.props.match.params.id;
-    var headers = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: `Bearer ${tk}`,
-    };
+import { MyModal } from "../../components/Modal";
+import { LinkTab } from "../../helpers/LinkTab";
+import { TabPanel } from "../../helpers/TabPanel";
 
-    let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/service/getServiceForEdit/${id}`;
+export const ServiceAppointment = () => {
+  const history = useHistory();
+  const params = useParams();
+  const [value, setValue] = useState(0);
 
-    const rspApi = axios
-      .get(linkDocumentsApi, {
-        headers: headers,
-      })
-      .then((response) => {
-        const { data } = response.data;
+  const { servicesList } = useSelector((state) => state.serviceList);
 
-        this.setState({
-          title: data[0].title,
-        });
+  const service = servicesList.find(
+    (Item) => Item.id === JSON.parse(params.id)
+  );
 
-        console.log(this.state.title);
-
-        return response;
-      })
-      .catch((error) => {
-        console.log(error.response);
-        if (error.response.status === 401) {
-          sessionStorage.removeItem("tk");
-          sessionStorage.removeItem("logo");
-          sessionStorage.removeItem("logged");
-          sessionStorage.removeItem("workflow");
-          sessionStorage.removeItem("tradename");
-          sessionStorage.removeItem("info");
-          sessionStorage.removeItem("id");
-          this.setState({
-            modal: true,
-            message: "Sesión expirada, porfavor vuelva a iniciar sesión",
-            forceRedirect: true,
-          });
-        } else {
-          this.setState({
-            modal: true,
-            message:
-              "Ha ocurrido un error, porfavor refresque la página o intentelo más tarde",
-          });
-        }
-      });
-    return rspApi;
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
   };
 
-  handleChange = (event, newValue) => {
-    this.setState({ value: newValue });
-  };
-
-  handleRedirectService = () => {
-    this.props.history.push(
-      `/business/services/details/${this.props.match.params.id}/${this.props.match.params.value}/${this.props.match.params.category}`
-    );
-  };
-
-  handleRedirectAppointment = () => {
-    this.props.history.push(
-      `/business/services/appointment/${this.props.match.params.id}/${this.props.match.params.value}/${this.props.match.params.category}`
-    );
-  };
-
-  handleClick = () => {
-    if (this.props.match.params.value === "1") {
-      this.props.history.push("/business/services");
-    } else if (this.props.match.params.value === "2") {
-      this.props.history.push(
-        `/business/services-category/${this.props.match.params.category}`
-      );
+  const handleClick = (id) => {
+    if (id === 1) {
+      history.push("/");
+    } else if (id === 2 && params.value === "1") {
+      history.push("/business/services");
+    } else if (id === 2 && params.value === "2") {
+      history.push(`/business/services-category/${params.category}`);
     }
   };
-  handleClose = () => {
-    this.setState({
-      modal: false,
-    });
-    if (this.state.forceRedirect === true) {
-      this.props.history.push("/");
-      this.props.history.go();
-    }
-  };
-  render() {
-    return (
-      <div className="page-container" style={{ padding: "0", width: "100%" }}>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          open={this.state.modal}
-          closeAfterTransition
-          onClose={this.handleClose}
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
+
+  return (
+    <div className="page-container" style={{ padding: "0", width: "100%" }}>
+      <MyModal />
+      <Breadcrumbs
+        separator={<NavigateNext fontSize="medium" />}
+        aria-label="breadcrumb"
+        className="font"
+        style={{ marginLeft: "50px" }}
+      >
+        <Link
+          color="textPrimary"
+          onClick={() => handleClick(1)}
+          style={{ cursor: "pointer" }}
+        >
+          Inicio
+        </Link>
+        <Link
+          color="textPrimary"
+          onClick={() => handleClick(2)}
+          style={{ cursor: "pointer" }}
+        >
+          Mis Servicios
+        </Link>
+        <Link color="textSecondary">{service && service.title}</Link>
+      </Breadcrumbs>
+
+      <div className="appointment-service-container">
+        <AppBar
+          position="static"
+          style={{
+            backgroundColor: "transparent",
+            borderBottom: "1px solid gray",
           }}
-          className="modal-container"
+          elevation={0}
         >
-          <Fade in={this.state.modal}>
-            <div className="modal-message-container">
-              <p>{this.state.message}</p>
-              <Button
-                size="large"
-                color="primary"
-                variant="contained"
-                className="btn-primary"
-                onClick={this.handleClose}
-              >
-                Aceptar
-              </Button>
-            </div>
-          </Fade>
-        </Modal>
-        <Breadcrumbs
-          separator={<NavigateNext fontSize="medium" />}
-          aria-label="breadcrumb"
-          className="font"
-          style={{ marginLeft: "50px" }}
-        >
-          <Link href="/" color="textPrimary">
-            Inicio
-          </Link>
-          <Link
-            color="textPrimary"
-            onClick={this.handleClick}
-            style={{ cursor: "pointer" }}
+          <Tabs
+            variant="fullWidth"
+            value={value}
+            onChange={handleChange}
+            aria-label="nav tabs example"
+            indicatorColor="primary"
+            TabIndicatorProps={{ style: { background: "black" } }}
           >
-            Mis Servicios
-          </Link>
-          <Link color="textSecondary">{this.state.title}</Link>
-        </Breadcrumbs>
-        <div className="header-profile-container">
-          <div className="header-profile">
-            <div className="button-container">
-              <div>
-                <button
-                  onClick={this.handleRedirectService}
-                  className="button_ref"
-                  style={{ textDecoration: "none" }}
-                >
-                  Detalles servicios
-                </button>
-              </div>
-              <div className="button">
-                <button
-                  onClick={this.handleRedirectAppointment}
-                  className="button_ref"
-                  style={{ textDecoration: "none" }}
-                >
-                  Citas agendadas
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="appointment-service-container">
-          <AppBar position="static" style={{ backgroundColor: "transparent" }}>
-            <Tabs
-              variant="fullWidth"
-              value={this.state.value}
-              onChange={this.handleChange}
-              aria-label="nav tabs example"
-              indicatorColor="primary"
-              style={{ color: "black" }}
-            >
-              <LinkTab
-                label="Citas confirmadas"
-                href="/appointments"
-                className="font-p"
-                style={{ textTransform: "none", fontWeight: "bold" }}
-              />
-              <LinkTab
-                label="Historial de citas"
-                href="past"
-                className="font-p"
-                style={{ textTransform: "none", fontWeight: "bold" }}
-              />
-            </Tabs>
-          </AppBar>
-          <TabPanel value={this.state.value} index={0}>
-            <FutureAppointments
-              id={this.props.match.params.id}
-              history={this.props.history}
+            <LinkTab
+              label="Citas confirmadas"
+              href="/appointments"
+              className="font-p"
+              style={{
+                textTransform: "none",
+                fontWeight: "bold",
+                fontSize: "1.4rem",
+                color: "black",
+              }}
             />
-          </TabPanel>
-          <TabPanel value={this.state.value} index={1}>
-            <PastAppointments
-              id={this.props.match.params.id}
-              history={this.props.history}
+            <LinkTab
+              label="Historial de citas"
+              href="past"
+              className="font-p"
+              style={{
+                textTransform: "none",
+                fontWeight: "bold",
+                fontSize: "1.4rem",
+                color: "black",
+              }}
             />
-          </TabPanel>
-        </div>
+          </Tabs>
+        </AppBar>
+        <TabPanel value={value} index={0}>
+          <FutureAppointments id={params.id} />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <PastAppointments id={params.id} />
+        </TabPanel>
       </div>
-    );
-  }
-}
-
-export default ServiceAppointment;
+    </div>
+  );
+};

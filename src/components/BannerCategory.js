@@ -11,7 +11,7 @@ function Project(props) {
       style={{
         backgroundColor: "transparent",
       }}
-      elevation={10}
+      elevation={0}
     >
       <div className="content">
         <div className="title">
@@ -55,6 +55,7 @@ class Banner extends Component {
             timeout={this.state.timeout}
             navButtonsAlwaysVisible={this.state.navButtonsAlwaysVisible}
             navButtonsAlwaysInvisible={this.state.navButtonsAlwaysInvisible}
+            swipe={false}
           >
             <Project
               name={this.props.name}

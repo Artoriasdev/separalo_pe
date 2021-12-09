@@ -24,6 +24,5 @@ export const RedirectBusinessAuthRoute = ({
 };
 
 RedirectBusinessAuthRoute.propTypes = {
-  workflow: PropTypes.string.isRequired,
   component: PropTypes.func.isRequired,
 };

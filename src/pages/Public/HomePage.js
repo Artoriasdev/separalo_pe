@@ -1,23 +1,19 @@
+import "animate.css";
 import React, { useEffect, useState } from "react";
-import { ItemCarousel } from "../../components/CarouselItem";
-import { MyModal } from "../../components/Modal";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+// import { useHistory } from "react-router";
 
+import { ItemCarousel } from "../../components/CarouselItem";
+import { MyModal } from "../../components/Modal";
 import Carousel from "../../components/Carousel";
 import trb2 from "../../assets/images/trabaja con nosotros 1325 x 325.jpg";
 import trb4 from "../../assets/images/Transforma tu negocio 273 x 271.jpg";
-import "animate.css";
 import { MySearchHomeInput } from "../../components/Fields";
 import { loadSearch } from "../../actions/search";
 
-import { logout } from "../../actions/auth";
-import { useHistory } from "react-router";
-
-// import { loadCategorys } from "../actions/category";
-
 export const HomePage = () => {
-  const history = useHistory();
+  // const history = useHistory();
 
   const { categorys } = useSelector((state) => state.category);
   const dispatch = useDispatch();
@@ -34,17 +30,6 @@ export const HomePage = () => {
     const val = target.value;
     values = val;
     dispatch(loadSearch(values));
-  };
-
-  const handleLogout = () => {
-    dispatch(logout());
-  };
-
-  const toLogin = () => {
-    history.push("/login/C");
-  };
-  const toLoginb = () => {
-    history.push("/login/B");
   };
 
   return (
@@ -137,9 +122,6 @@ export const HomePage = () => {
             />
           </a>
         )}
-        <button onClick={handleLogout}>logout</button>
-        <button onClick={toLogin}>cliente</button>
-        <button onClick={toLoginb}>business</button>
       </div>
     </div>
   );

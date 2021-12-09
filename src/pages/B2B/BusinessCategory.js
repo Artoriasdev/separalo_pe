@@ -1,21 +1,13 @@
 import React, { useEffect } from "react";
-// import Axios from "axios";
-// import Container from "../Modal/Container/Container";
-// import {
-//   Backdrop,
-//   Breadcrumbs,
-//   Button,
-//   Fade,
-//   Link,
-//   Modal,
-//   TextField,
-// } from "@material-ui/core";
-import { NavigateNext } from "@mui/icons-material";
-import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
+
+// import Container from "../Modal/Container/Container";
+
 import { Breadcrumbs, Link } from "@mui/material";
+import { NavigateNext } from "@mui/icons-material";
 import { loadCategorys } from "../../actions/category";
-import { logout } from "../../actions/auth";
+
 import { MyModal } from "../../components/Modal";
 
 export const BusinessCategory = () => {
@@ -33,8 +25,17 @@ export const BusinessCategory = () => {
     history.push(`/business/services-category/${id}`);
   };
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleClick = (id) => {
+    switch (id) {
+      case 1:
+        history.push("/");
+        break;
+      case 2:
+        history.push("/business/category");
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -46,13 +47,17 @@ export const BusinessCategory = () => {
           aria-label="breadcrumb"
           className="font"
         >
-          <Link href="/" color="textPrimary">
+          <Link
+            color="textPrimary"
+            style={{ cursor: "pointer" }}
+            onClick={() => handleClick(1)}
+          >
             Inicio
           </Link>
           <Link
             color="textSecondary"
-            href="/business/category"
-            // onClick={handleClick}
+            style={{ cursor: "pointer" }}
+            onClick={() => handleClick(2)}
           >
             Categorías
           </Link>
@@ -115,7 +120,6 @@ export const BusinessCategory = () => {
               ))}
           </ul>
         </div>
-        <button onClick={handleLogout}>logout</button>
       </div>
     </div>
   );

@@ -17,7 +17,6 @@ export const MenuServicesBusiness = () => {
 
   useEffect(() => {
     try {
-      console.log(JSON.parse(params.id), JSON.parse(params.category));
       dispatch(loadServicesCategorys(params.id, params.category));
     } catch (error) {
       history.push("/");
@@ -31,6 +30,7 @@ export const MenuServicesBusiness = () => {
         <Banner
           negocio={categorysByServices[0].businessName}
           imagen={JSON.stringify(categorysByServices[0].imageBig)}
+          logo={categorysByServices[0].logoBusiness}
         />
       )}
 

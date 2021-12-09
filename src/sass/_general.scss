@@ -4,7 +4,7 @@ body {
   font-family: VarelaRound-Regular, MavenPro-Regular, -apple-system,
     BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
     "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
+  // -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
 }
@@ -128,8 +128,7 @@ button {
 }
 
 .error {
-  // margin-top: 0.3rem;
-  margin-bottom: 5px;
+  margin-top: 0.3rem;
   color: $red;
   font-size: 0.8rem;
   font-weight: bold;
@@ -189,6 +188,7 @@ button {
 }
 
 .buttonHeader {
+  color: black;
   border-radius: 0 !important;
   width: 150px;
   height: 3.15rem;
@@ -439,7 +439,7 @@ button {
   width: 100%;
   height: 100%;
   z-index: 995;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(35, 35, 35, 0.56);
 }
 
 .mdal .mdal_content {
@@ -449,54 +449,14 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
   max-height: 90%;
-  overflow: auto;
-  background: #fff;
-  box-sizing: border-box;
-  // padding: 50px;
-  padding: 25px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
-  border-radius: 4px;
-  // width: auto;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
-  // width: 70%;
-  width: 20%;
-  text-align: center;
 
   /* This just a default width */
   @include mobile {
     padding: 30px;
     width: 80%;
-  }
-}
-
-.mdal .mdal_content > div {
-  margin: 20px 0 20px;
-  text-align: center;
-  display: inline-block;
-
-  color: rgba(0, 0, 0, 0.65);
-
-  strong {
-    font-size: 24px;
-  }
-
-  u {
-    font-size: 24px;
-    color: $red;
-    font-weight: bold;
-  }
-
-  @include mobile {
-    font-size: 18px;
-  }
-
-  p {
-    font-size: 18px;
-  }
-
-  li {
-    font-size: 18px;
   }
 }
 
@@ -549,8 +509,19 @@ button {
   }
 }
 
+.Input {
+  input[type="text"] {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+  }
+  input[type="text"]:focus {
+    outline: none;
+  }
+}
+
 .files {
   display: flex;
+  justify-content: space-between;
   .input {
     padding-right: 50px;
   }
@@ -558,14 +529,23 @@ button {
     .button {
       position: relative !important;
     }
-
+    width: 100%;
     flex-direction: column;
     justify-content: center;
   }
   .txt-left {
     flex-direction: column;
-    width: 50%;
-    margin: 5px 5px 5px 0;
+    width: 30%;
+    margin: 10px 5px 10px 0;
+    @include mobile {
+      width: 100%;
+      margin: 5px 0;
+    }
+  }
+  .txt-mid {
+    flex-direction: column;
+    width: 30%;
+    margin: 10px 5px 10px 5px;
     @include mobile {
       width: 100%;
       margin: 5px 0;
@@ -573,13 +553,87 @@ button {
   }
   .txt-right {
     flex-direction: column;
+    width: 30%;
+    margin: 10px 0 10px 5px;
+    @include mobile {
+      width: 100%;
+      margin: 5px 0;
+    }
+  }
+  .txt-left-nomid {
+    flex-direction: column;
     width: 50%;
+    margin: 15px 5px 10px 0;
+    @include mobile {
+      width: 100%;
+      margin: 5px 0;
+    }
+  }
+  .txt-right-nomid {
+    flex-direction: column;
+    width: 50%;
+    margin: 15px 0 10px 5px;
+    @include mobile {
+      width: 100%;
+      margin: 5px 0;
+    }
+  }
+  .txt-right-nomid-bank {
+    flex-direction: column;
+    width: 65%;
     margin: 5px 0 5px 5px;
     @include mobile {
       width: 100%;
       margin: 5px 0;
     }
   }
+  .txt-quarter {
+    flex-direction: column;
+    width: 20%;
+    margin: 5px 5px 5px 0;
+    @include mobile {
+      width: 100%;
+      margin: 5px 0;
+    }
+  }
+  .logos {
+    display: flex;
+    flex-wrap: wrap;
+    width: 65.5%;
+    @include mobile {
+      width: 100%;
+    }
+    .content {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      @include mobile {
+        flex-wrap: wrap;
+      }
+      .txt-mid-content {
+        flex-direction: column;
+        width: 45.7%;
+        margin: 5px 0 5px 6px;
+        @include mobile {
+          width: 100%;
+          margin: 5px 0;
+        }
+      }
+      .txt-right-content {
+        flex-direction: column;
+        width: 45.8%;
+        margin: 5px 0 5px 0;
+        @include mobile {
+          width: 100%;
+          margin: 5px 0;
+        }
+      }
+    }
+  }
+}
+
+.files > button {
+  min-width: 200px;
 }
 
 .card {
@@ -949,10 +1003,11 @@ button {
   }
   .table {
     width: 100% !important;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px,
-      rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px !important;
+    border: 0.5px solid #c4c4c4;
+    background: #ffffff;
+    box-sizing: border-box;
     .table-head {
-      background: #f3f3f3;
+      background: #e5e5e5;
     }
   }
   .home-text {
@@ -1248,6 +1303,191 @@ button {
   }
 }
 
+.picture-container {
+  width: 100%;
+  height: 580px;
+  margin-bottom: 100px;
+  @include mobile {
+    height: 450px;
+    margin-bottom: 120px;
+  }
+}
+.picture-container > p {
+  margin: 0;
+  padding: 0;
+  margin-left: 25vw;
+  margin-top: 5px;
+  color: rgba(0, 0, 0, 0.5);
+  @include tablet {
+    margin-left: 28vw;
+  }
+  @include mobile {
+    margin-left: 45vw;
+  }
+}
+.banner-container-profile {
+  cursor: pointer;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s ease;
+  opacity: 1;
+  img {
+    max-height: 580px;
+    max-width: 1316px;
+    height: 100%;
+    width: 80%;
+    position: absolute;
+    @media (max-width: 1550px) {
+      width: 85%;
+    }
+    @include mobile {
+      height: 450px;
+    }
+  }
+}
+.banner-hover {
+  z-index: 3;
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  color: white;
+  margin-top: 80px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.banner-background-hover {
+  transition: 0.5s ease;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.banner-container-profile:hover .banner-background-hover {
+  opacity: 1;
+}
+
+.banner-container-profile:hover .banner-hover {
+  opacity: 1;
+}
+
+.logo-container-profile {
+  cursor: pointer;
+  width: 180px;
+  height: 170px;
+  z-index: 4;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s ease;
+  opacity: 1;
+  margin-left: 4vw;
+  margin-top: -150px;
+  border-radius: 50%;
+  border: white 5px solid;
+  @include tablet {
+    margin-top: -140px;
+    width: 140px;
+    height: 140px;
+  }
+  @include mobile {
+    margin-top: -160px;
+    width: 140px;
+    height: 140px;
+    margin-left: 2vw;
+  }
+  img {
+    position: absolute;
+    width: 180px;
+    height: 170px;
+    border-radius: 50%;
+    @include tablet {
+      width: 140px;
+      height: 140px;
+    }
+  }
+}
+.logo-container-services {
+  width: 180px;
+  height: 180px;
+  z-index: 4;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s ease;
+  opacity: 1;
+  margin-left: 8vw;
+  margin-top: -120px;
+  border-radius: 50%;
+
+  @include tablet {
+    margin-top: -100px;
+    width: 140px;
+    height: 140px;
+  }
+  @include mobile {
+    margin-top: -30px;
+    width: 90px;
+    height: 90px;
+  }
+  img {
+    position: absolute;
+    width: 250px;
+    height: 235px;
+    border-radius: 50%;
+    border: #fedd00 5px solid !important;
+    @include tablet {
+      width: 200px;
+      height: 190px;
+    }
+    @include mobile {
+      width: 120px;
+      height: 120px;
+    }
+  }
+}
+.logo-background-hover {
+  border-radius: 50%;
+  transition: 0.5s ease;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  background: rgba(0, 0, 0, 0.6);
+}
+.logo-hover {
+  z-index: 6;
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  color: white;
+  transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  text-align: center;
+  font-size: 14px;
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.logo-container-profile:hover .logo-background-hover {
+  opacity: 1;
+}
+
+.logo-container-profile:hover .logo-hover {
+  opacity: 1;
+}
+
 .modal-container {
   display: flex;
   align-items: center;
@@ -1307,6 +1547,20 @@ button {
     padding: 8px 15px;
   }
 }
+
+.service-description {
+  display: flex;
+  align-items: center;
+  @include mobile {
+    display: inline-block;
+  }
+  h3 {
+    margin-left: 30px;
+    @include mobile {
+      margin-left: 0;
+    }
+  }
+}
 .correo {
   color: #5829dd;
   font-size: 1.2rem;
@@ -1318,7 +1572,6 @@ button {
   -webkit-text-decoration: none;
   text-decoration: none;
   color: #232323;
-  max-width: 500px;
   font-size: 0.8rem;
   margin-top: 1rem;
   display: inline-block;
@@ -1403,8 +1656,45 @@ button {
   }
 }
 
+.profile-container {
+  max-width: 1550px;
+  margin: auto;
+  hr {
+    width: 85%;
+    @include mobile {
+      width: 90%;
+    }
+  }
+}
+
+.form-profile {
+  display: flex;
+  width: 85%;
+  margin: auto;
+  justify-content: space-between;
+  @include tablet {
+    margin-left: 6vw;
+    width: 90%;
+    display: inline-block;
+  }
+  h1 {
+    color: #5829dd;
+    @include tablet {
+      margin-bottom: 10px;
+    }
+  }
+}
+
 .form > button {
   @include tablet {
+    margin-bottom: 10px;
+  }
+}
+.form-profile > button {
+  margin-top: 18px;
+  max-height: 35px !important;
+  @include tablet {
+    margin-top: 0;
     margin-bottom: 10px;
   }
 }
@@ -1414,7 +1704,7 @@ button {
   border-radius: 10px 10px !important;
   margin: 30px auto !important;
   .table-head {
-    background: #f3f3f3 !important;
+    background: #e5e5e5 !important;
   }
   button {
     background: none;
@@ -1467,7 +1757,7 @@ button {
 }
 .flex {
   display: flex;
-  margin-top: 5px;
+  align-items: center;
 }
 .cursor-pointer {
   cursor: pointer;
@@ -1671,8 +1961,15 @@ button {
 }
 
 .appointment-service-container {
-  width: 50%;
+  width: 90%;
   margin: 3% auto;
+  @include mobile {
+    width: 90%;
+  }
+}
+.business-profile-container {
+  width: 85%;
+  margin: 10px auto;
   @include mobile {
     width: 90%;
   }
@@ -1716,5 +2013,19 @@ button {
 .list {
   ul {
     padding: 0 !important;
+  }
+}
+
+.reserve-complete-address {
+  display: flex;
+  justify-content: space-between;
+  p {
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 0;
+    padding: 0;
+  }
+  @include mobile {
+    display: unset;
   }
 }

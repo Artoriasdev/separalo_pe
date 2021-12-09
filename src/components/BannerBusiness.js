@@ -11,12 +11,10 @@ function Project(props) {
       style={{
         backgroundColor: "transparent",
       }}
-      elevation={10}
+      elevation={0}
     >
       <div className="content">
-        <div className="title">
-          <h2>{props.negocio}</h2>
-        </div>
+        <div className="title"></div>
       </div>
     </Paper>
   );
@@ -25,7 +23,6 @@ function Project(props) {
 class Banner extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       autoPlay: false,
       animation: "none",
@@ -39,13 +36,14 @@ class Banner extends Component {
   render() {
     return (
       <div
-        className="banner-container-business"
+        className="banner-container"
         style={{
           backgroundImage: `url(${this.props.imagen})`,
           backgroundSize: "100% 100%",
+          marginBottom: "40px",
         }}
       >
-        <div className="carousel-background-business">
+        <div className="carousel-background" style={{ background: "none" }}>
           <Carousel
             className="SecondExample"
             autoPlay={this.state.autoPlay}
@@ -54,9 +52,13 @@ class Banner extends Component {
             timeout={this.state.timeout}
             navButtonsAlwaysVisible={this.state.navButtonsAlwaysVisible}
             navButtonsAlwaysInvisible={this.state.navButtonsAlwaysInvisible}
+            swipe={false}
           >
             <Project negocio={this.props.negocio} />;
           </Carousel>
+        </div>
+        <div className="logo-container-services">
+          <img src={this.props.logo} alt="logo" />
         </div>
       </div>
     );

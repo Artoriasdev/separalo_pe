@@ -7,7 +7,7 @@ import { LoginBusiness } from "../pages/Public/LoginBusiness";
 
 export const BusinessAuthRouter = () => {
   return (
-    <div style={{ marginTop: "5.9rem" }}>
+    <div>
       <Switch>
         <Route exact path="/login/:B" component={LoginBusiness} />
 

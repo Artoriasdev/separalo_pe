@@ -130,7 +130,7 @@ export const ReserveAppointmentInvited = () => {
                   text="hola"
                 />
                 <div className="files">
-                  <div className="txt-left">
+                  <div className="txt-left-nomid">
                     <MyTextInput
                       label="Nombre"
                       name="nombre"
@@ -143,7 +143,7 @@ export const ReserveAppointmentInvited = () => {
                     />
                   </div>
 
-                  <div className="txt-right">
+                  <div className="txt-right-nomid">
                     <MyTextInput
                       label="Apellidos"
                       name="apellido"
@@ -157,7 +157,7 @@ export const ReserveAppointmentInvited = () => {
                   </div>
                 </div>
                 <div className="files">
-                  <div className="txt-left">
+                  <div className="txt-left-nomid">
                     <MyTextInput
                       name="correo"
                       label="Correo electrónico"
@@ -169,7 +169,7 @@ export const ReserveAppointmentInvited = () => {
                       }}
                     />
                   </div>
-                  <div className="txt-right">
+                  <div className="txt-right-nomid">
                     <MyTextInput
                       name="celular"
                       label="Número de celular"
@@ -188,7 +188,7 @@ export const ReserveAppointmentInvited = () => {
                 </div>
 
                 <div className="files">
-                  <div className="txt-left">
+                  <div className="txt-left-nomid">
                     <MyTextInput
                       name="servicio"
                       label="Nombre del servicio"
@@ -204,7 +204,7 @@ export const ReserveAppointmentInvited = () => {
                     />
                   </div>
 
-                  <div className="txt-right">
+                  <div className="txt-right-nomid">
                     <MyTextInput
                       name="duracion"
                       label="Duración del servicio"
@@ -222,7 +222,7 @@ export const ReserveAppointmentInvited = () => {
                 </div>
 
                 <div className="files">
-                  <div className="txt-left">
+                  <div className="txt-left-nomid">
                     <MyTextInput
                       name="precio"
                       label="Precio"
@@ -244,7 +244,7 @@ export const ReserveAppointmentInvited = () => {
                     />
                   </div>
 
-                  <div className="txt-right">
+                  <div className="txt-right-nomid">
                     <MySelect
                       name="fechaDisponible"
                       label="Elige la fecha disponible"
@@ -268,7 +268,7 @@ export const ReserveAppointmentInvited = () => {
                   </div>
                 </div>
                 <div className="files">
-                  <div className="txt-left">
+                  <div className="txt-left-nomid">
                     <MySelect
                       name="horarioDisponible"
                       label="Elige el horario"

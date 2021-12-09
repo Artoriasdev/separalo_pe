@@ -7,7 +7,7 @@ import { LoginClient } from "../pages/Public/LoginClient";
 
 export const ClientAuthRouter = () => {
   return (
-    <div style={{ marginTop: "5.9rem" }}>
+    <div>
       <Switch>
         <Route exact path="/login/:C" component={LoginClient} />
 

@@ -1,9 +1,9 @@
 import { Formik } from "formik";
 import React, { Component } from "react";
-import { Backdrop, Button, Fade, Modal, TextField } from "@material-ui/core";
 import { handleRegexDisable } from "../../utils/utilitaries";
 import axios from "axios";
-import { Announcement } from "@material-ui/icons";
+import { Announcement } from "@mui/icons-material";
+import { Backdrop, Button, Fade, Modal, TextField } from "@mui/material";
 
 export class Form extends Component {
   constructor(props) {
