@@ -514,3 +514,138 @@ export const handleGetReservationHistoryByBusiness = (id, tk) => {
     });
   return rspApi;
 };
+
+export const handleUploadLogoBusiness = async (logo, tk) => {
+  let data = new FormData();
+  data.append("file", logo);
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+  let linkEditApi = `${process.env.REACT_APP_PATH_SERVICE}/business/uploadLogoBusiness`;
+
+  const rspApi = axios
+    .post(linkEditApi, data, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
+  return rspApi;
+};
+export const handleUploadBannerBusiness = async (banner, tk) => {
+  let data = new FormData();
+  data.append("file", banner);
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+  let linkEditApi = `${process.env.REACT_APP_PATH_SERVICE}/business/uploadBannerBusiness?file`;
+
+  const rspApi = axios
+    .post(linkEditApi, data, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
+  return rspApi;
+};
+
+export const handleEditDataBusiness = async (dataModel, tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+  let linkEditApi = `${process.env.REACT_APP_PATH_SERVICE}/business/updateBusiness`;
+
+  const rspApi = axios
+    .put(linkEditApi, dataModel, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
+  return rspApi;
+};
+
+export const handleGetDocuments = () => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "",
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/generic/getDocumentTypes`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleGetProvinces = () => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "",
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/generic/getProvinces`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleGetDistrics = (id) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "",
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/generic/getDistricts/${id}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};

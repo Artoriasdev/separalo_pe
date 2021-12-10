@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import * as Yup from "yup";
-
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
+
+import * as Yup from "yup";
 import { Formik, Form } from "formik";
 
 import { MyFormikDialog, MyModal } from "../../components/Modal";
@@ -12,9 +12,9 @@ import {
   MySelect,
   MyTextInput,
 } from "../../components/Fields";
+import { MenuItem } from "@mui/material";
 import { handleRegexDisable } from "../../utils/utilitaries";
 import { serviceById } from "../../actions/serviceById";
-import { MenuItem } from "@mui/material";
 import { hoursId } from "../../actions/hoursById";
 import { reservation } from "../../actions/reservation";
 
@@ -34,17 +34,6 @@ export const ReserveAppointmentInvited = () => {
     if (logged) history.push("/");
     dispatch(serviceById(params.id));
   }, [logged, history, dispatch, params.id]);
-
-  // handleClose = () => {
-  //   this.setState({
-  //     modal: false,
-  //   });
-  //   if (this.state.response === true) {
-  //     this.props.history.push(`/reserve-complete`);
-  //   } else if (this.state.errorTerms === true) {
-  //     this.props.history.goBack();
-  //   }
-  // };
 
   return (
     <div>
@@ -114,10 +103,6 @@ export const ReserveAppointmentInvited = () => {
               reserveModel.reservationDate = values.fechaDisponible;
               reserveModel.reservationTime = values.horarioDisponible;
 
-              // (async () => {
-              //   this.handleInfoSubmit(reserveModel);
-              // })();
-              // console.log(reserveModel);
               dispatch(reservation(reserveModel));
             }}
           >

@@ -3,6 +3,8 @@ import { Redirect, Route, Switch } from "react-router";
 
 import { NavbarBusines } from "../components/NavbarBusiness";
 import { BusinessCategory } from "../pages/B2B/BusinessCategory";
+import { BusinessProfile } from "../pages/B2B/BusinessProfile";
+import { BusinessReports } from "../pages/B2B/BusinessReports";
 import { BusinessServices } from "../pages/B2B/BusinessServices";
 import { BusinessServicesCategory } from "../pages/B2B/BusinessServicesCategory";
 import { ServiceAppointment } from "../pages/B2B/ServiceAppointments";
@@ -25,6 +27,8 @@ export const BusinessRoute = () => {
             path="/business/services/appointment/:id/:value/:category"
             component={ServiceAppointment}
           />
+          <Route exact path="/business/reports" component={BusinessReports} />
+          <Route exact path="/business/profile" component={BusinessProfile} />
           <Redirect to="/business/category" />
         </Switch>
       </div>

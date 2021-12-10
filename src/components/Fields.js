@@ -139,6 +139,8 @@ export const MySelect = ({ children, label, despachador, ...props }) => {
     if (props.elements === 2) {
       if (props.first !== "" && props.second !== "")
         dispatch(despachador(props.first, props.second));
+    } else if (props.elements === 1) {
+      if (props.first !== "") dispatch(despachador(props.first));
     }
   }
   return (

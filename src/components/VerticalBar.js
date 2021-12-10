@@ -1,3 +1,6 @@
+import React, { useEffect, useState } from "react";
+import { Bar } from "react-chartjs-2";
+
 import {
   IconButton,
   Table,
@@ -6,12 +9,12 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from "@material-ui/core";
-import { ArrowBackIos, ArrowForwardIos } from "@material-ui/icons";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Bar } from "react-chartjs-2";
+} from "@mui/material";
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
+import axios from "axios";
+
+/*eslint no-extend-native: ["off", { "exceptions": ["Object"] }]*/
 Date.prototype.addDays = function (days) {
   const date = new Date(this.valueOf());
   date.setDate(date.getDate() + days);

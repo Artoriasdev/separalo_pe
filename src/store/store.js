@@ -15,6 +15,10 @@ import { servicesList } from "../reducers/serviceListReducer";
 import { servicesListByCategory } from "../reducers/serviceListByCategoryReducer";
 import { businessData } from "../reducers/businessDataReducer";
 import { reservationList } from "../reducers/reservationListReducer";
+import { imageUpload } from "../reducers/imageUploadReducer";
+import { districsReducer } from "../reducers/districsReducer";
+import { provincesReducer } from "../reducers/provincesReducer";
+import { documentsReducer } from "../reducers/documentsReducer";
 
 const composeEnhancers =
   (typeof window !== "undefined" &&
@@ -37,6 +41,10 @@ const reducers = combineReducers({
   reservation: reservation,
   businessData: businessData,
   reservationList: reservationList,
+  imageUpload: imageUpload,
+  districsLoad: districsReducer,
+  provinces: provincesReducer,
+  documents: documentsReducer,
 });
 
 export const store = createStore(

@@ -36,4 +36,13 @@ export const types = {
   reservationConfirmList:
     "[Reservation List] Reservation Confirmed List Loaded",
   reservationHistoryList: "[Reservation List] Reservation History List Loaded",
+
+  imageUploaded: "[Image Upload] Image Uploaded",
+  imageUploadedFinished: "[Image Upload] Image Uploaded Finished",
+
+  documentsLoaded: "[Documents] Documents Loaded",
+
+  provincesLoaded: "[Provinces] Provinces Loaded",
+
+  districsLoaded: "[Districs] Districs Loaded",
 };

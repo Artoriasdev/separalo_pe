@@ -1,231 +1,116 @@
-import {
-  Backdrop,
-  Breadcrumbs,
-  Button,
-  Fade,
-  Link,
-  MenuItem,
-  Modal,
-  Select,
-} from "@material-ui/core";
-import axios from "axios";
-import React, { Component } from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router";
+
+import { Breadcrumbs, Link, MenuItem, Select } from "@mui/material";
+import { NavigateNext } from "@mui/icons-material";
+
 import VerticalBar from "../../components/VerticalBar";
-import { NavigateNext } from "@material-ui/icons";
+import { MyModal } from "../../components/Modal";
 
-class BusinessReports extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      fecha: "",
-      ventas: 0,
-      message: "",
-      modal: false,
-      forceRedirect: false,
-      listData: [],
-      today: new Date(),
-      date: "",
-      textoVentas: "Cantidad",
-    };
-  }
+export const BusinessReports = () => {
+  const history = useHistory();
 
-  componentDidMount() {
-    try {
-      const tk = sessionStorage.getItem("tk");
-      var headers = {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${tk}`,
-      };
+  const [fecha, setFecha] = useState("");
+  const [ventas, setVentas] = useState(0);
 
-      let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/business/getBusiness`;
-
-      const rspApi = axios
-        .get(linkDocumentsApi, {
-          headers: headers,
-        })
-        .then((response) => {
-          if (response.data.response === "true") {
-          } else {
-            this.setState({
-              modal: true,
-              message: "Usted no esta autorizado para ver esta información",
-            });
-          }
-
-          return response;
-        })
-        .catch((error) => {
-          const { status } = error.response;
-          if (status === 401) {
-            sessionStorage.removeItem("tk");
-            sessionStorage.removeItem("logo");
-            sessionStorage.removeItem("logged");
-            sessionStorage.removeItem("workflow");
-            sessionStorage.removeItem("tradename");
-            sessionStorage.removeItem("info");
-            sessionStorage.removeItem("id");
-            this.setState({
-              modal: true,
-              message: "Sesión expirada, porfavor vuelva a iniciar sesión",
-              forceRedirect: true,
-            });
-          } else {
-            this.setState({
-              modal: true,
-              message:
-                "Ha ocurrido un error, porfavor refresque la página o intentelo más tarde",
-            });
-          }
-        });
-      return rspApi;
-    } catch (error) {
-      console.log(error);
-      this.setState({
-        listData: [],
-      });
-    }
-  }
-
-  handleDocumentChange = (e) => {
+  const handleDocumentChange = (e) => {
     const value = e.target.value;
     const formField = e.target.name;
     if (formField === "fecha") {
-      this.setState({
-        fecha: value,
-      });
-
-      console.log(this.state.date);
+      setFecha(value);
     } else if (formField === "venta") {
-      this.setState({
-        ventas: value,
-      });
-      if (value === 1) {
-        this.setState({
-          textoVentas: "Cantidad",
-        });
-      } else if (value === 2) {
-        this.setState({
-          textoVentas: "Ventas",
-        });
-      }
+      setVentas(value);
     }
   };
 
-  handleClose = () => {
-    this.setState({
-      modal: false,
-    });
-    if (this.state.forceRedirect === true) {
-      this.props.history.push("/login/B");
-      this.props.history.go();
+  const handleClick = (id) => {
+    switch (id) {
+      case 1:
+        history.push("/");
+        break;
+      case 2:
+        history.push("/business/reports");
+        break;
+      default:
+        break;
     }
   };
-  render() {
-    return (
-      <>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          open={this.state.modal}
-          closeAfterTransition
-          onClose={this.handleClose}
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-          className="modal-container"
+
+  return (
+    <>
+      <MyModal />
+      <div className="page-container" style={{ padding: 0 }}>
+        <Breadcrumbs
+          separator={<NavigateNext fontSize="medium" />}
+          aria-label="breadcrumb"
+          className="font"
         >
-          <Fade in={this.state.modal}>
-            <div className="modal-message-container">
-              <p>{this.state.message}</p>
-              <Button
-                size="large"
-                color="primary"
-                variant="contained"
-                className="btn-primary"
-                onClick={this.handleClose}
-              >
-                Aceptar
-              </Button>
-            </div>
-          </Fade>
-        </Modal>
-        <div className="page-container" style={{ padding: 0 }}>
-          <Breadcrumbs
-            separator={<NavigateNext fontSize="medium" />}
-            aria-label="breadcrumb"
-            className="font"
+          <Link
+            color="textPrimary"
+            style={{ cursor: "pointer" }}
+            onClick={() => handleClick(2)}
           >
-            <Link href="/" color="textPrimary">
-              Inicio
-            </Link>
-            <Link
-              color="textSecondary"
-              href="/business/reports"
-              // onClick={handleClick}
-            >
-              Mis Reportes
-            </Link>
-          </Breadcrumbs>
-          <h1>Mis reportes</h1>
-          <h3 className="register__subtitle">
-            Estos son los reportes obtenidos hasta la fecha <br />
-            Podrá ver los resultados diarios, semanales y mensuales
-          </h3>
-          <div>
-            <div className="vertical-bar">
-              <div className="files">
-                <div className="txt-left">
-                  <p>Resultado por :</p>
-                  <Select
-                    value={this.state.fecha}
-                    name="fecha"
-                    onChange={this.handleDocumentChange}
-                    required
-                    variant="outlined"
-                    fullWidth
-                    displayEmpty
-                  >
-                    <MenuItem selected={true} disabled value={""}>
-                      Seleccione
-                    </MenuItem>
-                    <MenuItem value={"D"}>Días</MenuItem>
-                    {/* <MenuItem value={"S"}>Semanas</MenuItem>  */}
-                    <MenuItem value={"M"}>Meses</MenuItem>
-                  </Select>
-                </div>
-                <div className="txt-right">
-                  <p>Tipo:</p>
-                  <Select
-                    value={this.state.ventas}
-                    name="venta"
-                    onChange={this.handleDocumentChange}
-                    required
-                    variant="outlined"
-                    fullWidth
-                    displayEmpty
-                  >
-                    <MenuItem selected={true} disabled value={0}>
-                      Seleccione
-                    </MenuItem>
-                    <MenuItem value={1}>Cantidad</MenuItem>
-                    <MenuItem value={2}>Ventas</MenuItem>
-                  </Select>
-                </div>
+            Inicio
+          </Link>
+          <Link
+            color="textSecondary"
+            style={{ cursor: "pointer" }}
+            onClick={() => handleClick(2)}
+          >
+            Mis Reportes
+          </Link>
+        </Breadcrumbs>
+        <h1>Mis reportes</h1>
+        <h3 className="register__subtitle">
+          Estos son los reportes obtenidos hasta la fecha <br />
+          Podrá ver los resultados diarios, semanales y mensuales
+        </h3>
+        <div>
+          <div className="vertical-bar">
+            <div className="files">
+              <div className="txt-left-nomid">
+                <p>Resultado por :</p>
+                <Select
+                  value={fecha}
+                  name="fecha"
+                  onChange={handleDocumentChange}
+                  required
+                  variant="outlined"
+                  fullWidth
+                  displayEmpty
+                >
+                  <MenuItem selected={true} disabled value={""}>
+                    Seleccione
+                  </MenuItem>
+                  <MenuItem value={"D"}>Días</MenuItem>
+                  {/* <MenuItem value={"S"}>Semanas</MenuItem>  */}
+                  <MenuItem value={"M"}>Meses</MenuItem>
+                </Select>
+              </div>
+              <div className="txt-right-nomid">
+                <p>Tipo:</p>
+                <Select
+                  value={ventas}
+                  name="venta"
+                  onChange={handleDocumentChange}
+                  required
+                  variant="outlined"
+                  fullWidth
+                  displayEmpty
+                >
+                  <MenuItem selected={true} disabled value={0}>
+                    Seleccione
+                  </MenuItem>
+                  <MenuItem value={1}>Cantidad</MenuItem>
+                  <MenuItem value={2}>Ventas</MenuItem>
+                </Select>
               </div>
             </div>
-
-            <VerticalBar
-              fecha={this.state.fecha}
-              venta={this.state.ventas}
-              handleDate={this.handleDate}
-            />
           </div>
-        </div>
-      </>
-    );
-  }
-}
 
-export default BusinessReports;
+          <VerticalBar fecha={fecha} venta={ventas} />
+        </div>
+      </div>
+    </>
+  );
+};
