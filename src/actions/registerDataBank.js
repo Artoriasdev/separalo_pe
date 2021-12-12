@@ -1,10 +1,10 @@
-import { handleEditDataBusiness } from "../helpers/handlers";
+import { handleRegisterBusinessBankData } from "../helpers/handlers";
 import { modalOpen, modalRedirect } from "./modal";
 
-export const editBusiness = (dataModel, tk) => {
+export const registerDataBank = (dataModel, tk) => {
   return async (dispatch) => {
     try {
-      const { data } = await handleEditDataBusiness(dataModel, tk);
+      const { data } = await handleRegisterBusinessBankData(dataModel, tk);
       if (data.response === "true") {
         dispatch(modalOpen(data.message));
         dispatch(modalRedirect());

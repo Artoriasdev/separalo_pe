@@ -11,16 +11,16 @@ import { businessData } from "../../actions/businessData";
 import { LinkTab } from "../../helpers/LinkTab.js";
 import { TabPanel } from "../../helpers/TabPanel.js";
 import { modalOpen } from "../../actions/modal";
-import { bannerUpload, finish, logoUpload } from "../../actions/imageUpload";
+import { bannerUpload, logoUpload } from "../../actions/imageUpload";
 import { MyModal } from "../../components/Modal";
+import { BusinessData } from "./BusinessData";
+import { BusinessDataBank } from "./BusinessDataBank";
 
 export const BusinessProfile = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { token } = useSelector((state) => state.auth.data);
   const { data } = useSelector((state) => state.businessData);
-  const { redirect } = useSelector((state) => state.imageUpload);
-  console.log(data);
 
   const [value, setValue] = useState(0);
 
@@ -30,11 +30,6 @@ export const BusinessProfile = () => {
   useEffect(() => {
     dispatch(businessData(token));
   }, [dispatch, token]);
-
-  if (redirect) {
-    dispatch(businessData(token));
-    dispatch(finish());
-  }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -138,7 +133,8 @@ export const BusinessProfile = () => {
               className="banner-container-profile"
               onClick={handleAttachBannerClick}
               style={{
-                backgroundColor: data.imageBig === undefined ? "gray" : "",
+                backgroundColor:
+                  data[0] && data[0].imageBig === undefined ? "gray" : "",
               }}
             >
               <input
@@ -148,14 +144,14 @@ export const BusinessProfile = () => {
                 style={{ display: "none" }}
                 onChange={handleAttachBanner}
               />
-              {data.imageBig !== undefined ? (
-                <img src={data.imageBig} alt="banner" title="banner" />
+              {data[0] && data[0].imageBig !== undefined ? (
+                <img src={data[0].imageBig} alt="banner" title="banner" />
               ) : null}
 
               <div className="banner-background-hover" />
               <div className="banner-hover">
                 <ImageOutlined fontSize="large" style={{ fontSize: "40px" }} />
-                {data.imageBig !== undefined ? (
+                {data[0] && data[0].imageBig !== undefined ? (
                   <p>Editar imagen de banner</p>
                 ) : (
                   <p>Subir imagen de banner</p>
@@ -171,7 +167,8 @@ export const BusinessProfile = () => {
               className="logo-container-profile"
               onClick={handleAttachClick}
               style={{
-                backgroundColor: data.logo === undefined ? "gray" : "",
+                backgroundColor:
+                  data[0] && data[0].logo === undefined ? "gray" : "",
               }}
             >
               <input
@@ -181,13 +178,13 @@ export const BusinessProfile = () => {
                 style={{ display: "none" }}
                 onChange={handleAttach}
               />
-              {data.logo !== undefined ? (
-                <img src={data.logo} alt="logo" title="logo" />
+              {data[0] && data[0].logo !== undefined ? (
+                <img src={data[0].logo} alt="logo" title="logo" />
               ) : null}
               <div className="logo-background-hover" />
               <div className="logo-hover">
                 <PhotoCamera fontSize="large" style={{ fontSize: "40px" }} />
-                {data.imageBig !== undefined ? (
+                {data[0] && data[0].imageBig !== undefined ? (
                   <p>Editar logo</p>
                 ) : (
                   <p>Subir logo</p>
@@ -195,7 +192,7 @@ export const BusinessProfile = () => {
               </div>
             </div>
           </div>
-          {/* <AppBar
+          <AppBar
             position="static"
             style={{
               backgroundColor: "transparent",
@@ -219,6 +216,7 @@ export const BusinessProfile = () => {
                   textTransform: "none",
                   fontWeight: "bold",
                   fontSize: "1.4rem",
+                  color: "black",
                 }}
               />
               <LinkTab
@@ -229,16 +227,17 @@ export const BusinessProfile = () => {
                   textTransform: "none",
                   fontWeight: "bold",
                   fontSize: "1.4rem",
+                  color: "black",
                 }}
               />
             </Tabs>
           </AppBar>
           <TabPanel value={value} index={0}>
-            <BusinessData  data={data} />
+            <BusinessData />
           </TabPanel>
           <TabPanel value={value} index={1}>
             <BusinessDataBank />
-          </TabPanel> */}
+          </TabPanel>
         </div>
       </div>
     </div>

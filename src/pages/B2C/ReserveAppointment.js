@@ -1,3 +1,6 @@
+import React from "react";
+import { Formik, ErrorMessage } from "formik";
+
 import {
   Backdrop,
   Button,
@@ -11,13 +14,10 @@ import {
   DialogActions,
   FormControlLabel,
   Checkbox,
-  withStyles,
-} from "@material-ui/core";
+} from "@mui/material";
 import axios from "axios";
-import { Formik, ErrorMessage } from "formik";
-import React, { Component } from "react";
 import { handleRegexDisable } from "../../utils/utilitaries";
-import FullPageLoader from "../../components/FullPageLoader";
+import { MyModal } from "../../components/Modal";
 
 const styles = (theme) => ({
   dialog: {
@@ -27,41 +27,41 @@ const styles = (theme) => ({
   },
 });
 
-class ReserveAppointment extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      customerData: [],
-      serviceData: [],
-      dateData: [],
-      hourData: [],
-      date: "",
-      modal: false,
-      response: false,
-      message: "",
-      isLoading: false,
-      errorTerms: false,
-      checked: false,
-      termsModal: false,
-      terms: [],
-    };
-  }
+export const ReserveAppointment = () => {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     customerData: [],
+  //     serviceData: [],
+  //     dateData: [],
+  //     hourData: [],
+  //     date: "",
+  //     modal: false,
+  //     response: false,
+  //     message: "",
+  //     isLoading: false,
+  //     errorTerms: false,
+  //     checked: false,
+  //     termsModal: false,
+  //     terms: [],
+  //   };
+  // }
 
-  componentDidMount() {
-    if (sessionStorage.getItem("workflow") === "C") {
-      try {
-        this.handleGetCustomer();
-        this.handleGetServicesById();
-        this.handleGetAvailableDateService();
-        this.handleGetAvailableScheduleService();
-        this.handleGetTerms();
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      this.props.history.push("/");
-    }
-  }
+  // componentDidMount() {
+  //   if (sessionStorage.getItem("workflow") === "C") {
+  //     try {
+  //       this.handleGetCustomer();
+  //       this.handleGetServicesById();
+  //       this.handleGetAvailableDateService();
+  //       this.handleGetAvailableScheduleService();
+  //       this.handleGetTerms();
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   } else {
+  //     this.props.history.push("/");
+  //   }
+  // }
 
   handleGetCustomer = async () => {
     try {
@@ -378,351 +378,317 @@ class ReserveAppointment extends Component {
     }
   };
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <div>
-        <FullPageLoader isLoading={this.state.isLoading} />
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          open={this.state.modal}
-          closeAfterTransition
-          onClose={this.handleClose}
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-          className="modal-container"
-        >
-          <Fade in={this.state.modal}>
-            <div className="modal-message-container">
-              <p>{this.state.message}</p>
-              <Button
-                size="large"
-                color="primary"
-                variant="contained"
-                className="btn-primary"
-                onClick={this.handleClose}
-              >
-                Aceptar
-              </Button>
-            </div>
-          </Fade>
-        </Modal>
+  return (
+    <div>
+      <MyModal />
 
-        <Dialog
-          open={this.state.termsModal}
-          onClose={() => this.handleTerms(2)}
-          scroll="paper"
-          className={classes.dialog}
-        >
-          {this.state.terms.map(({ id, value }) => (
-            <DialogContent key={id}>
-              <div dangerouslySetInnerHTML={{ __html: value }} />
-            </DialogContent>
-          ))}
-          <DialogActions style={{ justifyContent: "center" }}>
-            <Button
-              className="font-p btn-primary"
-              color="primary"
-              onClick={() => this.handleTerms(1)}
-              variant="contained"
-              style={{
-                margin: "5px 5px 3px 0",
-                width: "30%",
-                textTransform: "capitalize",
-              }}
-            >
-              Aceptar
-            </Button>
-            <Button
-              className="font-p btn-primary"
-              color="primary"
-              onClick={() => this.handleTerms(2)}
-              variant="contained"
-              style={{
-                margin: "5px 0 3px 5px",
-                width: "30%",
-                textTransform: "capitalize",
-              }}
-            >
-              Cancelar
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <div className="page-container">
-          <div className="login">
-            <h1>Reserva tu cita</h1>
-            <Formik
-              ref={(ref) => (this.form = ref)}
-              initialValues={{
-                correo: "",
-                celular: "",
-                servicio: "",
-                duracion: "",
-                precio: "",
-                fechaDisponible: "",
-                horarioDisponible: "",
-                checkbox: false,
-              }}
-              validate={(values) => {
-                const { checkbox } = values;
-                let errors = {};
+      <Dialog
+        open={this.state.termsModal}
+        onClose={() => this.handleTerms(2)}
+        scroll="paper"
+        className={classes.dialog}
+      >
+        {this.state.terms.map(({ id, value }) => (
+          <DialogContent key={id}>
+            <div dangerouslySetInnerHTML={{ __html: value }} />
+          </DialogContent>
+        ))}
+        <DialogActions style={{ justifyContent: "center" }}>
+          <Button
+            className="font-p btn-primary"
+            color="primary"
+            onClick={() => this.handleTerms(1)}
+            variant="contained"
+            style={{
+              margin: "5px 5px 3px 0",
+              width: "30%",
+              textTransform: "capitalize",
+            }}
+          >
+            Aceptar
+          </Button>
+          <Button
+            className="font-p btn-primary"
+            color="primary"
+            onClick={() => this.handleTerms(2)}
+            variant="contained"
+            style={{
+              margin: "5px 0 3px 5px",
+              width: "30%",
+              textTransform: "capitalize",
+            }}
+          >
+            Cancelar
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <div className="page-container">
+        <div className="login">
+          <h1>Reserva tu cita</h1>
+          <Formik
+            ref={(ref) => (this.form = ref)}
+            initialValues={{
+              correo: "",
+              celular: "",
+              servicio: "",
+              duracion: "",
+              precio: "",
+              fechaDisponible: "",
+              horarioDisponible: "",
+              checkbox: false,
+            }}
+            validate={(values) => {
+              const { checkbox } = values;
+              let errors = {};
 
-                if (checkbox === false) {
-                  errors.checkbox = "Debes aceptar los términos y condiciones";
-                }
+              if (checkbox === false) {
+                errors.checkbox = "Debes aceptar los términos y condiciones";
+              }
 
-                return errors;
-              }}
-              onSubmit={(values, { setSubmitting }) => {
-                setSubmitting(false);
-                const reserveModel = {
-                  idService: "",
-                  reservationDate: "",
-                  reservationTime: "",
-                };
+              return errors;
+            }}
+            onSubmit={(values, { setSubmitting }) => {
+              setSubmitting(false);
+              const reserveModel = {
+                idService: "",
+                reservationDate: "",
+                reservationTime: "",
+              };
 
-                reserveModel.idService = JSON.parse(this.props.match.params.id);
-                reserveModel.reservationDate = values.fechaDisponible;
-                reserveModel.reservationTime = values.horarioDisponible;
+              reserveModel.idService = JSON.parse(this.props.match.params.id);
+              reserveModel.reservationDate = values.fechaDisponible;
+              reserveModel.reservationTime = values.horarioDisponible;
 
-                this.setState({
-                  isLoading: true,
-                });
+              this.setState({
+                isLoading: true,
+              });
 
-                (async () => {
-                  this.handleInfoSubmit(reserveModel);
-                })();
-              }}
-            >
-              {({
-                values,
-                handleBlur,
-                handleChange,
-                handleSubmit,
-                isSubmitting,
-                errors,
-                touched,
-              }) => (
-                <form name="formRegister" onSubmit={handleSubmit}>
-                  <div className="files">
-                    <div className="txt-left">
-                      <TextField
-                        name="correo"
-                        className="TxtField"
-                        variant="outlined"
-                        label="Correo electrónico"
-                        fullWidth
-                        value={values.correo}
-                        error={errors.correo && touched.correo}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        disabled={true}
-                        style={{ marginBottom: "5px" }}
-                        onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
-                      />
-                    </div>
-
-                    <div className="txt-right">
-                      <TextField
-                        name="celular"
-                        className="TxtField"
-                        variant="outlined"
-                        label="Número de celular"
-                        fullWidth
-                        value={values.celular}
-                        error={errors.celular && touched.celular}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        disabled={true}
-                        style={{
-                          marginBottom: "5px",
-                        }}
-                        // inputProps={{
-                        //   maxLength: 9,
-                        // }}
-                        onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
-                      />
-                    </div>
+              (async () => {
+                this.handleInfoSubmit(reserveModel);
+              })();
+            }}
+          >
+            {({
+              values,
+              handleBlur,
+              handleChange,
+              handleSubmit,
+              isSubmitting,
+              errors,
+              touched,
+            }) => (
+              <form name="formRegister" onSubmit={handleSubmit}>
+                <div className="files">
+                  <div className="txt-left">
+                    <TextField
+                      name="correo"
+                      className="TxtField"
+                      variant="outlined"
+                      label="Correo electrónico"
+                      fullWidth
+                      value={values.correo}
+                      error={errors.correo && touched.correo}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      disabled={true}
+                      style={{ marginBottom: "5px" }}
+                      onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
+                    />
                   </div>
 
-                  <div className="files">
-                    <div className="txt-left">
-                      <TextField
-                        name="servicio"
-                        className="TxtField"
-                        variant="outlined"
-                        label="Nombre del servicio"
-                        fullWidth
-                        value={values.servicio}
-                        error={errors.servicio && touched.servicio}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        disabled={true}
-                        style={{
-                          marginBottom: "5px",
-                        }}
-                        onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
-                      />
-                    </div>
-
-                    <div className="txt-right">
-                      <TextField
-                        name="duracion"
-                        type="text"
-                        className="TxtField"
-                        variant="outlined"
-                        label="Duración del servicio"
-                        fullWidth
-                        value={values.duracion}
-                        error={errors.duracion && touched.duracion}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        disabled={true}
-                        style={{
-                          marginBottom: "5px",
-                        }}
-                        onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
-                      />
-                    </div>
-                  </div>
-
-                  <div className="files">
-                    <div className="txt-left">
-                      <TextField
-                        name="precio"
-                        type="text"
-                        className="TxtField"
-                        variant="outlined"
-                        label="Precio"
-                        fullWidth
-                        value={values.precio}
-                        error={errors.precio && touched.precio}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        disabled={true}
-                        style={{
-                          marginBottom: "5px",
-                        }}
-                        // inputProps={{
-                        //   maxLength: 9,
-                        // }}
-                        onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
-                      />
-                    </div>
-
-                    <div className="txt-right">
-                      <Select
-                        style={{
-                          width: "100%",
-                          backgroundColor: "white",
-                          marginBottom: "5px",
-                        }}
-                        variant="outlined"
-                        value={values.fechaDisponible}
-                        error={
-                          errors.fechaDisponible && touched.fechaDisponible
-                        }
-                        name="fechaDisponible"
-                        displayEmpty
-                        required
-                        onChange={this.handleDateChange}
-                        onBlur={handleBlur}
-                      >
-                        <MenuItem disabled value={""}>
-                          <span className="empty--option">
-                            Elige la fecha disponible
-                          </span>
-                        </MenuItem>
-                        {this.state.dateData &&
-                          this.state.dateData.map(({ keyDate, valueDate }) => (
-                            <MenuItem key={keyDate} value={keyDate}>
-                              {valueDate}
-                            </MenuItem>
-                          ))}
-                      </Select>
-                    </div>
-                  </div>
-                  <div className="files">
-                    <Select
+                  <div className="txt-right">
+                    <TextField
+                      name="celular"
+                      className="TxtField"
+                      variant="outlined"
+                      label="Número de celular"
+                      fullWidth
+                      value={values.celular}
+                      error={errors.celular && touched.celular}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      disabled={true}
                       style={{
-                        backgroundColor: "white",
-                        marginRight: "51%",
-                        marginTop: "5px",
                         marginBottom: "5px",
                       }}
-                      fullWidth
+                      // inputProps={{
+                      //   maxLength: 9,
+                      // }}
+                      onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
+                    />
+                  </div>
+                </div>
+
+                <div className="files">
+                  <div className="txt-left">
+                    <TextField
+                      name="servicio"
+                      className="TxtField"
                       variant="outlined"
-                      value={values.horarioDisponible}
-                      error={
-                        errors.horarioDisponible && touched.horarioDisponible
-                      }
-                      name="horarioDisponible"
+                      label="Nombre del servicio"
+                      fullWidth
+                      value={values.servicio}
+                      error={errors.servicio && touched.servicio}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      disabled={true}
+                      style={{
+                        marginBottom: "5px",
+                      }}
+                      onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
+                    />
+                  </div>
+
+                  <div className="txt-right">
+                    <TextField
+                      name="duracion"
+                      type="text"
+                      className="TxtField"
+                      variant="outlined"
+                      label="Duración del servicio"
+                      fullWidth
+                      value={values.duracion}
+                      error={errors.duracion && touched.duracion}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      disabled={true}
+                      style={{
+                        marginBottom: "5px",
+                      }}
+                      onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
+                    />
+                  </div>
+                </div>
+
+                <div className="files">
+                  <div className="txt-left">
+                    <TextField
+                      name="precio"
+                      type="text"
+                      className="TxtField"
+                      variant="outlined"
+                      label="Precio"
+                      fullWidth
+                      value={values.precio}
+                      error={errors.precio && touched.precio}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      disabled={true}
+                      style={{
+                        marginBottom: "5px",
+                      }}
+                      // inputProps={{
+                      //   maxLength: 9,
+                      // }}
+                      onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
+                    />
+                  </div>
+
+                  <div className="txt-right">
+                    <Select
+                      style={{
+                        width: "100%",
+                        backgroundColor: "white",
+                        marginBottom: "5px",
+                      }}
+                      variant="outlined"
+                      value={values.fechaDisponible}
+                      error={errors.fechaDisponible && touched.fechaDisponible}
+                      name="fechaDisponible"
                       displayEmpty
                       required
-                      onChange={handleChange}
+                      onChange={this.handleDateChange}
                       onBlur={handleBlur}
                     >
                       <MenuItem disabled value={""}>
-                        <span className="empty--option">Elige el horario</span>
+                        <span className="empty--option">
+                          Elige la fecha disponible
+                        </span>
                       </MenuItem>
-                      {this.state.hourData.length === 0 ? (
-                        <MenuItem disabled value={" "}>
-                          <span className="empty--option">
-                            Horarios no disponibles
-                          </span>
-                        </MenuItem>
-                      ) : (
-                        this.state.hourData &&
-                        this.state.hourData.map(({ keyTime, valueTime }) => (
-                          <MenuItem key={keyTime} value={keyTime}>
-                            {valueTime}
+                      {this.state.dateData &&
+                        this.state.dateData.map(({ keyDate, valueDate }) => (
+                          <MenuItem key={keyDate} value={keyDate}>
+                            {valueDate}
                           </MenuItem>
-                        ))
-                      )}
+                        ))}
                     </Select>
                   </div>
-
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        name="checkbox"
-                        checked={this.state.checked}
-                        onChange={this.handleCheck}
-                        color="primary"
-                      />
-                    }
-                    label="Términos y condiciones"
-                  />
-                  <ErrorMessage
-                    className="error"
-                    name="checkbox"
-                    component="div"
-                  />
-
-                  <Button
-                    size="large"
-                    color="primary"
-                    variant="contained"
-                    className="btn-primary"
+                </div>
+                <div className="files">
+                  <Select
                     style={{
-                      margin: "10px 0",
+                      backgroundColor: "white",
+                      marginRight: "51%",
+                      marginTop: "5px",
+                      marginBottom: "5px",
                     }}
-                    type="submit"
                     fullWidth
+                    variant="outlined"
+                    value={values.horarioDisponible}
+                    error={
+                      errors.horarioDisponible && touched.horarioDisponible
+                    }
+                    name="horarioDisponible"
+                    displayEmpty
+                    required
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   >
-                    Reservar cita
-                  </Button>
-                </form>
-              )}
-            </Formik>
-          </div>
+                    <MenuItem disabled value={""}>
+                      <span className="empty--option">Elige el horario</span>
+                    </MenuItem>
+                    {this.state.hourData.length === 0 ? (
+                      <MenuItem disabled value={" "}>
+                        <span className="empty--option">
+                          Horarios no disponibles
+                        </span>
+                      </MenuItem>
+                    ) : (
+                      this.state.hourData &&
+                      this.state.hourData.map(({ keyTime, valueTime }) => (
+                        <MenuItem key={keyTime} value={keyTime}>
+                          {valueTime}
+                        </MenuItem>
+                      ))
+                    )}
+                  </Select>
+                </div>
+
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name="checkbox"
+                      checked={this.state.checked}
+                      onChange={this.handleCheck}
+                      color="primary"
+                    />
+                  }
+                  label="Términos y condiciones"
+                />
+                <ErrorMessage
+                  className="error"
+                  name="checkbox"
+                  component="div"
+                />
+
+                <Button
+                  size="large"
+                  color="primary"
+                  variant="contained"
+                  className="btn-primary"
+                  style={{
+                    margin: "10px 0",
+                  }}
+                  type="submit"
+                  fullWidth
+                >
+                  Reservar cita
+                </Button>
+              </form>
+            )}
+          </Formik>
         </div>
       </div>
-    );
-  }
-}
-
-export default withStyles(styles)(ReserveAppointment);
+    </div>
+  );
+};

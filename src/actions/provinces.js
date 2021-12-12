@@ -6,7 +6,6 @@ export const provinces = () => {
   return async (dispatch) => {
     try {
       const { data } = await handleGetProvinces();
-      console.log(data);
       dispatch(loadProvinces(data.data));
     } catch (error) {
       console.log(error);

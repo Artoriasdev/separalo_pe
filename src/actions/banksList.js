@@ -1,12 +1,12 @@
-import { handleGetDistrics } from "../helpers/handlers";
+import { handleGetBanks } from "../helpers/handlers";
 import { types } from "../types/types";
 import { modalOpen } from "./modal";
 
-export const districs = (id) => {
+export const banksList = () => {
   return async (dispatch) => {
     try {
-      const { data } = await handleGetDistrics(id);
-      dispatch(loadDistrics(data.data));
+      const { data } = await handleGetBanks();
+      dispatch(banks(data.data));
     } catch (error) {
       console.log(error);
       dispatch(
@@ -18,9 +18,7 @@ export const districs = (id) => {
   };
 };
 
-export const loadDistrics = (data) => ({
-  type: types.districsLoaded,
-  payload: {
-    districs: data,
-  },
+export const banks = (data) => ({
+  type: types.loadBanks,
+  payload: data,
 });

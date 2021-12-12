@@ -649,3 +649,183 @@ export const handleGetDistrics = (id) => {
     });
   return rspApi;
 };
+
+export const handleRegisterBusinessBankData = async (BankModel, tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+  let linkRegisterApi = `${process.env.REACT_APP_PATH_SERVICE}/business/registerBusinessBankData`;
+
+  const rspApi = axios
+    .post(linkRegisterApi, BankModel, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
+  return rspApi;
+};
+
+export const handleUpdateBusinessBankData = async (bankModel, tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+  let linkEditApi = `${process.env.REACT_APP_PATH_SERVICE}/business/updateBusinessBankData`;
+
+  const rspApi = axios
+    .put(linkEditApi, bankModel, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
+  return rspApi;
+};
+
+export const handleGetBanks = () => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "",
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/generic/getBanks`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleGetBanksAccountType = (id) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "",
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/generic/getBanksAccountType/${id}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleGetBusinessBankData = async (tk) => {
+  try {
+    var headers = {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${tk}`,
+    };
+
+    let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/business/getBusinessBankData`;
+
+    const rspApi = await axios
+      .get(linkDocumentsApi, {
+        headers: headers,
+      })
+      .then((response) => {
+        return response;
+      })
+      .catch(({ response }) => {
+        return response;
+      });
+    return rspApi;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const handleUpdateCustomer = async (dataModel, tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+  let linkEditApi = `${process.env.REACT_APP_PATH_SERVICE}/customer/updateCustomer`;
+
+  const rspApi = axios
+    .put(linkEditApi, dataModel, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
+  return rspApi;
+};
+
+export const handleGetReservationByCustomer = (tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/reservation/getReservationByCustomer`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleGetReservationHistoryByCustomer = (tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/reservation/getReservationHistoryByCustomer`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};

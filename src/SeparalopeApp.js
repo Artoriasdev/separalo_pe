@@ -31,20 +31,14 @@ export const SeparalopeApp = () => {
 //                 path="/business/services/details/:id/:value/:category"
 //                 component={ServiceDetail}
 //               />
-
-//               
-//               <Route
-//                 exact
-//                 path="/business/profile/register-data-bank"
-//                 component={RegisterDataBank}
-//               />
-//               <Route
-//                 exact
-//                 path="/business/profile/bank"
-//                 component={BussinesProfileBank}
-//               />
 //               <Route exact path="/password_change" component={Password} />
 //               
+//               <Route
+//                 exact
+//                 path="/register/business"
+//                 component={RegisterBusiness}
+//               />
+//               <Route exact path="/frequent-questions" component={Question} />
 //              
 
 //               <Route
@@ -53,26 +47,7 @@ export const SeparalopeApp = () => {
 //                 component={RegisterCustomer}
 //               />
 
-//               <Route exact path="/customer/profile" component={ClientProfile} />
-
-//               <Route
-//                 exact
-//                 path="/register/business"
-//                 component={RegisterBusiness}
-//               />
-//               <Route exact path="/frequent-questions" component={Question} />
-
-//               <Route
-//                 exact
-//                 path="/customer-appointment"
-//                 component={CustomerAppointment}
-//               />
-
-//               <Route
-//                 exact
-//                 path="/customer-history"
-//                 component={CustomerHistory}
-//               />
+//               
 //               
 //               <Route exact path="/reserve/:id" component={ReserveAppointment} />
 //               

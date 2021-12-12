@@ -6,7 +6,6 @@ export const documents = () => {
   return async (dispatch) => {
     try {
       const { data } = await handleGetDocuments();
-      console.log(data);
       dispatch(loadDocuments(data.data));
     } catch (error) {
       console.log(error);

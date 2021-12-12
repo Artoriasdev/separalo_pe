@@ -98,10 +98,10 @@ export const NavbarSectionClient = () => {
       history.push("/customer/profile");
     }
     if (id === 2) {
-      history.push("/customer-appointment");
+      history.push("/customer/appointment");
     }
     if (id === 3) {
-      history.push("/customer-history");
+      history.push("/customer/history");
     }
     if (id === 6) {
       history.push("/business/reports");

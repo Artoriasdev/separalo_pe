@@ -1,12 +1,13 @@
-import { handleGetDistrics } from "../helpers/handlers";
+import { handleGetReservationByCustomer } from "../helpers/handlers";
 import { types } from "../types/types";
 import { modalOpen } from "./modal";
 
-export const districs = (id) => {
+export const clientAppointment = (token) => {
   return async (dispatch) => {
     try {
-      const { data } = await handleGetDistrics(id);
-      dispatch(loadDistrics(data.data));
+      const { data } = await handleGetReservationByCustomer(token);
+
+      dispatch(clientAppoint(...data.data));
     } catch (error) {
       console.log(error);
       dispatch(
@@ -18,9 +19,7 @@ export const districs = (id) => {
   };
 };
 
-export const loadDistrics = (data) => ({
-  type: types.districsLoaded,
-  payload: {
-    districs: data,
-  },
+export const clientAppoint = (data) => ({
+  type: types.clientAppointments,
+  payload: data,
 });

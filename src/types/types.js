@@ -32,6 +32,9 @@ export const types = {
   loadServiceListCategory: "[Service List] Service List by Category Loaded",
 
   businessData: "[Business Data] Business Data Loaded",
+  businessDataBank: "[Business Data] Business Data Bank Loaded",
+  businessDataBankUpdate: "[Business Data] Business Data Bank Updated",
+  businessDataUpdate: "[Business Data] Business Data Updated",
 
   reservationConfirmList:
     "[Reservation List] Reservation Confirmed List Loaded",
@@ -45,4 +48,13 @@ export const types = {
   provincesLoaded: "[Provinces] Provinces Loaded",
 
   districsLoaded: "[Districs] Districs Loaded",
+
+  loadBanks: "[Banks] Banks Loaded",
+  loadBanksType: "[Banks] Banks Types Loaded",
+
+  clientData: "[Client Data] Client Data Loaded",
+
+  clientAppointments: "[Client Appointments] Client Appointments Loaded ",
+  clientAppointmentsHistory:
+    "[Client Appointments] Client Appointments History Loaded ",
 };

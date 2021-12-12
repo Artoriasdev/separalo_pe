@@ -19,6 +19,12 @@ import { imageUpload } from "../reducers/imageUploadReducer";
 import { districsReducer } from "../reducers/districsReducer";
 import { provincesReducer } from "../reducers/provincesReducer";
 import { documentsReducer } from "../reducers/documentsReducer";
+import { businessDataBankReducer } from "../reducers/businessDataBankReducer";
+import { banksReducer } from "../reducers/banksReducer";
+import { banksAccountTypeReducer } from "../reducers/banksAccountTypeReducer";
+import { clientData } from "../reducers/clientDataReducer";
+import { clientAppointment } from "../reducers/clientAppointmentReducer";
+import { clientAppointmentHistory } from "../reducers/clientAppointmentHistoryReducer";
 
 const composeEnhancers =
   (typeof window !== "undefined" &&
@@ -40,11 +46,17 @@ const reducers = combineReducers({
   hoursById: hoursById,
   reservation: reservation,
   businessData: businessData,
+  businessDataBank: businessDataBankReducer,
   reservationList: reservationList,
   imageUpload: imageUpload,
   districsLoad: districsReducer,
   provinces: provincesReducer,
   documents: documentsReducer,
+  banksList: banksReducer,
+  banksTypeList: banksAccountTypeReducer,
+  clientData: clientData,
+  clientAppointment: clientAppointment,
+  clientAppointmentHistory: clientAppointmentHistory,
 });
 
 export const store = createStore(

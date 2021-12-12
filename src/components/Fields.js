@@ -23,7 +23,11 @@ export const MyTextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
 
   useEffect(() => {
-    if (props.accion === 1 && value !== props.data) {
+    if (
+      props.accion === 1 &&
+      value !== props.data &&
+      props.data !== undefined
+    ) {
       setFieldValue(field.name, props.data, true);
       setValue(props.data);
     }
@@ -131,18 +135,124 @@ export const MyCheckbox = ({
 
 export const MySelect = ({ children, label, despachador, ...props }) => {
   const dispatch = useDispatch();
+  const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(props);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState("a");
 
-  if (props.accion === 1 && field.value !== value) {
-    setValue(field.value);
-    if (props.elements === 2) {
-      if (props.first !== "" && props.second !== "")
-        dispatch(despachador(props.first, props.second));
-    } else if (props.elements === 1) {
-      if (props.first !== "") dispatch(despachador(props.first));
+  useEffect(() => {
+    if (props.accion === 1 && field.value !== value) {
+      setValue(field.value);
+      if (props.elements === 2) {
+        if (props.first !== "" && props.second !== "")
+          dispatch(despachador(props.first, props.second));
+      } else if (props.elements === 1) {
+        if (props.first !== "") dispatch(despachador(props.first));
+      }
+    } else if (props.accion === 2 && field.value !== value) {
+      setValue(field.value);
+
+      if (props.elements === 2) {
+        if (props.first !== "" && props.second !== "")
+          dispatch(despachador(props.first, props.second));
+      } else if (props.elements === 1) {
+        if (props.first !== "") dispatch(despachador(props.first));
+      }
     }
-  }
+  }, [
+    props.accion,
+    field.value,
+    props.elements,
+    props.first,
+    props.second,
+    setFieldValue,
+    dispatch,
+    despachador,
+    field.name,
+    props.data,
+    value,
+  ]);
+
+  useEffect(() => {
+    if (field.value !== props.data && props.data !== undefined) {
+      setFieldValue(field.name, props.data, true);
+    }
+  }, [props.data]);
+
+  return (
+    <div>
+      <Select
+        fullWidth
+        variant="outlined"
+        displayEmpty
+        {...field}
+        {...props}
+        className={
+          meta.touched && meta.error
+            ? "animate__animated animate__shakeX"
+            : null
+        }
+      >
+        {children}
+      </Select>
+
+      {meta.touched && meta.error ? (
+        <div className="error">{meta.error}</div>
+      ) : null}
+    </div>
+  );
+};
+
+export const MyDocumentSelect = ({
+  children,
+  label,
+  accion,
+  MaxValueSet,
+  MinValueSet,
+  ...props
+}) => {
+  const dispatch = useDispatch();
+  const { documentsList } = useSelector((state) => state.documents);
+  const { setFieldValue } = useFormikContext();
+  const [field, meta] = useField(props);
+
+  useEffect(() => {
+    if (accion === 1) {
+      let maxLengthInput;
+      let minLengthInput;
+      let valor = "[0-9]";
+      const id = documentsList.find((arreglo) => arreglo.id === field.value);
+      if (id !== undefined) {
+        maxLengthInput = id.maxLength;
+        minLengthInput = id.minLength;
+      }
+
+      if (field.value === "04" || field.value === "07") {
+        valor = "";
+      } else {
+        valor = "[0-9]";
+      }
+      MaxValueSet(maxLengthInput);
+      MinValueSet(minLengthInput);
+      setFieldValue("ingreso", valor, true);
+    }
+  }, [
+    accion,
+    dispatch,
+    documentsList,
+    field.name,
+    field.value,
+    props.data,
+    setFieldValue,
+    MaxValueSet,
+    MinValueSet,
+  ]);
+
+  useEffect(() => {
+    if (field.value !== props.data) {
+      setFieldValue(field.name, props.data, true);
+    }
+  }, [props.data]);
+
   return (
     <div>
       <Select

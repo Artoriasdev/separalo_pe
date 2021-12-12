@@ -14,6 +14,8 @@ import { ConfirmLoginRedirectRoute } from "./ConfirmLoginRedirectRoute";
 import { ConfirmLoginRedirectRouter } from "./ConfirmLoginRedirectRouter";
 import { RedirectBusinessAuthRoute } from "./RedirectBusinessAuthRoute";
 import { RedirectClientAuthRoute } from "./RedirectClientAuthRoute";
+import { RedirectClientRoute } from "./RedirectClientRoute";
+import { ClientRoute } from "./ClientRouter";
 
 export const PublicRouter = () => {
   const { workflow } = useSelector((state) => state.auth);
@@ -22,7 +24,11 @@ export const PublicRouter = () => {
       <Navbar />
       <div style={{ marginTop: "5.9rem" }}>
         <Switch>
-          <Route exact path="/" component={HomePage} />
+          <RedirectClientRoute
+            path="/customer/"
+            workflow={workflow}
+            component={ClientRoute}
+          />
           <Route
             exact
             path="/services-menu/:value"
@@ -61,6 +67,7 @@ export const PublicRouter = () => {
             workflow={workflow}
             component={ConfirmLoginRedirectRoute}
           />
+          <Route exact path="/" component={HomePage} />
 
           <Redirect to="/" />
         </Switch>
