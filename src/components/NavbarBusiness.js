@@ -77,7 +77,7 @@ export const NavbarBusines = () => {
         history.push("/business/reports");
         break;
       case 7:
-        history.push("/password_change");
+        history.push("/business/password_change");
         break;
       default:
         break;

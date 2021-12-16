@@ -1,8 +1,11 @@
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import {
   AppBar,
   Grid,
   Container,
-  makeStyles,
   Toolbar,
   Button,
   IconButton,
@@ -14,15 +17,15 @@ import {
   ListItem,
   ListItemText,
   Collapse,
-} from "@material-ui/core";
-import { ExpandLess, ExpandMore } from "@material-ui/icons";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+} from "@mui/material";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { makeStyles } from "@mui/styles";
+
 import Facebook from "../assets/images/icon-fb.png";
 import Instagram from "../assets/images/icon-ig.png";
 import Twitter from "../assets/images/icon-tw.png";
 import LinkedIn from "../assets/images/icon-in.png";
+import { termsLoad } from "../actions/termsLoad";
 
 const tema = createTheme({
   breakpoints: {
@@ -63,60 +66,36 @@ const useStyles = makeStyles(() => ({
 
 export const Footer = () => {
   const classes = useStyles();
-
-  const [terms, setTerms] = useState([]);
-
   const history = useHistory();
-
+  const dispatch = useDispatch();
+  const [term, setTerm] = useState(false);
   const [open, setOpen] = useState(false);
+  const { terms } = useSelector((state) => state.terms);
+  const { workflow } = useSelector((state) => state.auth);
 
   const handleClick = () => {
     setOpen(!open);
   };
 
-  useEffect(() => {
-    handleGetTerms();
-  }, []);
-
-  const handleGetTerms = (id) => {
-    var headers = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: "",
-    };
-
-    let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/generic/getTemplates/${id}`;
-
-    const rspApi = axios
-      .get(linkDocumentsApi, {
-        headers: headers,
-      })
-      .then((response) => {
-        const { data } = response.data;
-
-        setTerms(data);
-
-        return response;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    return rspApi;
-  };
-
   const handleRedirect = (id) => {
     if (id === 1) {
-      history.push("/frequent-questions");
+      if (workflow === "C" || workflow === "") {
+        history.push("/frequent-questions");
+      } else if (workflow === "B") {
+        history.push("/business/questions");
+      }
     } else if (id === 2) {
-      history.push("/quejas-y-reclamaciones");
+      if (workflow === "C" || workflow === "") {
+        history.push("/complains");
+      } else if (workflow === "B") {
+        history.push("/business/complains");
+      }
     }
   };
 
-  const [term, setTerm] = useState(false);
-
   const handleModalTerm = (id) => {
-    handleGetTerms(id);
     setTerm(true);
+    dispatch(termsLoad(id));
   };
 
   const handleClose = () => {
@@ -213,11 +192,12 @@ export const Footer = () => {
         scroll="paper"
         className={classes.dialog}
       >
-        {terms.map(({ id, value }) => (
-          <DialogContent key={id}>
-            <div dangerouslySetInnerHTML={{ __html: value }} />
-          </DialogContent>
-        ))}
+        {terms &&
+          terms.map(({ key, value }) => (
+            <DialogContent key={key}>
+              <div dangerouslySetInnerHTML={{ __html: value }} />
+            </DialogContent>
+          ))}
         <DialogActions style={{ justifyContent: "center" }}>
           <Button
             className="font-p btn-primary"

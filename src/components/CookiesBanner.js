@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import CookieConsent, { Cookies } from "react-cookie-consent";
-import MuiAccordion from "@material-ui/core/Accordion";
-import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
-import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
-import { withStyles } from "@material-ui/styles";
-import { ExpandMore } from "@material-ui/icons";
-import "animate.css";
+
+import MuiAccordion from "@mui/material/Accordion";
+import MuiAccordionSummary from "@mui/material/AccordionSummary";
+import MuiAccordionDetails from "@mui/material/AccordionDetails";
+import { withStyles } from "@mui/styles";
+import { ExpandMore } from "@mui/icons-material";
 
 const Accordion = withStyles({
   root: {
@@ -56,6 +58,7 @@ const AccordionDetails = withStyles((theme) => ({
 }))(MuiAccordionDetails);
 
 export const CookiesBanner = () => {
+  const { workflow } = useSelector((state) => state.auth);
   const [cookie, setCookie] = useState(false);
 
   return (
@@ -68,7 +71,6 @@ export const CookiesBanner = () => {
         onDecline={() => {
           Cookies.remove("acceptCookies");
           setCookie(true);
-          // console.log(cookie);
         }}
         flipButtons
         disableStyles
@@ -83,12 +85,15 @@ export const CookiesBanner = () => {
           Esta página web usa cookies para mejorar la experiencia del usuario.
         </p>
         <p style={{ textAlign: "center" }}>
-          <a href="/cookie-policy">Políticas de cookies</a>
+          {workflow === "C" || workflow === "" ? (
+            <Link to="/cookie-policy">Políticas de cookies</Link>
+          ) : workflow === "B" ? (
+            <Link to="/business/cookie-policy">Políticas de cookies</Link>
+          ) : null}
         </p>
       </CookieConsent>
       {cookie === true ? (
         <>
-          {console.log(cookie)}
           <CookieConsent
             location="bottom"
             buttonText="Si, acepto todas"

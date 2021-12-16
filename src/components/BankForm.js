@@ -45,7 +45,6 @@ const SelectHandler = () => {
     const formField = e.target.name;
 
     if (formField === "bancoId") {
-      console.log(value);
       setFieldValue(formField, value, true);
       setFieldValue("tipoId", "", true);
       setFieldValue("numeroCuenta", "", true);

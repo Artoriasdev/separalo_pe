@@ -8,7 +8,6 @@ export const loadSearch = (value) => {
       if (value.length > 2) {
         const { data } = await handleGetBusinessByFilter(value);
         dispatch(search(data));
-        // console.log(value);
       } else if (value.length <= 2) {
         dispatch(cleanSearch());
       }

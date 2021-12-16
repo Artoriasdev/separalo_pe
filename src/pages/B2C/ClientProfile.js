@@ -300,11 +300,8 @@ export const ClientProfile = () => {
               dataModel.email = values.correo;
 
               (async () => {
-                console.log(dataModel);
                 dispatch(clientDataUpdate(dataModel, token));
               })();
-
-              // aqui los getter y handler
             }}
           >
             {({ handleSubmit, isSubmitting }) => (

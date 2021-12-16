@@ -25,6 +25,13 @@ export const BusinessServicesCategory = () => {
     (typeCategory) => typeCategory.id === JSON.parse(params.value)
   );
 
+  const { redirect } = useSelector((state) => state.modal);
+  // const { data } = useSelector((state) => state.auth);
+
+  if (redirect) {
+    history.go();
+  }
+
   const handleClick = (id) => {
     switch (id) {
       case 1:

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router";
 import { useSelector } from "react-redux";
 
@@ -16,9 +16,31 @@ import { RedirectBusinessAuthRoute } from "./RedirectBusinessAuthRoute";
 import { RedirectClientAuthRoute } from "./RedirectClientAuthRoute";
 import { RedirectClientRoute } from "./RedirectClientRoute";
 import { ClientRoute } from "./ClientRouter";
+import { Question } from "../pages/Public/Question";
+import { CookiePolicy } from "../pages/Public/CookiePolicy";
+import { PasswordRecovery } from "../pages/Public/PasswordRecovery";
+import { PasswordOTP } from "../pages/Public/PasswordOTP";
+import { PasswordRestore } from "../pages/Public/PasswordRestore";
+import { Complains } from "../pages/Public/Complains";
+import { RegisterCustomer } from "../pages/Public/RegisterCustomer";
+import { RegisterBusiness } from "../pages/Public/RegisterBusiness";
+import { Password } from "../pages/Public/PasswordChange";
+import { ReserveDetail } from "../pages/Public/ReserveDetail";
+import { ShoppingPage } from "../pages/Public/ShoppingPage";
 
 export const PublicRouter = () => {
   const { workflow } = useSelector((state) => state.auth);
+  const items = useSelector((state) => state.shoppingCar);
+
+  useEffect(() => {
+    if (items.shoppingCarItems !== undefined) {
+      const { shoppingCarItems } = items;
+      if (shoppingCarItems.length > 0) {
+        localStorage.setItem("Car Items", JSON.stringify(items));
+      }
+    }
+  }, [items]);
+
   return (
     <>
       <Navbar />
@@ -34,21 +56,17 @@ export const PublicRouter = () => {
             path="/services-menu/:value"
             component={MenuBusinessCategory}
           />
-
           <Route
             exact
             path="/services-menu-category/:id/:category"
             component={MenuServicesBusiness}
           />
-
           <Route
             exact
             path="/reserve/invited/:id"
             component={ReserveAppointmentInvited}
           />
-
           <Route exact path="/reserve-complete" component={ReserveComplete} />
-
           <RedirectClientAuthRoute
             exact
             path="/login/C"
@@ -68,7 +86,32 @@ export const PublicRouter = () => {
             component={ConfirmLoginRedirectRoute}
           />
           <Route exact path="/" component={HomePage} />
+          <Route exact path="/frequent-questions" component={Question} />
+          <Route exact path="/cookie-policy" component={CookiePolicy} />
+          <Route
+            exact
+            path="/password-recovery/:value"
+            component={PasswordRecovery}
+          />
+          <Route
+            exact
+            path="/password-recovery-otp/:value"
+            component={PasswordOTP}
+          />
+          <Route
+            exact
+            path="/password-restore/:value"
+            component={PasswordRestore}
+          />
+          <Route exact path="/complains" component={Complains} />
 
+          <Route exact path="/register/customer" component={RegisterCustomer} />
+
+          <Route exact path="/register/business" component={RegisterBusiness} />
+
+          <Route exact path="/password_change" component={Password} />
+          <Route exact path="/reserve-detail" component={ReserveDetail} />
+          <Route exact patth="/shopping" component={ShoppingPage} />
           <Redirect to="/" />
         </Switch>
       </div>

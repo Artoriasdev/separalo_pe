@@ -31,7 +31,6 @@ export class Form extends Component {
       })
       .then((response) => {
         const { data } = response;
-        console.log(data);
         if (data.response === "true") {
           this.setState({
             modal: true,

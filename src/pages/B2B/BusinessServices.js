@@ -13,7 +13,12 @@ import { ServiceListTable } from "../../components/ServiceListTable";
 export const BusinessServices = () => {
   const history = useHistory();
   const { servicesList } = useSelector((state) => state.serviceList);
+  const { redirect } = useSelector((state) => state.modal);
   // const { data } = useSelector((state) => state.auth);
+
+  if (redirect) {
+    history.go();
+  }
 
   const dispatch = useDispatch();
 

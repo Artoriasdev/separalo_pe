@@ -449,28 +449,6 @@ export const handleGetListByCategory = (id, cat, tk) => {
   return rspApi;
 };
 
-export const handleGetServiceForEdit = (id, tk) => {
-  var headers = {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    Authorization: `Bearer ${tk}`,
-  };
-
-  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/service/getServiceForEdit/${id}`;
-
-  const rspApi = axios
-    .get(linkDocumentsApi, {
-      headers: headers,
-    })
-    .then((response) => {
-      return response;
-    })
-    .catch(({ response }) => {
-      return response;
-    });
-  return rspApi;
-};
-
 export const handleGetReservationConfirmByBusiness = (id, tk) => {
   var headers = {
     "Content-Type": "application/json",
@@ -828,4 +806,336 @@ export const handleGetReservationHistoryByCustomer = (tk) => {
       return response;
     });
   return rspApi;
+};
+
+export const handleRegisterReservation = (reserveModel, tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+
+  let linkRegisterApi = `${process.env.REACT_APP_PATH_SERVICE}/reservation/registerReservation`;
+
+  const rspApi = axios
+    .post(linkRegisterApi, reserveModel, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
+  return rspApi;
+};
+
+export const handleGeneratePasswordRecovery = async (RecoveryModel) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "",
+  };
+  let linkLoginApi = `${process.env.REACT_APP_PATH_SERVICE}/user/generatePasswordRecovery`;
+
+  const rspApi = axios
+    .post(linkLoginApi, RecoveryModel, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
+  return rspApi;
+};
+
+export const handleValidatePasswordRecovery = async (RecoveryModel) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "",
+  };
+  let linkLoginApi = `${process.env.REACT_APP_PATH_SERVICE}/user/validatePasswordRecovery`;
+
+  const rspApi = axios
+    .post(linkLoginApi, RecoveryModel, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handlePasswordRestore = async (RecoveryModel) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "",
+  };
+  let linkLoginApi = `${process.env.REACT_APP_PATH_SERVICE}/user/passwordRestore`;
+
+  const rspApi = axios
+    .post(linkLoginApi, RecoveryModel, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleGetCategoryComplaint = (id) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "",
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/complaint/getCategoryComplaint/${id}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleRegisterComplaint = (complainModel) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: ``,
+  };
+
+  let linkRegisterApi = `${process.env.REACT_APP_PATH_SERVICE}/complaint/registerComplaint`;
+
+  const rspApi = axios
+    .post(linkRegisterApi, complainModel, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
+  return rspApi;
+};
+
+export const handleRegisterCustomer = (CustomerModel) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "",
+  };
+
+  let linkRegisterApi = `${process.env.REACT_APP_PATH_SERVICE}/customer/registerCustomer`;
+
+  const rspApi = axios
+    .post(linkRegisterApi, CustomerModel, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
+  return rspApi;
+};
+
+export const handleRegisterBusiness = async (BusinessModel) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "",
+  };
+  let linkRegisterApi = `${process.env.REACT_APP_PATH_SERVICE}/business/registerBusiness`;
+
+  const rspApi = axios
+    .post(linkRegisterApi, BusinessModel, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
+  return rspApi;
+};
+
+export const handleChangePassword = (passwordModel, tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+  let linkEditApi = `${process.env.REACT_APP_PATH_SERVICE}/user/passwordChange`;
+
+  const rspApi = axios
+    .post(linkEditApi, passwordModel, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
+  return rspApi;
+};
+
+export const handleGetServiceForEdit = (id, tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/service/getServiceForEdit/${id}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleGetHoursAttentionService = () => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "",
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/service/getHoursAttentionService`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleGetHoursDurationService = () => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "",
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/service/getHoursDurationService`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleEditService = async (dataModel, tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+  let linkEditApi = `${process.env.REACT_APP_PATH_SERVICE}/service/editService`;
+
+  const rspApi = axios
+    .put(linkEditApi, dataModel, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
+  return rspApi;
+};
+
+export const handleDeleteService = (id, tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/service/deleteService/${id}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleRegisterService = async (formModel, tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+  let linkRegisterApi = `${process.env.REACT_APP_PATH_SERVICE}/service/registerService`;
+
+  const rspApi = axios
+    .post(linkRegisterApi, formModel, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
+  return rspApi;
+  //
 };

@@ -324,7 +324,6 @@ export const MySearchHomeInput = ({ label, ...props }) => {
               // className="animate__animated animate__slideInUp"
               onClick={(e) => {
                 handleRedirectBusiness(id, idCategory);
-                console.log("Redirección del business");
               }}
               key={id}
             >

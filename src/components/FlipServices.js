@@ -13,7 +13,7 @@ export const FlipServices = ({ typeCategorys }) => {
     if (!logged) {
       history.push(`/confirm/${title}/${id}`);
     } else {
-      history.push(`/reserve/${id}`);
+      history.push(`/customer/reserve/${id}`);
     }
   };
   return (

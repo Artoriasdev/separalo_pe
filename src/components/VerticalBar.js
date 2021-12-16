@@ -200,7 +200,6 @@ const VerticalBar = (props) => {
       .then((response) => {
         const { data } = response.data;
         setListData(data);
-        console.log(data);
 
         return response;
       })
@@ -224,7 +223,6 @@ const VerticalBar = (props) => {
           longDate.getDate();
 
         setDate(shorDate);
-        console.log(date);
       } else if (id === 2) {
         const dat = new Date(longDates);
         const longDate = dat.addDays(7);
@@ -236,7 +234,6 @@ const VerticalBar = (props) => {
           "-" +
           longDate.getDate();
         setDate(shorDate);
-        console.log(date);
       }
     } else if (props.fecha === "M") {
       if (id === 1) {
@@ -251,7 +248,6 @@ const VerticalBar = (props) => {
           longDate.getDate();
         year = longDate.getFullYear();
         setDate(shorDate);
-        console.log(year);
       } else if (id === 2) {
         const dat = new Date(longDates);
         const longDate = dat.addYear(1);
@@ -263,7 +259,6 @@ const VerticalBar = (props) => {
           "-" +
           longDate.getDate();
         year = longDate.getFullYear();
-        console.log(year);
         setDate(shorDate);
       }
     }

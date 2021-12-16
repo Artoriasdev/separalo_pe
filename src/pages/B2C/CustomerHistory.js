@@ -33,7 +33,7 @@ export const CustomerHistory = () => {
           <Event fontSize="large" style={{ margin: "0 5px 0 0" }} />
           <h1>Mi historial de citas</h1>
         </div>
-        {/* <TableContainer className="table">
+        <TableContainer className="table">
           <Table sx={{ minWidth: 650 }}>
             <TableHead className="table-head">
               <TableRow>
@@ -62,7 +62,7 @@ export const CustomerHistory = () => {
                     state,
                     codeReservation,
                   }) => (
-                    <TableRow key={titleService}>
+                    <TableRow key={codeReservation}>
                       <TableCell className="font">{titleService}</TableCell>
                       <TableCell className="font">{nameCategory}</TableCell>
                       <TableCell className="font">{tradeName}</TableCell>
@@ -79,7 +79,7 @@ export const CustomerHistory = () => {
                 )}
             </TableBody>
           </Table>
-        </TableContainer> */}
+        </TableContainer>
       </div>
     </>
   );

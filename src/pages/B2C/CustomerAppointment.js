@@ -48,8 +48,8 @@ export const CustomerAppointment = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data[0] &&
-                data[0].map(
+              {data &&
+                data.map(
                   ({
                     titleService,
                     nameCategory,
@@ -61,7 +61,7 @@ export const CustomerAppointment = () => {
                     state,
                     codeReservation,
                   }) => (
-                    <TableRow key={titleService}>
+                    <TableRow key={codeReservation}>
                       <TableCell className="font">{titleService}</TableCell>
                       <TableCell className="font">{nameCategory}</TableCell>
                       <TableCell className="font">{tradeName}</TableCell>

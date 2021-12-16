@@ -6,9 +6,8 @@ export const clientAppointmentHistory = (token) => {
   return async (dispatch) => {
     try {
       const { data } = await handleGetReservationHistoryByCustomer(token);
-      console.log(data);
       if (data.response === "true") {
-        dispatch(clientAppointHistory(...data.data));
+        dispatch(clientAppointHistory(data.data));
       } else if (data.response === "false") {
         dispatch(modalOpen(data.message));
       }
@@ -24,6 +23,6 @@ export const clientAppointmentHistory = (token) => {
 };
 
 export const clientAppointHistory = (data) => ({
-  type: types.clientAppointments,
+  type: types.clientAppointmentsHistory,
   payload: data,
 });

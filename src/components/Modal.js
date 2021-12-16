@@ -119,15 +119,15 @@ export const MyDialog = ({ modal, text, ...props }) => {
   );
 };
 
-export const MyFormikDialog = ({ modal, text, setChecked, setTermsModal }) => {
+export const MyFormikDialog = ({ modal, setChecked, setTermsModal }) => {
   const classes = useStyles();
+  const { terms } = useSelector((state) => state.terms);
   const { setFieldValue } = useFormikContext();
   const handleClose = () => {
     setTermsModal(false);
   };
 
   const handleTerms = (id) => {
-    // const Formik = this.form;
     if (id === 1) {
       setChecked(true);
       setTermsModal(false);
@@ -146,16 +146,13 @@ export const MyFormikDialog = ({ modal, text, setChecked, setTermsModal }) => {
         scroll="paper"
         className={classes.root}
       >
-        {/* {text.map((text) => {
+        {terms.map((term) => {
           return (
             <DialogContent key={"1"}>
-              <div dangerouslySetInnerHTML={{ __html: text.value }} />
+              <div dangerouslySetInnerHTML={{ __html: term.value }} />
             </DialogContent>
           );
-        })} */}
-        <DialogContent>
-          <h1>Hola</h1>
-        </DialogContent>
+        })}
         <DialogActions style={{ justifyContent: "center" }}>
           <MyButton
             onClick={() => handleTerms(1)}

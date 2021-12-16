@@ -7,7 +7,6 @@ export const RedirectClientRoute = ({
   component: Component,
   ...rest
 }) => {
-  console.log(workflow);
   return (
     <Route
       {...rest}

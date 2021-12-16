@@ -7,7 +7,7 @@ export const clientAppointmentHistory = (state = initialState, action) => {
   switch (action.type) {
     case types.clientAppointmentsHistory:
       return {
-        data: [action.payload],
+        data: action.payload,
       };
     case types.clientLogout:
       return {

@@ -347,6 +347,8 @@ button {
       BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
       "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
     text-transform: none !important;
+    color: black !important;
+    font-weight: bold !important;
   }
 
   &:disabled {
@@ -848,6 +850,7 @@ button {
   margin: auto;
   .flip-card {
     min-width: 300px;
+    max-width: 350px;
     height: 350px;
     display: inline-block;
     margin: 0 30px 30px 0;
@@ -1236,7 +1239,7 @@ button {
   border-bottom: solid 4px #232323;
   .carousel-background {
     background: rgba(0, 0, 0, 0.3);
-    height: 580px;
+    height: 370px;
     @include mobile {
       height: 200px;
     }
@@ -1244,13 +1247,14 @@ button {
   .content {
     height: 100%;
     width: 25%;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 5%;
   }
   .title {
-    padding-top: 5vh;
-    padding-left: 50px;
+    padding-top: 0;
+    padding-left: 11%;
+    h2 {
+      margin: 10px 0;
+      padding: 0;
+    }
     @include mobile {
       padding-top: 0;
       padding-left: 8px;
@@ -1425,7 +1429,7 @@ button {
   align-items: center;
   transition: 0.5s ease;
   opacity: 1;
-  margin-left: 8vw;
+  margin-left: 15vw;
   margin-top: -120px;
   border-radius: 50%;
 
@@ -1435,23 +1439,23 @@ button {
     height: 140px;
   }
   @include mobile {
-    margin-top: -30px;
+    margin-top: -60px;
     width: 90px;
     height: 90px;
   }
   img {
     position: absolute;
-    width: 250px;
-    height: 235px;
+    width: 200px;
+    height: 185px;
     border-radius: 50%;
     border: #fedd00 5px solid !important;
     @include tablet {
-      width: 200px;
-      height: 190px;
+      width: 180px;
+      height: 170px;
     }
     @include mobile {
-      width: 120px;
-      height: 120px;
+      width: 100px;
+      height: 100px;
     }
   }
 }
@@ -1904,7 +1908,7 @@ button {
 
 .question-container {
   width: 40%;
-  margin: 40px auto;
+  margin: 140px auto;
   @include tablet {
     width: 80%;
   }
@@ -2028,4 +2032,72 @@ button {
   @include mobile {
     display: unset;
   }
+}
+
+.reserve-detail-container {
+  max-width: 800px;
+  margin: auto;
+  .reserve-details {
+    .reserve-detail-title {
+      text-align: center;
+    }
+    .reserve-detail-service {
+      text-align: center;
+    }
+    .reserve-detail-address {
+      text-align: center;
+      // color: rgba(0, 0, 0, 0.5);
+      color: #23232399;
+    }
+    .reserve-detail-details {
+      max-width: 600px;
+      margin: auto;
+      margin-bottom: 10px;
+      .reserve-table {
+        display: flex;
+        .detail-left {
+          border: 0.5px solid #c4c4c4;
+          border-right: 0;
+          width: 50%;
+          padding: 15px;
+        }
+        .detail-right {
+          border: 1px solid #c4c4c4;
+          width: 50%;
+          padding: 15px;
+        }
+      }
+    }
+    .reserve-disclaimer {
+      margin: auto;
+      text-align: center;
+      color: #232323;
+      max-width: 600px;
+    }
+  }
+  .reserve-accions {
+    display: flex;
+    justify-content: space-between;
+    button {
+      width: 40%;
+    }
+  }
+}
+
+.shopping-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .empty-container {
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.table-container {
+  width: 100%;
 }

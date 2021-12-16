@@ -4,6 +4,10 @@ import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 
 import { checkAuth } from "../actions/auth";
 import { loadCategorys } from "../actions/category";
+import { checkShoppingItems } from "../actions/shoppingCar";
+import { CookiesBanner } from "../components/CookiesBanner";
+import { Footer } from "../components/Footer";
+import ScrollToTop from "../components/ScrollToTop";
 import { BusinessRoute } from "./BusinessRouter";
 import { PublicRouter } from "./PublicRouter";
 import { RedirectBusinessRoute } from "./RedirectBusinessRoute";
@@ -17,6 +21,7 @@ export const SeparalopeRouter = () => {
   useEffect(() => {
     dispatch(checkAuth());
     dispatch(loadCategorys());
+    dispatch(checkShoppingItems());
   }, [dispatch]);
 
   if (check) {
@@ -25,13 +30,15 @@ export const SeparalopeRouter = () => {
 
   return (
     <Router>
-      <div style={{ minHeight: "100vh" }}>
+      <div style={{ minHeight: "80vh" }}>
+        <ScrollToTop />
         <Switch>
           <RedirectBusinessRoute
             path="/business/"
             workflow={workflow}
             component={BusinessRoute}
           />
+
           <RedirectPublicRoute
             path="/"
             workflow={workflow}
@@ -41,6 +48,8 @@ export const SeparalopeRouter = () => {
           <Redirect to="/" />
         </Switch>
       </div>
+      <Footer />
+      <CookiesBanner />
     </Router>
   );
 };

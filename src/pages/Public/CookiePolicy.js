@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { BUSINESS_NAME, COMERCIAL_NAME } from "../../utils/constants";
 
 export const CookiePolicy = () => {
@@ -10,10 +11,10 @@ export const CookiePolicy = () => {
         <p>
           {BUSINESS_NAME} (en adelante, “{COMERCIAL_NAME}”) describe en este
           documento la “Política de Cookies” que regula este sitio web (
-          <a href="/cookie-policy">DOMINIO</a>) con el objetivo de garantizar la
-          privacidad del usuario del sitio web (en adelante “EL USUARIO”). El
-          sitio web es propiedad de {COMERCIAL_NAME}, con domicilio en
-          DIRECCIÓN.
+          <Link to="/cookie-policy">DOMINIO</Link>) con el objetivo de
+          garantizar la privacidad del usuario del sitio web (en adelante “EL
+          USUARIO”). El sitio web es propiedad de {COMERCIAL_NAME}, con
+          domicilio en DIRECCIÓN.
           <br />
           <br />
           Estas cookies permiten a {COMERCIAL_NAME} facilitar el uso y

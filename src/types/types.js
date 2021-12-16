@@ -57,4 +57,19 @@ export const types = {
   clientAppointments: "[Client Appointments] Client Appointments Loaded ",
   clientAppointmentsHistory:
     "[Client Appointments] Client Appointments History Loaded ",
+
+  categoryComplaintList: "[Category Complaint] Category Complaint List Loaded",
+
+  termsLoad: "[Terms] Terms Loaded",
+
+  serviceForEditData: "[Service] Service For Edit Loaded",
+
+  serviceEdit: "[Service] Service Edited",
+  serviceDelete: "[Service] Service Deleted Redirect",
+  serviceDeleteFinish: "[Service] Service Deleted Redirect Finished",
+  serviceHoursListLoad: "[Service] Service Hours Loaded",
+  serviceHoursAttentionLoad: "[Service] Service Hours Attention Loaded",
+
+  shoppingCarItemsAdd: "[Shopping Car] Shopping Car Item Added",
+  shoppingCarItemsLoad: "[Shopping Car] Shopping Car Item Load",
 };

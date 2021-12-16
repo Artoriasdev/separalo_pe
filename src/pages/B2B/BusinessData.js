@@ -432,7 +432,7 @@ export const BusinessData = () => {
           numDocumento: "",
           ingreso: "[0-9]",
           maxLengthValue: 8,
-          minLengthValue: 8,
+          minLengthValue: 5,
         }}
         validate={(values) => {
           const errors = {};

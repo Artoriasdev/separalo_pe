@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { AppBar, Button, Tab, Toolbar, Tabs, Box } from "@mui/material";
 
 import LogoSVG from "../assets/images/logo01.svg";
+import Shopping from "../assets/images/ShoppingCart.svg";
 import { NavbarSectionPublic } from "./NavbarSectionPublic";
 import { NavbarSectionClient } from "./NavbarSectionClient";
 
@@ -16,6 +17,10 @@ const Navbar = () => {
 
   const handleRedirectHome = () => {
     history.push("/");
+  };
+
+  const handleRedirectShopping = () => {
+    history.push("/shopping");
   };
 
   const handleChange = (event, newValue) => {
@@ -49,6 +54,19 @@ const Navbar = () => {
             ) : (
               <NavbarSectionPublic />
             )}
+            <Button
+              className=""
+              onClick={handleRedirectShopping}
+              style={{
+                textTransform: "none",
+                backgroundColor: "black",
+                marginTop: "-5px",
+                height: "46px",
+                borderRadius: "0",
+              }}
+            >
+              <img src={Shopping} alt="logo" style={{ height: "23px" }} />
+            </Button>
           </Toolbar>
         </AppBar>
       </Box>

@@ -16,7 +16,6 @@ import {
 export const ReserveComplete = () => {
   const history = useHistory();
   const { reservationUser } = useSelector((state) => state.reservation);
-  console.log(reservationUser);
 
   useEffect(() => {
     if (reservationUser.length === 0) history.push("/");

@@ -12,7 +12,6 @@ import {
 } from "../helpers/styled";
 
 const Menu = (props) => {
-  console.log("aacaaa llegooo");
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
 

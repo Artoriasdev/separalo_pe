@@ -1,366 +1,245 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+
 import {
-  Backdrop,
   Button,
-  Fade,
   IconButton,
   InputAdornment,
-  Modal,
   OutlinedInput,
   TextField,
-} from "@material-ui/core";
-import { Visibility, VisibilityOff } from "@material-ui/icons";
-import axios from "axios";
-import { ErrorMessage, Formik } from "formik";
-import React, { Component } from "react";
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+
+import { ErrorMessage, Formik, useFormikContext } from "formik";
+
 import { MATCH, PASSN_MINLENGTH, PASS_INVALID } from "../../utils/constants";
 import { PASSWORD_REGEXP } from "../../utils/regexp";
+import { MyModal } from "../../components/Modal";
+import { passwordRestore } from "../../actions/passwordRecovery";
 
-class PasswordRestore extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modal: false,
-      response: false,
-      message: "",
-      show: false,
-      show2: false,
-    };
-  }
+const FormText = () => {
+  const { values, errors, touched, handleChange, handleBlur, setFieldValue } =
+    useFormikContext();
 
-  componentDidMount() {
-    if (sessionStorage.getItem("tk") === null) {
-      try {
-        const Formik = this.form;
-        Formik.setFieldValue("correo", localStorage.getItem("correo"));
-      } catch (e) {
-        console.log(e);
+  useEffect(() => {
+    if (localStorage.getItem("Recover email") !== null) {
+      setFieldValue("correo", localStorage.getItem("Recover email"), true);
+      localStorage.removeItem("Recover email");
+    }
+  }, [setFieldValue]);
+
+  return (
+    <>
+      <TextField
+        type="email"
+        name="correo"
+        className="TxtField"
+        variant="outlined"
+        label="Correo electronico"
+        value={values.correo}
+        required
+        error={!!errors.correo && touched.correo}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        fullWidth
+        style={{
+          marginTop: "10px",
+          marginBottom: "10px",
+        }}
+      />
+    </>
+  );
+};
+
+export const PasswordRestore = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const params = useParams();
+  const { logged } = useSelector((state) => state.auth);
+  const [show, setShow] = useState(false);
+  const [show2, setShow2] = useState(false);
+
+  useEffect(() => {
+    if (logged) history.push("/");
+    else if (params.value !== "C") {
+      if (params.value !== "B") {
+        history.push("/");
       }
-    } else {
-      this.props.history.push("/");
     }
-  }
+  }, [history, params.value, logged]);
 
-  handleRecovery = async (RecoveryModel) => {
-    var headers = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: "",
-    };
-    let linkLoginApi = `${process.env.REACT_APP_PATH_SERVICE}/user/passwordRestore`;
-
-    const rspApi = axios
-      .post(linkLoginApi, RecoveryModel, {
-        headers: headers,
-      })
-      .then((response) => {
-        const { data } = response;
-
-        if (data.response === "true") {
-          this.setState({
-            modal: true,
-            message: data.message,
-            response: true,
-          });
-        } else if (data.response === "false") {
-          this.setState({
-            modal: true,
-            message: data.message,
-          });
-        }
-        return response;
-      })
-      .catch(({ response }) => {
-        console.log(response.data.message);
-        this.setState({
-          modal: true,
-          message:
-            "Ha ocurrido un error, porfavor refresque la página o intentelo más tarde",
-        });
-      });
-    return rspApi;
-  };
-
-  handleClose = () => {
-    this.setState({
-      modal: false,
-    });
-    if (this.state.response === true) {
-      this.props.history.push(`/login/${this.props.match.params.value}`);
-      localStorage.removeItem("correo");
-    }
-  };
-
-  handleShowPassword = (id) => {
+  const handleShowPassword = (id) => {
     if (id === 1) {
-      this.setState({
-        show: !this.state.show,
-      });
+      setShow(!show);
     } else if (id === 2) {
-      this.setState({
-        show2: !this.state.show2,
-      });
+      setShow2(!show2);
     }
   };
+  return (
+    <>
+      <MyModal link={`/login/${params.value}`} />
+      <div
+        className="page-container"
+        style={{ margin: "11%  auto", padding: "0" }}
+      >
+        <div className="login">
+          {params.value === "C" ? (
+            <h3 className="register__subtitle">Soy un cliente</h3>
+          ) : (
+            <h3 className="register__subtitle">Doy un servicio</h3>
+          )}
+          <h1>Restaurar contraseña</h1>
+          <div style={{ textAlign: "center" }}>
+            <Formik
+              initialValues={{
+                correo: "",
+                contraseña: "",
+                repetirContraseña: "",
+              }}
+              validate={(values) => {
+                const errors = {};
 
-  render() {
-    return (
-      <>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          open={this.state.modal}
-          closeAfterTransition
-          onClose={this.handleClose}
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-          className="modal-container"
-        >
-          <Fade in={this.state.modal}>
-            <div className="modal-message-container">
-              <p>{this.state.message}</p>
-              <Button
-                size="large"
-                color="primary"
-                variant="contained"
-                className="btn-primary"
-                onClick={this.handleClose}
-              >
-                Aceptar
-              </Button>
-            </div>
-          </Fade>
-        </Modal>
-        <div
-          className="page-container"
-          style={{ margin: "11%  auto", padding: "0" }}
-        >
-          <div className="login">
-            {this.props.match.params.value === "C" ? (
-              <h3 className="register__subtitle">Soy un cliente</h3>
-            ) : (
-              <h3 className="register__subtitle">Doy un servicio</h3>
-            )}
-            <h1>Restaurar contraseña</h1>
-            <div style={{ textAlign: "center" }}>
-              <Formik
-                ref={(ref) => (this.form = ref)}
-                initialValues={{
-                  correo: "",
-                  contraseña: "",
-                  repetirContraseña: "",
-                }}
-                validate={(values) => {
-                  const { contraseña, repetirContraseña } = values;
-                  let errors = {};
+                if (!values.contraseña) {
+                  errors.contraseña = "";
+                } else if (
+                  !PASSWORD_REGEXP.test(values.contraseña) ||
+                  values.contraseña.length < PASSN_MINLENGTH
+                ) {
+                  errors.contraseña = PASS_INVALID;
+                }
 
-                  if (!contraseña) {
-                    errors.contraseña = "";
-                  } else if (
-                    !PASSWORD_REGEXP.test(contraseña) ||
-                    contraseña.length < PASSN_MINLENGTH
-                  ) {
-                    errors.contraseña = PASS_INVALID;
-                  }
+                if (!values.repetirContraseña) {
+                  errors.repetirContraseña = "";
+                } else if (
+                  !PASSWORD_REGEXP.test(values.repetirContraseña) ||
+                  values.repetirContraseña.length < PASSN_MINLENGTH
+                ) {
+                  errors.repetirContraseña = PASS_INVALID;
+                } else if (values.contraseña !== values.repetirContraseña) {
+                  errors.repetirContraseña = MATCH;
+                }
 
-                  if (!repetirContraseña) {
-                    errors.repetirContraseña = "";
-                  } else if (
-                    !PASSWORD_REGEXP.test(repetirContraseña) ||
-                    repetirContraseña.length < PASSN_MINLENGTH
-                  ) {
-                    errors.repetirContraseña = PASS_INVALID;
-                  } else if (contraseña !== repetirContraseña) {
-                    errors.repetirContraseña = MATCH;
-                  }
+                return errors;
+              }}
+              onSubmit={(values, { setSubmitting }) => {
+                setSubmitting(false);
+                const RecoveryModel = {
+                  email: "",
+                  workflow: "",
+                  newPassword: "",
+                  confirmNewPassword: "",
+                };
 
-                  return errors;
-                }}
-                onSubmit={(values, { setSubmitting }) => {
-                  setSubmitting(false);
-                  const RecoveryModel = {
-                    email: "",
-                    workflow: "",
-                    newPassword: "",
-                    confirmNewPassword: "",
-                  };
+                RecoveryModel.email = values.correo;
+                RecoveryModel.newPassword = values.contraseña;
+                RecoveryModel.confirmNewPassword = values.repetirContraseña;
+                RecoveryModel.workflow = params.value;
 
-                  RecoveryModel.email = values.correo;
-                  RecoveryModel.newPassword = values.contraseña;
-                  RecoveryModel.confirmNewPassword = values.repetirContraseña;
-                  RecoveryModel.workflow = this.props.match.params.value;
-
-                  (async () => {
-                    await this.handleRecovery(RecoveryModel);
-                  })();
-                }}
-              >
-                {({
-                  values,
-                  handleBlur,
-                  handleChange,
-                  handleSubmit,
-                  isSubmitting,
-                  errors,
-                  touched,
-                }) => (
-                  <form name="formLogin" onSubmit={handleSubmit}>
-                    <div className="files">
-                      <TextField
-                        type="email"
-                        name="correo"
-                        className="TxtField"
-                        variant="outlined"
-                        label="Correo electronico"
-                        value={values.correo}
-                        required
-                        error={errors.correo && touched.correo}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
+                (async () => {
+                  dispatch(passwordRestore(RecoveryModel));
+                })();
+              }}
+            >
+              {({
+                values,
+                handleBlur,
+                handleChange,
+                handleSubmit,
+                isSubmitting,
+                errors,
+                touched,
+              }) => (
+                <form name="formLogin" onSubmit={handleSubmit}>
+                  <div className="files">
+                    <FormText />
+                  </div>
+                  <div className="files">
+                    <div className="txt-left-nomid">
+                      <OutlinedInput
+                        name="contraseña"
                         fullWidth
-                        style={{
-                          marginTop: "10px",
-                          marginBottom: "10px",
-                        }}
-                        // inputProps={{
-                        //   maxLength: 9,
-                        // }}
+                        required
+                        autoComplete="off"
+                        type={show ? "text" : "password"}
+                        value={values.contraseña}
+                        error={!!errors.contraseña && touched.contraseña}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={() => handleShowPassword(1)}
+                              edge="end"
+                            >
+                              {show ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                        placeholder="Contraseña"
+                      />
+                      <ErrorMessage
+                        className="error"
+                        name="contraseña"
+                        component="div"
                       />
                     </div>
-                    <div className="files">
-                      <div className="txt-left">
-                        {/* <TextField
-                          name="contraseña"
-                          className="TxtField"
-                          variant="outlined"
-                          placeholder="Ingresa tu nueva contraseña"
-                          required
-                          fullWidth
-                          value={values.contraseña}
-                          error={errors.contraseña && touched.contraseña}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          type={this.state.viewPassword ? "text" : "password"}
-
-                          // inputProps={{
-                          //   maxLength: 9,
-                          // }}
-                        /> */}
-                        <OutlinedInput
-                          name="contraseña"
-                          fullWidth
-                          required
-                          autoComplete="off"
-                          type={this.state.show ? "text" : "password"}
-                          value={values.contraseña}
-                          error={errors.contraseña && touched.contraseña}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          endAdornment={
-                            <InputAdornment position="end">
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={() => this.handleShowPassword(1)}
-                                edge="end"
-                              >
-                                {this.state.show ? (
-                                  <Visibility />
-                                ) : (
-                                  <VisibilityOff />
-                                )}
-                              </IconButton>
-                            </InputAdornment>
-                          }
-                          placeholder="Contraseña"
-                        />
-                        <ErrorMessage
-                          className="error"
-                          name="contraseña"
-                          component="div"
-                        />
-                      </div>
-                      <div className="txt-right">
-                        {/* <TextField
-                          name="repetirContraseña"
-                          className="TxtField"
-                          variant="outlined"
-                          placeholder="Repite tu nueva contraseña"
-                          value={values.repetirContraseña}
-                          required
-                          fullWidth
-                          error={
-                            errors.repetirContraseña &&
-                            touched.repetirContraseña
-                          }
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          type={this.state.viewPassword ? "text" : "password"}
-
-                          // inputProps={{
-                          //   maxLength: 9,
-                          // }}
-                        /> */}
-                        <OutlinedInput
-                          name="repetirContraseña"
-                          fullWidth
-                          required
-                          autoComplete="off"
-                          type={this.state.show2 ? "text" : "password"}
-                          value={values.repetirContraseña}
-                          error={
-                            errors.repetirContraseña &&
-                            touched.repetirContraseña
-                          }
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          endAdornment={
-                            <InputAdornment position="end">
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={() => this.handleShowPassword(2)}
-                                edge="end"
-                              >
-                                {this.state.show2 ? (
-                                  <Visibility />
-                                ) : (
-                                  <VisibilityOff />
-                                )}
-                              </IconButton>
-                            </InputAdornment>
-                          }
-                          placeholder="Repite tu nueva contraseña"
-                        />
-                        <ErrorMessage
-                          className="error"
-                          name="repetirContraseña"
-                          component="div"
-                        />
-                      </div>
+                    <div className="txt-right-nomid">
+                      <OutlinedInput
+                        name="repetirContraseña"
+                        fullWidth
+                        required
+                        autoComplete="off"
+                        type={show2 ? "text" : "password"}
+                        value={values.repetirContraseña}
+                        error={
+                          !!errors.repetirContraseña &&
+                          touched.repetirContraseña
+                        }
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={() => handleShowPassword(2)}
+                              edge="end"
+                            >
+                              {show2 ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                        placeholder="Repite tu nueva contraseña"
+                      />
+                      <ErrorMessage
+                        className="error"
+                        name="repetirContraseña"
+                        component="div"
+                      />
                     </div>
+                  </div>
 
-                    <Button
-                      size="large"
-                      color="primary"
-                      variant="contained"
-                      className="btn-primary"
-                      style={{
-                        width: "80%",
-                        margin: "10px auto",
-                      }}
-                      type="submit"
-                    >
-                      Enviar
-                    </Button>
-                  </form>
-                )}
-              </Formik>
-            </div>
+                  <Button
+                    size="large"
+                    color="primary"
+                    variant="contained"
+                    className="btn-primary"
+                    disabled={isSubmitting}
+                    style={{
+                      width: "80%",
+                      margin: "10px auto",
+                    }}
+                    type="submit"
+                  >
+                    Enviar
+                  </Button>
+                </form>
+              )}
+            </Formik>
           </div>
         </div>
-      </>
-    );
-  }
-}
-
-export default PasswordRestore;
+      </div>
+    </>
+  );
+};

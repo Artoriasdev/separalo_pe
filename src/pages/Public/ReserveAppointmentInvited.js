@@ -17,8 +17,7 @@ import { handleRegexDisable } from "../../utils/utilitaries";
 import { serviceById } from "../../actions/serviceById";
 import { hoursId } from "../../actions/hoursById";
 import { reservation } from "../../actions/reservation";
-
-// import FullPageLoader from "../components/FullPageLoader";
+import { termsLoad } from "../../actions/termsLoad";
 
 export const ReserveAppointmentInvited = () => {
   const params = useParams();
@@ -30,6 +29,10 @@ export const ReserveAppointmentInvited = () => {
   const { serviceId, serviceDate } = useSelector((state) => state.serviceById);
   const { hoursById } = useSelector((state) => state.hoursById);
 
+  if (termsModal) {
+    dispatch(termsLoad(2));
+  }
+
   useEffect(() => {
     if (logged) history.push("/");
     dispatch(serviceById(params.id));
@@ -37,8 +40,7 @@ export const ReserveAppointmentInvited = () => {
 
   return (
     <div>
-      {/* <FullPageLoader isLoading={this.state.isLoading} /> */}
-      <MyModal link="/reserve-complete" />
+      <MyModal link="/reserve-detail" />
 
       <div className="page-container">
         <div className="login">
@@ -81,7 +83,9 @@ export const ReserveAppointmentInvited = () => {
               horarioDisponible: Yup.string().required("Requerido"),
               nombre: Yup.string().required("Requerido"),
               apellido: Yup.string().required("Requerido"),
-              checkbox: Yup.boolean().required("Requerido"),
+              checkbox: Yup.boolean().required(
+                "Debes aceptar los términos y condiciones"
+              ),
             })}
             onSubmit={(values, { setSubmitting }) => {
               setSubmitting(false);

@@ -135,7 +135,6 @@ class BusinessProfileBank extends Component {
         .then((response) => {
           if (response.data.response === "true") {
             const { data } = response.data;
-            console.log(data);
             this.setState({
               formModel: data,
             });

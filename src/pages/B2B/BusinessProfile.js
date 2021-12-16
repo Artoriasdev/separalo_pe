@@ -43,7 +43,6 @@ export const BusinessProfile = () => {
       if (ext === "jpg" || ext === "png" || ext === "jpeg") {
         const sizeFile = file.size;
         if (sizeFile < 1048576) {
-          console.log(file, "logo");
           dispatch(logoUpload(file, token));
         } else {
           dispatch(modalOpen(wMessage));
@@ -64,7 +63,6 @@ export const BusinessProfile = () => {
       if (ext === "jpg" || ext === "png" || ext === "jpeg") {
         const sizeFile = file.size;
         if (sizeFile < 1048576) {
-          // console.log(file, "banner");
           dispatch(bannerUpload(file, token));
         } else {
           dispatch(modalOpen(wMessage));

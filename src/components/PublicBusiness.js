@@ -1,12 +1,8 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-} from "@mui/material";
+import { Button } from "@mui/material";
 import React from "react";
+import { BackSide, Flippy, FrontSide } from "react-flippy";
 import { useHistory } from "react-router";
+import { RatingService } from "../helpers/RatingService";
 
 export const PublicBusiness = ({ typeBusiness, category }) => {
   const history = useHistory();
@@ -15,33 +11,74 @@ export const PublicBusiness = ({ typeBusiness, category }) => {
   };
 
   return (
-    <div>
+    <div className="flip-container">
       {typeBusiness &&
-        typeBusiness.map(({ id, tradename, logo }) => (
-          <Card className="card-container" key={id}>
-            <CardMedia image={logo} title={tradename} className="card-media" />
-
-            <CardContent className="card-content">
-              <Typography gutterBottom variant="h5" component="h2">
-                {tradename}
-              </Typography>
-            </CardContent>
-
-            <Button
-              size="large"
-              color="primary"
-              variant="contained"
-              className="btn_card"
-              style={{
-                margin: "0.5px 0",
-                textTransform: "none",
-              }}
-              fullWidth
-              onClick={() => handleRedirect(id)}
-            >
-              Ver servicios
-            </Button>
-          </Card>
+        typeBusiness.map(({ id, tradename, logo, cardDescription }) => (
+          <Flippy
+            flipOnHover={true}
+            flipOnClick={false}
+            flipDirection="horizontal"
+            className="flip-card"
+            key={id}
+          >
+            <FrontSide className="flip-card-background">
+              <div
+                className="flip-card-service"
+                style={{
+                  height: "92%",
+                }}
+              >
+                <img
+                  src={logo}
+                  alt="logo"
+                  style={{ height: "240px", width: "300px" }}
+                />
+                <h2>{tradename}</h2>
+              </div>
+              <Button
+                size="large"
+                color="primary"
+                variant="contained"
+                className="btn_card"
+                style={{
+                  margin: "0.5px 0",
+                  textTransform: "none",
+                  maxWidth: "349px",
+                }}
+                fullWidth
+                onClick={() => handleRedirect(id)}
+              >
+                Ver servicios
+              </Button>
+            </FrontSide>
+            <BackSide className="flip-card-background">
+              <div
+                className="flip-card-service"
+                style={{
+                  height: "92%",
+                }}
+              >
+                <h2>{tradename}</h2>
+                <RatingService rate={5} />
+                <p style={{ textAlign: "justify" }}>{cardDescription}</p>
+              </div>
+              <Button
+                size="large"
+                color="primary"
+                variant="contained"
+                className="btn_card"
+                style={{
+                  margin: "0.5px 0",
+                  textTransform: "none",
+                  maxWidth: "349px",
+                }}
+                fullWidth
+                onClick={() => handleRedirect(id)}
+              >
+                Ver servicios
+              </Button>
+            </BackSide>
+          </Flippy>
         ))}
     </div>
   );

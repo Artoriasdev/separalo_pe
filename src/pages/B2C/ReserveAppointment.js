@@ -1,432 +1,245 @@
-import React from "react";
-import { Formik, ErrorMessage } from "formik";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
 
-import {
-  Backdrop,
-  Button,
-  Fade,
-  MenuItem,
-  Modal,
-  Select,
-  TextField,
-  Dialog,
-  DialogContent,
-  DialogActions,
-  FormControlLabel,
-  Checkbox,
-} from "@mui/material";
-import axios from "axios";
+import { Form, Formik, useFormikContext } from "formik";
+
+import { MenuItem, Select, TextField } from "@mui/material";
+
 import { handleRegexDisable } from "../../utils/utilitaries";
-import { MyModal } from "../../components/Modal";
+import { MyFormikDialog, MyModal } from "../../components/Modal";
+import { clientData } from "../../actions/clientData";
+import { hoursId } from "../../actions/hoursById";
+import { serviceById } from "../../actions/serviceById";
+import { MyButton, MyCheckbox } from "../../components/Fields";
+import { reservationClient } from "../../actions/reservation";
+import { termsLoad } from "../../actions/termsLoad";
 
-const styles = (theme) => ({
-  dialog: {
-    "& .MuiDialog-paperWidthSm": {
-      maxWidth: "700px",
-    },
-  },
-});
+const FormRegister = () => {
+  const params = useParams();
+  const dispatch = useDispatch();
+  const { values, errors, touched, handleBlur, handleChange, setFieldValue } =
+    useFormikContext();
+  const { data } = useSelector((state) => state.clientData);
+  const { serviceId, serviceDate } = useSelector((state) => state.serviceById);
+  const { hoursById } = useSelector((state) => state.hoursById);
 
-export const ReserveAppointment = () => {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     customerData: [],
-  //     serviceData: [],
-  //     dateData: [],
-  //     hourData: [],
-  //     date: "",
-  //     modal: false,
-  //     response: false,
-  //     message: "",
-  //     isLoading: false,
-  //     errorTerms: false,
-  //     checked: false,
-  //     termsModal: false,
-  //     terms: [],
-  //   };
-  // }
-
-  // componentDidMount() {
-  //   if (sessionStorage.getItem("workflow") === "C") {
-  //     try {
-  //       this.handleGetCustomer();
-  //       this.handleGetServicesById();
-  //       this.handleGetAvailableDateService();
-  //       this.handleGetAvailableScheduleService();
-  //       this.handleGetTerms();
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   } else {
-  //     this.props.history.push("/");
-  //   }
-  // }
-
-  handleGetCustomer = async () => {
-    try {
-      const tk = sessionStorage.getItem("tk");
-      var headers = {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${tk}`,
-      };
-
-      let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/customer/getCustomer`;
-
-      const rspApi = await axios
-        .get(linkDocumentsApi, {
-          headers: headers,
-        })
-        .then((response) => {
-          if (response.data.response === "true") {
-            const { data } = response.data;
-            this.setState({
-              customerData: data,
-            });
-            console.log(data);
-
-            const Formik = this.form;
-            Formik.setFieldValue("celular", this.state.customerData[0].mobile);
-            Formik.setFieldValue("correo", this.state.customerData[0].email);
-          } else {
-            this.setState({
-              modal: true,
-              message: "Usted no esta autorizado para ver esta información",
-            });
-          }
-          return response;
-        })
-        .catch((error) => {
-          const { status } = error.response;
-          if (status === 401) {
-            sessionStorage.removeItem("tk");
-            sessionStorage.removeItem("logo");
-            sessionStorage.removeItem("logged");
-            sessionStorage.removeItem("workflow");
-            sessionStorage.removeItem("tradename");
-            sessionStorage.removeItem("info");
-            sessionStorage.removeItem("id");
-            this.setState({
-              modal: true,
-              message: "Sesión expirada, porfavor vuelva a iniciar sesión",
-              isLoading: false,
-              forceRedirect: true,
-            });
-          } else {
-            this.setState({
-              modal: true,
-              message:
-                "Ha ocurrido un error, porfavor refresque la página o intentelo más tarde",
-            });
-          }
-        });
-      return rspApi;
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    if (data[0] !== undefined) {
+      setFieldValue("correo", data[0].email, true);
+      setFieldValue("celular", data[0].mobile, true);
     }
-  };
+    if (serviceId[0] !== undefined) {
+      setFieldValue("servicio", serviceId[0].title, true);
+      setFieldValue("duracion", serviceId[0].duration, true);
+      setFieldValue(
+        "precio",
+        serviceId[0].currencySymbol + " " + serviceId[0].price,
+        true
+      );
+    }
+  }, [data, serviceId, setFieldValue]);
 
-  handleGetServicesById = () => {
-    const id = this.props.match.params.id;
-    var headers = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: ``,
-    };
-
-    let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/service/getServicesById/${id}`;
-
-    const rspApi = axios
-      .get(linkDocumentsApi, {
-        headers: headers,
-      })
-      .then((response) => {
-        const { data } = response.data;
-
-        this.setState({
-          serviceData: data,
-        });
-        console.log(data);
-        const Formik = this.form;
-        Formik.setFieldValue("servicio", this.state.serviceData[0].title);
-        Formik.setFieldValue("duracion", this.state.serviceData[0].duration);
-        Formik.setFieldValue(
-          "precio",
-          this.state.serviceData[0].currencySymbol +
-            ". " +
-            this.state.serviceData[0].price
-        );
-
-        return response;
-      })
-      .catch((error) => {
-        console.log(error);
-        this.setState({
-          modal: true,
-          message:
-            "Ha ocurrido un error, porfavor refresque la página o intentelo más tarde",
-        });
-      });
-    return rspApi;
-  };
-
-  handleGetAvailableDateService = () => {
-    const id = this.props.match.params.id;
-    var headers = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: ``,
-    };
-
-    let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/reservation/getAvailableDateService/${id}`;
-
-    const rspApi = axios
-      .get(linkDocumentsApi, {
-        headers: headers,
-      })
-      .then((response) => {
-        const { data } = response.data;
-
-        this.setState({
-          dateData: data,
-        });
-        // console.log(data);
-
-        return response;
-      })
-      .catch((error) => {
-        console.log(error);
-        this.setState({
-          modal: true,
-          message:
-            "Ha ocurrido un error, porfavor refresque la página o intentelo más tarde",
-        });
-      });
-    return rspApi;
-  };
-
-  handleGetAvailableScheduleService = (date) => {
-    const id = this.props.match.params.id;
-    var headers = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: ``,
-    };
-
-    let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/reservation/getAvailableScheduleService/${id}/${date}`;
-
-    const rspApi = axios
-      .get(linkDocumentsApi, {
-        headers: headers,
-      })
-      .then((response) => {
-        const { data } = response.data;
-        console.log(data);
-
-        this.setState({
-          hourData: data,
-        });
-        // console.log(data);
-
-        return response;
-      })
-      .catch((error) => {
-        console.log(error);
-        this.setState({
-          modal: true,
-          message:
-            "Ha ocurrido un error, porfavor refresque la página o intentelo más tarde",
-        });
-      });
-    return rspApi;
-  };
-
-  handleGetTerms = () => {
-    var headers = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: "",
-    };
-
-    let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/generic/getTemplates/2`;
-
-    const rspApi = axios
-      .get(linkDocumentsApi, {
-        headers: headers,
-      })
-      .then((response) => {
-        const { data } = response.data;
-        console.log(data);
-
-        this.setState({
-          terms: data,
-        });
-
-        return response;
-      })
-      .catch((error) => {
-        console.log(error);
-        this.setState({
-          modal: true,
-          message:
-            "Ha ocurrido un error, porfavor refresque la página o intentelo más tarde",
-          errorTerms: true,
-        });
-      });
-    return rspApi;
-  };
-
-  handleDateChange = (e) => {
+  const handleDateChange = (e) => {
     const value = e.target.value;
     const formField = e.target.name;
-    const formik = this.form;
 
     if (formField === "fechaDisponible") {
-      formik.setFieldValue(formField, value, true);
-      formik.setFieldValue("horarioDisponible", "", true);
-      this.handleGetAvailableScheduleService(value);
-    }
-  };
-
-  handleInfoSubmit = (reserveModel) => {
-    const tk = sessionStorage.getItem("tk");
-    var headers = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: `Bearer ${tk}`,
-    };
-
-    let linkRegisterApi = `${process.env.REACT_APP_PATH_SERVICE}/reservation/registerReservation`;
-
-    const rspApi = axios
-      .post(linkRegisterApi, reserveModel, {
-        headers: headers,
-      })
-      .then((response) => {
-        const { data } = response;
-        localStorage.setItem("data", JSON.stringify(data));
-
-        if (data.response === "true") {
-          setTimeout(() => {
-            this.setState({
-              modal: true,
-              message: "¡Registro grabado satisfactoriamente!",
-              response: true,
-              isLoading: false,
-            });
-          }, 500);
-        } else if (data.response === "false") {
-          this.setState({
-            modal: true,
-            message: data.message,
-            isLoading: false,
-          });
-        }
-        return response;
-      })
-      .catch((error) => {
-        console.log(error);
-        this.setState({
-          modal: true,
-          message:
-            "Ha ocurrido un error, porfavor refresque la página o intentelo más tarde",
-          isLoading: false,
-        });
-      });
-
-    return rspApi;
-  };
-
-  handleClose = () => {
-    this.setState({
-      modal: false,
-    });
-    if (this.state.response === true) {
-      this.props.history.push(`/reserve-complete`);
-    } else if (this.state.forceRedirect === true) {
-      this.props.history.push("/login/C");
-    }
-  };
-
-  handleCheck = () => {
-    const Formik = this.form;
-    if (this.state.checked === true) {
-      this.setState({
-        checked: false,
-      });
-      Formik.setFieldValue("checkbox", false, true);
-    } else if (this.state.checked === false) {
-      this.setState({
-        termsModal: true,
-      });
-    }
-  };
-
-  handleTerms = (id) => {
-    const Formik = this.form;
-    if (id === 1) {
-      this.setState({
-        checked: true,
-        termsModal: false,
-      });
-      Formik.setFieldValue("checkbox", true, true);
-    } else if (id === 2) {
-      this.setState({
-        termsModal: false,
-      });
+      setFieldValue(formField, value, true);
+      setFieldValue("horarioDisponible", "", true);
+      dispatch(hoursId(params.id, value));
     }
   };
 
   return (
-    <div>
-      <MyModal />
+    <>
+      <div className="files">
+        <div className="txt-left-nomid">
+          <TextField
+            name="correo"
+            className="TxtField"
+            variant="outlined"
+            label="Correo electrónico"
+            fullWidth
+            value={values.correo}
+            error={errors.correo && touched.correo}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            disabled={true}
+            style={{ marginBottom: "5px" }}
+            onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
+          />
+        </div>
 
-      <Dialog
-        open={this.state.termsModal}
-        onClose={() => this.handleTerms(2)}
-        scroll="paper"
-        className={classes.dialog}
-      >
-        {this.state.terms.map(({ id, value }) => (
-          <DialogContent key={id}>
-            <div dangerouslySetInnerHTML={{ __html: value }} />
-          </DialogContent>
-        ))}
-        <DialogActions style={{ justifyContent: "center" }}>
-          <Button
-            className="font-p btn-primary"
-            color="primary"
-            onClick={() => this.handleTerms(1)}
-            variant="contained"
+        <div className="txt-right-nomid">
+          <TextField
+            name="celular"
+            className="TxtField"
+            variant="outlined"
+            label="Número de celular"
+            fullWidth
+            value={values.celular}
+            error={errors.celular && touched.celular}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            disabled={true}
             style={{
-              margin: "5px 5px 3px 0",
-              width: "30%",
-              textTransform: "capitalize",
+              marginBottom: "5px",
             }}
-          >
-            Aceptar
-          </Button>
-          <Button
-            className="font-p btn-primary"
-            color="primary"
-            onClick={() => this.handleTerms(2)}
-            variant="contained"
+          />
+        </div>
+      </div>
+
+      <div className="files">
+        <div className="txt-left-nomid">
+          <TextField
+            name="servicio"
+            className="TxtField"
+            variant="outlined"
+            label="Nombre del servicio"
+            fullWidth
+            value={values.servicio}
+            error={errors.servicio && touched.servicio}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            disabled={true}
             style={{
-              margin: "5px 0 3px 5px",
-              width: "30%",
-              textTransform: "capitalize",
+              marginBottom: "5px",
             }}
+          />
+        </div>
+
+        <div className="txt-right-nomid">
+          <TextField
+            name="duracion"
+            type="text"
+            className="TxtField"
+            variant="outlined"
+            label="Duración del servicio"
+            fullWidth
+            value={values.duracion}
+            error={errors.duracion && touched.duracion}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            disabled={true}
+            style={{
+              marginBottom: "5px",
+            }}
+          />
+        </div>
+      </div>
+
+      <div className="files">
+        <div className="txt-left-nomid">
+          <TextField
+            name="precio"
+            type="text"
+            className="TxtField"
+            variant="outlined"
+            label="Precio"
+            fullWidth
+            value={values.precio}
+            error={errors.precio && touched.precio}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            disabled={true}
+            style={{
+              marginBottom: "5px",
+            }}
+          />
+        </div>
+
+        <div className="txt-right-nomid">
+          <Select
+            style={{
+              width: "100%",
+              backgroundColor: "white",
+              marginBottom: "5px",
+            }}
+            variant="outlined"
+            value={values.fechaDisponible}
+            error={errors.fechaDisponible && touched.fechaDisponible}
+            name="fechaDisponible"
+            displayEmpty
+            required
+            onChange={handleDateChange}
+            onBlur={handleBlur}
           >
-            Cancelar
-          </Button>
-        </DialogActions>
-      </Dialog>
+            <MenuItem disabled value={""}>
+              <span className="empty--option">Elige la fecha disponible</span>
+            </MenuItem>
+            {serviceDate &&
+              serviceDate.map(({ keyDate, valueDate }) => (
+                <MenuItem key={keyDate} value={keyDate}>
+                  {valueDate}
+                </MenuItem>
+              ))}
+          </Select>
+        </div>
+      </div>
+      <div className="files">
+        <Select
+          style={{
+            backgroundColor: "white",
+            marginRight: "51%",
+            marginTop: "5px",
+            marginBottom: "5px",
+          }}
+          fullWidth
+          variant="outlined"
+          value={values.horarioDisponible}
+          error={errors.horarioDisponible && touched.horarioDisponible}
+          name="horarioDisponible"
+          displayEmpty
+          required
+          onChange={handleChange}
+          onBlur={handleBlur}
+        >
+          <MenuItem disabled value={""}>
+            <span className="empty--option">Elige el horario</span>
+          </MenuItem>
+          {hoursById.length === 0 ? (
+            <MenuItem disabled value={" "}>
+              <span className="empty--option">Horarios no disponibles</span>
+            </MenuItem>
+          ) : (
+            hoursById &&
+            hoursById.map(({ keyTime, valueTime }) => (
+              <MenuItem key={keyTime} value={keyTime}>
+                {valueTime}
+              </MenuItem>
+            ))
+          )}
+        </Select>
+      </div>
+    </>
+  );
+};
+
+export const ReserveAppointment = () => {
+  const dispatch = useDispatch();
+  const params = useParams();
+  const [checked, setChecked] = useState(false);
+  const [termsModal, setTermsModal] = useState(false);
+  const { token } = useSelector((state) => state.auth.data);
+
+  if (termsModal) {
+    dispatch(termsLoad(2));
+  }
+
+  useEffect(() => {
+    dispatch(clientData(token));
+    dispatch(serviceById(params.id));
+  }, [dispatch, params.id, token]);
+
+  return (
+    <div>
+      <MyModal link="/reserve-detail" />
+
       <div className="page-container">
         <div className="login">
           <h1>Reserva tu cita</h1>
           <Formik
-            ref={(ref) => (this.form = ref)}
             initialValues={{
               correo: "",
               celular: "",
@@ -438,10 +251,9 @@ export const ReserveAppointment = () => {
               checkbox: false,
             }}
             validate={(values) => {
-              const { checkbox } = values;
-              let errors = {};
+              const errors = {};
 
-              if (checkbox === false) {
+              if (values.checkbox === false) {
                 errors.checkbox = "Debes aceptar los términos y condiciones";
               }
 
@@ -455,236 +267,45 @@ export const ReserveAppointment = () => {
                 reservationTime: "",
               };
 
-              reserveModel.idService = JSON.parse(this.props.match.params.id);
+              reserveModel.idService = JSON.parse(params.id);
               reserveModel.reservationDate = values.fechaDisponible;
               reserveModel.reservationTime = values.horarioDisponible;
 
-              this.setState({
-                isLoading: true,
-              });
-
               (async () => {
-                this.handleInfoSubmit(reserveModel);
+                dispatch(reservationClient(reserveModel, token));
               })();
             }}
           >
-            {({
-              values,
-              handleBlur,
-              handleChange,
-              handleSubmit,
-              isSubmitting,
-              errors,
-              touched,
-            }) => (
-              <form name="formRegister" onSubmit={handleSubmit}>
-                <div className="files">
-                  <div className="txt-left">
-                    <TextField
-                      name="correo"
-                      className="TxtField"
-                      variant="outlined"
-                      label="Correo electrónico"
-                      fullWidth
-                      value={values.correo}
-                      error={errors.correo && touched.correo}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      disabled={true}
-                      style={{ marginBottom: "5px" }}
-                      onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
-                    />
-                  </div>
-
-                  <div className="txt-right">
-                    <TextField
-                      name="celular"
-                      className="TxtField"
-                      variant="outlined"
-                      label="Número de celular"
-                      fullWidth
-                      value={values.celular}
-                      error={errors.celular && touched.celular}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      disabled={true}
-                      style={{
-                        marginBottom: "5px",
-                      }}
-                      // inputProps={{
-                      //   maxLength: 9,
-                      // }}
-                      onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
-                    />
-                  </div>
-                </div>
-
-                <div className="files">
-                  <div className="txt-left">
-                    <TextField
-                      name="servicio"
-                      className="TxtField"
-                      variant="outlined"
-                      label="Nombre del servicio"
-                      fullWidth
-                      value={values.servicio}
-                      error={errors.servicio && touched.servicio}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      disabled={true}
-                      style={{
-                        marginBottom: "5px",
-                      }}
-                      onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
-                    />
-                  </div>
-
-                  <div className="txt-right">
-                    <TextField
-                      name="duracion"
-                      type="text"
-                      className="TxtField"
-                      variant="outlined"
-                      label="Duración del servicio"
-                      fullWidth
-                      value={values.duracion}
-                      error={errors.duracion && touched.duracion}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      disabled={true}
-                      style={{
-                        marginBottom: "5px",
-                      }}
-                      onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
-                    />
-                  </div>
-                </div>
-
-                <div className="files">
-                  <div className="txt-left">
-                    <TextField
-                      name="precio"
-                      type="text"
-                      className="TxtField"
-                      variant="outlined"
-                      label="Precio"
-                      fullWidth
-                      value={values.precio}
-                      error={errors.precio && touched.precio}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      disabled={true}
-                      style={{
-                        marginBottom: "5px",
-                      }}
-                      // inputProps={{
-                      //   maxLength: 9,
-                      // }}
-                      onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
-                    />
-                  </div>
-
-                  <div className="txt-right">
-                    <Select
-                      style={{
-                        width: "100%",
-                        backgroundColor: "white",
-                        marginBottom: "5px",
-                      }}
-                      variant="outlined"
-                      value={values.fechaDisponible}
-                      error={errors.fechaDisponible && touched.fechaDisponible}
-                      name="fechaDisponible"
-                      displayEmpty
-                      required
-                      onChange={this.handleDateChange}
-                      onBlur={handleBlur}
-                    >
-                      <MenuItem disabled value={""}>
-                        <span className="empty--option">
-                          Elige la fecha disponible
-                        </span>
-                      </MenuItem>
-                      {this.state.dateData &&
-                        this.state.dateData.map(({ keyDate, valueDate }) => (
-                          <MenuItem key={keyDate} value={keyDate}>
-                            {valueDate}
-                          </MenuItem>
-                        ))}
-                    </Select>
-                  </div>
-                </div>
-                <div className="files">
-                  <Select
-                    style={{
-                      backgroundColor: "white",
-                      marginRight: "51%",
-                      marginTop: "5px",
-                      marginBottom: "5px",
-                    }}
-                    fullWidth
-                    variant="outlined"
-                    value={values.horarioDisponible}
-                    error={
-                      errors.horarioDisponible && touched.horarioDisponible
-                    }
-                    name="horarioDisponible"
-                    displayEmpty
-                    required
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  >
-                    <MenuItem disabled value={""}>
-                      <span className="empty--option">Elige el horario</span>
-                    </MenuItem>
-                    {this.state.hourData.length === 0 ? (
-                      <MenuItem disabled value={" "}>
-                        <span className="empty--option">
-                          Horarios no disponibles
-                        </span>
-                      </MenuItem>
-                    ) : (
-                      this.state.hourData &&
-                      this.state.hourData.map(({ keyTime, valueTime }) => (
-                        <MenuItem key={keyTime} value={keyTime}>
-                          {valueTime}
-                        </MenuItem>
-                      ))
-                    )}
-                  </Select>
-                </div>
-
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      name="checkbox"
-                      checked={this.state.checked}
-                      onChange={this.handleCheck}
-                      color="primary"
-                    />
-                  }
-                  label="Términos y condiciones"
+            {({ handleSubmit, isSubmitting }) => (
+              <Form name="formRegister" onSubmit={handleSubmit}>
+                <MyFormikDialog
+                  modal={termsModal}
+                  setChecked={setChecked}
+                  setTermsModal={setTermsModal}
+                  text="hola"
                 />
-                <ErrorMessage
-                  className="error"
+
+                <FormRegister />
+
+                <MyCheckbox
                   name="checkbox"
-                  component="div"
-                />
-
-                <Button
-                  size="large"
+                  checked={checked}
+                  setChecked={setChecked}
+                  setTermsModal={setTermsModal}
                   color="primary"
-                  variant="contained"
-                  className="btn-primary"
+                >
+                  Términos y condiciones
+                </MyCheckbox>
+                <MyButton
+                  type="submit"
+                  disabled={isSubmitting}
                   style={{
                     margin: "10px 0",
                   }}
-                  type="submit"
-                  fullWidth
                 >
                   Reservar cita
-                </Button>
-              </form>
+                </MyButton>
+              </Form>
             )}
           </Formik>
         </div>
