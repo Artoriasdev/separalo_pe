@@ -275,8 +275,10 @@ const FormHandler = () => {
             variant="outlined"
             label="Descripción de la tarjeta"
             placeholder="Max. 200 caracteres"
+            required
             multiline
             minRows={4}
+            maxRows={4}
             fullWidth
             value={values.tarjeta}
             error={!!errors.tarjeta && touched.tarjeta}
@@ -295,8 +297,10 @@ const FormHandler = () => {
             variant="outlined"
             label="Descripción del negocio"
             placeholder="Max. 500 caracteres"
+            required
             multiline
             minRows={4}
+            maxRows={4}
             fullWidth
             value={values.descripcion}
             error={!!errors.descripcion && touched.descripcion}
@@ -409,10 +413,6 @@ export const BusinessData = () => {
     dispatch(provinces());
   }, [dispatch]);
 
-  const handleBack = () => {
-    history.push("/business/category");
-  };
-
   return (
     <>
       <Formik
@@ -512,6 +512,9 @@ export const BusinessData = () => {
             style={{ marginTop: "50px" }}
           >
             <FormHandler />
+            <div style={{ float: "left" }}>
+              <p style={{ color: "#23232366" }}>*Datos obligatorios</p>
+            </div>
             <div className="files" style={{ float: "right" }}>
               <Button
                 fullWidth
@@ -529,18 +532,6 @@ export const BusinessData = () => {
           </Form>
         )}
       </Formik>
-      <div className="files" style={{ float: "left" }}>
-        <Button
-          fullWidth
-          variant="contained"
-          color="secondary"
-          className="btn-primary"
-          style={{ marginTop: "10px" }}
-          onClick={handleBack}
-        >
-          Regresar
-        </Button>
-      </div>
     </>
   );
 };

@@ -99,29 +99,30 @@ export const BusinessProfile = () => {
   return (
     <div className="page-container" style={{ padding: "0", width: "100%" }}>
       <MyModal />
-      <Breadcrumbs
-        separator={<NavigateNext fontSize="medium" />}
-        aria-label="breadcrumb"
-        className="font"
-        style={{ margin: "30px" }}
-      >
-        <Link
-          color="textSecondary"
-          style={{ cursor: "pointer" }}
-          onClick={() => handleClick(1)}
-        >
-          Inicio
-        </Link>
-        <Link
-          color="textPrimary"
-          style={{ cursor: "pointer" }}
-          onClick={() => handleClick(2)}
-        >
-          Mi Perfil
-        </Link>
-      </Breadcrumbs>
+
       <div className="profile-container">
         <div className="form-profile">
+          <Breadcrumbs
+            separator={<NavigateNext fontSize="medium" />}
+            aria-label="breadcrumb"
+            className="font"
+            style={{ margin: "0" }}
+          >
+            <Link
+              color="textSecondary"
+              style={{ cursor: "pointer" }}
+              onClick={() => handleClick(1)}
+            >
+              Inicio
+            </Link>
+            <Link
+              color="textPrimary"
+              style={{ cursor: "pointer" }}
+              onClick={() => handleClick(2)}
+            >
+              Mi Perfil
+            </Link>
+          </Breadcrumbs>
           <h1>Datos de negocio</h1>
         </div>
         <hr />

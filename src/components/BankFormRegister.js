@@ -59,36 +59,39 @@ const SelectHandler = () => {
   };
   return (
     <>
-      <div className="files">
-        <Select
-          value={values.bancoId}
-          error={errors.bancoId && touched.bancoId}
-          name="bancoId"
-          onChange={handleDocumentChange}
-          onBlur={handleBlur}
-          required
-          variant="outlined"
-          fullWidth
-          style={{
-            marginTop: "10px",
-            textAlign: "center",
-            marginBottom: "5px",
-          }}
-          displayEmpty
-        >
-          <MenuItem disabled value={""}>
-            Nombre de banco
-          </MenuItem>
-          {banks &&
-            banks.map(({ id, name }) => (
-              <MenuItem key={id} value={id}>
-                {name}
-              </MenuItem>
-            ))}
-        </Select>
-      </div>
-      <div className="files">
-        <div className="txt-left-nomid">
+      <div
+        className="files"
+        style={{ marginBottom: "10px", marginTop: "10px" }}
+      >
+        <div className="txt-left">
+          <Select
+            value={values.bancoId}
+            error={errors.bancoId && touched.bancoId}
+            name="bancoId"
+            onChange={handleDocumentChange}
+            onBlur={handleBlur}
+            required
+            variant="outlined"
+            fullWidth
+            style={{
+              marginTop: "10px",
+              textAlign: "center",
+              marginBottom: "5px",
+            }}
+            displayEmpty
+          >
+            <MenuItem disabled value={""}>
+              Nombre de banco
+            </MenuItem>
+            {banks &&
+              banks.map(({ id, name }) => (
+                <MenuItem key={id} value={id}>
+                  {name}
+                </MenuItem>
+              ))}
+          </Select>
+        </div>
+        <div className="txt-mid">
           <Select
             value={values.tipoId}
             error={errors.tipoId && touched.tipoId}
@@ -117,7 +120,7 @@ const SelectHandler = () => {
             )}
           </Select>
         </div>
-        <div className="txt-right-nomid">
+        <div className="txt-right">
           <TextField
             name="numeroCuenta"
             className="TxtField"
@@ -149,7 +152,10 @@ export const BankFormRegister = () => {
 
   return (
     <div>
-      <h2>Registra tus datos bancarios</h2>
+      <h2 style={{ color: "black", textAlign: "center", marginTop: "20px" }}>
+        No cuentas con ningun dato bancario registrado, por favor registra tus
+        datos aquí
+      </h2>
       <Formik
         initialValues={{
           bancoId: "",
@@ -223,7 +229,7 @@ export const BankFormRegister = () => {
           <Form name="formBank" onSubmit={handleSubmit}>
             <SelectHandler />
             <div className="files">
-              <div className="txt-left-nomid">
+              <div className="txt-left">
                 <TextField
                   name="numeroInterbancario"
                   className="TxtField"
@@ -251,7 +257,7 @@ export const BankFormRegister = () => {
                 />
               </div>
 
-              <div className="txt-right-nomid">
+              <div className="txt-right-nomid-bank">
                 <TextField
                   name="correoBancario"
                   className="TxtField"
