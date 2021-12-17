@@ -5,13 +5,15 @@ import { useSelector } from "react-redux";
 import { AppBar, Button, Tab, Toolbar, Tabs, Box } from "@mui/material";
 
 import LogoSVG from "../assets/images/logo01.svg";
-import Shopping from "../assets/images/ShoppingCart.svg";
+import Shopping from "../assets/images/Carrito_compras.svg";
+import ShoppingItems from "../assets/images/Carrito_compras_1.svg";
 import { NavbarSectionPublic } from "./NavbarSectionPublic";
 import { NavbarSectionClient } from "./NavbarSectionClient";
 
 const Navbar = () => {
   const { categorys } = useSelector((state) => state.category);
   const { logged, workflow } = useSelector((state) => state.auth);
+  const { shoppingCarItems } = useSelector((state) => state.shoppingCar);
   const [value, setValue] = useState(0);
   const history = useHistory();
 
@@ -65,7 +67,15 @@ const Navbar = () => {
                 borderRadius: "0",
               }}
             >
-              <img src={Shopping} alt="logo" style={{ height: "23px" }} />
+              {shoppingCarItems.length > 0 ? (
+                <img
+                  src={ShoppingItems}
+                  alt="logo"
+                  style={{ height: "26px" }}
+                />
+              ) : (
+                <img src={Shopping} alt="logo" style={{ height: "23px" }} />
+              )}
             </Button>
           </Toolbar>
         </AppBar>
