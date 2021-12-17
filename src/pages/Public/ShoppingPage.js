@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import {
   Button,
@@ -9,18 +10,52 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
 } from "@mui/material";
 
 import Shopping from "../../assets/images/ShoppingPage.svg";
-import { useSelector } from "react-redux";
 
 export const ShoppingPage = () => {
   const { shoppingCarItems } = useSelector((state) => state.shoppingCar);
   const history = useHistory();
+  const [pricing, setPricing] = useState(0);
+
+  var values;
+  var total = 0;
+
+  const handleInputChange = ({ target }) => {
+    const val = target.value;
+    values = val;
+    console.log(values);
+  };
+
+  const handleReserveMore = () => {
+    history.push("/");
+  };
+
+  const handleReservePayment = () => {
+    history.push("/reserve-complete");
+  };
+
+  function handlePricing() {
+    if (shoppingCarItems.length > 0) {
+      for (let i = 0; i < shoppingCarItems.length; i++) {
+        var element = JSON.parse(shoppingCarItems[i].price.split("/").pop());
+        total = total + element;
+      }
+      setPricing(total);
+    }
+  }
+
+  useEffect(() => {
+    handlePricing();
+  }, []);
 
   const handleFirstReserve = () => {
     history.push("/");
   };
+  // console.log(JSON.parse(shoppingCarItems[0].price.split("/").pop()));
+
   return (
     <div className="page-container">
       <h1>
@@ -75,7 +110,7 @@ export const ShoppingPage = () => {
                   {shoppingCarItems &&
                     shoppingCarItems.map(
                       ({
-                        id,
+                        codeReservation,
                         titleService,
                         tradeName,
                         state,
@@ -84,7 +119,7 @@ export const ShoppingPage = () => {
                         nameCategory,
                         timeReservation,
                       }) => (
-                        <TableRow key={id}>
+                        <TableRow key={codeReservation}>
                           <TableCell className="font">{nameCategory}</TableCell>
                           <TableCell className="font">{tradeName}</TableCell>
                           <TableCell className="font">{titleService}</TableCell>
@@ -110,6 +145,59 @@ export const ShoppingPage = () => {
                 </TableBody>
               </Table>
             </TableContainer>
+            <div className="inputs-shopping-container">
+              <div className="discount-container">
+                <p style={{ marginRight: "10px" }}>Agregar cupón de dcto.</p>
+                <TextField
+                  style={{ marginRight: "10px", marginTop: "0" }}
+                  variant="outlined"
+                  onChange={handleInputChange}
+                />
+                <button className="text-button" style={{ color: "#5950A2" }}>
+                  Aplicar cupón
+                </button>
+              </div>
+              <div className="payment-container">
+                <p style={{ marginRight: "10px" }}>Total a pagar S/</p>
+                <TextField
+                  value={pricing}
+                  style={{ marginRight: "10px" }}
+                  variant="outlined"
+                  disabled
+                />
+              </div>
+            </div>
+            <div>
+              <div className="reserve-accions">
+                <div className="reserve-accions-shopping">
+                  <Button
+                    size="large"
+                    color="primary"
+                    variant="contained"
+                    className="btn-primary_reserva"
+                    onClick={handleReserveMore}
+                  >
+                    Realizar otra reserva
+                  </Button>
+                  <Button
+                    size="large"
+                    color="primary"
+                    variant="contained"
+                    className="btn-primary"
+                    onClick={handleReservePayment}
+                  >
+                    Continuar con el pago
+                  </Button>
+                </div>
+              </div>
+            </div>
+            <div className="disclaimer-container">
+              <p>
+                *Si tu estado está caducado, puedes generar una nueva reserva,
+                recuerda que tu reserva se mantiene activa solo por{" "}
+                <span style={{ fontWeight: "bold" }}>120 minutos</span>.
+              </p>
+            </div>
           </div>
         )}
       </div>

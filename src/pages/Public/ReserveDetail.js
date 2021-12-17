@@ -9,11 +9,9 @@ export const ReserveDetail = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { reservationUser } = useSelector((state) => state.reservation);
-  const { shoppingCarItems } = useSelector((state) => state.shoppingCar);
 
   const handleReserveMore = () => {
     dispatch(shoppingCar(reservationUser));
-    console.log(shoppingCarItems);
     history.push("/");
   };
 
