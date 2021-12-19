@@ -16,16 +16,14 @@ import {
 export const ReserveComplete = () => {
   const history = useHistory();
   const { reservationUser } = useSelector((state) => state.reservation);
+  const { logged } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (reservationUser.length === 0) history.push("/");
-  });
+  }, [reservationUser.length, history]);
 
   const handleRedirect = () => {
-    if (
-      sessionStorage.getItem("logged") === "true" &&
-      sessionStorage.getItem("workflow") === "C"
-    ) {
+    if (logged) {
       history.push("/customer-appointment");
       // history.go();
     } else {

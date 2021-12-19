@@ -32,6 +32,7 @@ import { serviceForEditReducer } from "../reducers/serviceForEditReducer";
 import { serviceHoursReducer } from "../reducers/serviceHoursReducer";
 import { serviceHoursAttentionReducer } from "../reducers/serviceHoursAttentionReducer";
 import { shoppingCarReducer } from "../reducers/shoppingCarReducer";
+import { shoppingCarCompletedReducer } from "../reducers/shoppingCarCompletedReducer";
 
 const composeEnhancers =
   (typeof window !== "undefined" &&
@@ -71,6 +72,7 @@ const reducers = combineReducers({
   serviceHours: serviceHoursReducer,
   serviceHoursAttention: serviceHoursAttentionReducer,
   shoppingCar: shoppingCarReducer,
+  shoppingDone: shoppingCarCompletedReducer,
 });
 
 export const store = createStore(

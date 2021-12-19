@@ -72,4 +72,6 @@ export const types = {
 
   shoppingCarItemsAdd: "[Shopping Car] Shopping Car Item Added",
   shoppingCarItemsLoad: "[Shopping Car] Shopping Car Item Load",
+  shoppingCarRemoveItems: "[Shopping Car] Shopping Car Items Removed",
+  shoppingCarItemsPayed: " [Shopping Car] Payment Done",
 };

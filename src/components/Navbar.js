@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import { AppBar, Button, Tab, Toolbar, Tabs, Box } from "@mui/material";
 
-import LogoSVG from "../assets/images/logo01.svg";
+import LogoSVG from "../assets/images/Separalo_Logo_navbar.svg";
 import Shopping from "../assets/images/Carrito_compras.svg";
 import ShoppingItems from "../assets/images/Carrito_compras_1.svg";
 import { NavbarSectionPublic } from "./NavbarSectionPublic";

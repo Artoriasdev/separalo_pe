@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
+  Backdrop,
+  Box,
   Button,
+  Checkbox,
+  Fade,
+  Modal,
   Table,
   TableBody,
   TableCell,
@@ -11,22 +16,54 @@ import {
   TableHead,
   TableRow,
   TextField,
+  Typography,
 } from "@mui/material";
 
 import Shopping from "../../assets/images/ShoppingPage.svg";
+import { shoppingCarDeleteItems } from "../../actions/shoppingCar";
+import { shoppingCarDone } from "../../actions/shoppingCarDone";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  maxWidth: 400,
+  bgcolor: "background.paper",
+  borderRadius: "4px",
+  boxShadow: 10,
+  p: 4,
+};
 
 export const ShoppingPage = () => {
   const { shoppingCarItems } = useSelector((state) => state.shoppingCar);
+  const dispatch = useDispatch();
   const history = useHistory();
   const [pricing, setPricing] = useState(0);
+  const [selected, setSelected] = React.useState([]);
+  const [opened, setOpened] = useState(false);
+
+  const isSelected = (name) => selected.indexOf(name) !== -1;
 
   var values;
   var total = 0;
 
+  const handleDeleteModal = () => {
+    setOpened(true);
+  };
+
+  const handleClose = () => {
+    setOpened(false);
+  };
+
+  const handleReserveDelete = () => {
+    dispatch(shoppingCarDeleteItems(selected));
+    setOpened(false);
+  };
+
   const handleInputChange = ({ target }) => {
     const val = target.value;
     values = val;
-    console.log(values);
   };
 
   const handleReserveMore = () => {
@@ -34,7 +71,27 @@ export const ShoppingPage = () => {
   };
 
   const handleReservePayment = () => {
-    history.push("/reserve-complete");
+    dispatch(shoppingCarDone(shoppingCarItems));
+    history.push("/reservations-completed");
+  };
+
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+
+    setSelected(newSelected);
   };
 
   function handlePricing() {
@@ -49,15 +106,62 @@ export const ShoppingPage = () => {
 
   useEffect(() => {
     handlePricing();
-  }, []);
+  }, [shoppingCarItems]);
 
   const handleFirstReserve = () => {
     history.push("/");
   };
-  // console.log(JSON.parse(shoppingCarItems[0].price.split("/").pop()));
-
   return (
     <div className="page-container">
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={opened}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+        className="modal-container"
+      >
+        <Fade in={opened}>
+          <Box sx={style}>
+            <Typography
+              id="transition-modal-title"
+              variant="h8"
+              component="p"
+              style={{ fontWeight: "unset", marginBottom: "10px" }}
+            >
+              {"¿Desea borrar los servicios seleccionados?"}
+            </Typography>
+
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Button
+                size="large"
+                color="primary"
+                variant="contained"
+                className="btn-primary"
+                onClick={handleReserveDelete}
+                style={{ width: "45%" }}
+              >
+                Aceptar
+              </Button>
+
+              <Button
+                size="large"
+                color="primary"
+                variant="contained"
+                className="btn-primary"
+                onClick={handleClose}
+                style={{ width: "45%" }}
+              >
+                Rechazar
+              </Button>
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
       <h1>
         <img src={Shopping} alt="logo" style={{ marginRight: "8px" }} />
         Carrito de compras
@@ -90,6 +194,7 @@ export const ShoppingPage = () => {
               <Table sx={{ minWidth: 650 }}>
                 <TableHead className="table-head">
                   <TableRow>
+                    <TableCell className="font-tittle"></TableCell>
                     <TableCell className="font-tittle">Categoría</TableCell>
                     <TableCell className="font-tittle">Negocio</TableCell>
                     <TableCell className="font-tittle">Servicio</TableCell>
@@ -118,29 +223,45 @@ export const ShoppingPage = () => {
                         price,
                         nameCategory,
                         timeReservation,
-                      }) => (
-                        <TableRow key={codeReservation}>
-                          <TableCell className="font">{nameCategory}</TableCell>
-                          <TableCell className="font">{tradeName}</TableCell>
-                          <TableCell className="font">{titleService}</TableCell>
-                          <TableCell className="font">
-                            {dateReservation}
-                          </TableCell>
-                          <TableCell className="font">
-                            {timeReservation}
-                          </TableCell>
-                          <TableCell className="font" align="center">
-                            {price}
-                          </TableCell>
-                          <TableCell
-                            className="font"
-                            align="center"
-                          ></TableCell>
-                          <TableCell className="font" align="center">
-                            {state}
-                          </TableCell>
-                        </TableRow>
-                      )
+                      }) => {
+                        const isItemSelected = isSelected(codeReservation);
+                        return (
+                          <TableRow key={codeReservation}>
+                            <TableCell padding="checkbox">
+                              <Checkbox
+                                color="default"
+                                checked={isItemSelected}
+                                onClick={(event) =>
+                                  handleClick(event, codeReservation)
+                                }
+                              />
+                            </TableCell>
+                            <TableCell className="font">
+                              {nameCategory}
+                            </TableCell>
+                            <TableCell className="font">{tradeName}</TableCell>
+                            <TableCell className="font">
+                              {titleService}
+                            </TableCell>
+                            <TableCell className="font">
+                              {dateReservation}
+                            </TableCell>
+                            <TableCell className="font">
+                              {timeReservation}
+                            </TableCell>
+                            <TableCell className="font" align="center">
+                              {price}
+                            </TableCell>
+                            <TableCell
+                              className="font"
+                              align="center"
+                            ></TableCell>
+                            <TableCell className="font" align="center">
+                              {state}
+                            </TableCell>
+                          </TableRow>
+                        );
+                      }
                     )}
                 </TableBody>
               </Table>
@@ -149,6 +270,7 @@ export const ShoppingPage = () => {
               <div className="discount-container">
                 <p style={{ marginRight: "10px" }}>Agregar cupón de dcto.</p>
                 <TextField
+                  value={values}
                   style={{ marginRight: "10px", marginTop: "0" }}
                   variant="outlined"
                   onChange={handleInputChange}
@@ -169,6 +291,15 @@ export const ShoppingPage = () => {
             </div>
             <div>
               <div className="reserve-accions">
+                <div className="reserve-accions-delete">
+                  <button
+                    className="text-button_delete"
+                    style={{ color: "#23232399" }}
+                    onClick={handleDeleteModal}
+                  >
+                    Eliminar reserva
+                  </button>
+                </div>
                 <div className="reserve-accions-shopping">
                   <Button
                     size="large"

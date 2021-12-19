@@ -7,7 +7,7 @@ export const checkShoppingItems = () => {
         const { shoppingCarItems } = JSON.parse(
           localStorage.getItem("Car Items")
         );
-        if (shoppingCarItems.length > 1) {
+        if (shoppingCarItems.length > 0) {
           dispatch(shoppingCarLoad(shoppingCarItems));
         } else if (shoppingCarItems.length < 1) {
           localStorage.removeItem("Car Items");
@@ -27,4 +27,13 @@ export const shoppingCar = (item) => ({
 const shoppingCarLoad = (item) => ({
   type: types.shoppingCarItemsLoad,
   payload: item,
+});
+
+export const shoppingCarDeleteItems = (items) => ({
+  type: types.shoppingCarRemoveItems,
+  payload: items,
+});
+
+export const shoppingCarItemsPayed = () => ({
+  type: types.shoppingCarItemsPayed,
 });

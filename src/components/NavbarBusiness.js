@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { Settings, MoreVert } from "@mui/icons-material";
 
-import LogoSVG from "../assets/images/logo01.svg";
+import LogoSVG from "../assets/images/Separalo_Logo_navbar.svg";
 import { logout } from "../actions/auth";
 
 function StyledMenuSettings(props) {

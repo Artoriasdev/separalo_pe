@@ -27,6 +27,7 @@ import { RegisterBusiness } from "../pages/Public/RegisterBusiness";
 import { Password } from "../pages/Public/PasswordChange";
 import { ReserveDetail } from "../pages/Public/ReserveDetail";
 import { ShoppingPage } from "../pages/Public/ShoppingPage";
+import { ReserveCompleteShopping } from "../pages/Public/ReserveCompleteShopping";
 
 export const PublicRouter = () => {
   const { workflow } = useSelector((state) => state.auth);
@@ -111,7 +112,12 @@ export const PublicRouter = () => {
 
           <Route exact path="/password_change" component={Password} />
           <Route exact path="/reserve-detail" component={ReserveDetail} />
-          <Route exact patth="/shopping" component={ShoppingPage} />
+          <Route exact path="/shopping" component={ShoppingPage} />
+          <Route
+            exact
+            path="/reservations-completed"
+            component={ReserveCompleteShopping}
+          />
           <Redirect to="/" />
         </Switch>
       </div>

@@ -15,6 +15,19 @@ export const shoppingCarReducer = (state = initialState, action) => {
         ...state,
         shoppingCarItems: action.payload,
       };
+    case types.shoppingCarItemsPayed:
+      return {
+        ...state,
+        shoppingCarItems: [],
+      };
+    case types.shoppingCarRemoveItems:
+      const items = state.shoppingCarItems.filter(
+        (item) => !action.payload.includes(item.codeReservation)
+      );
+      return {
+        ...state,
+        shoppingCarItems: items,
+      };
 
     default:
       return state;
