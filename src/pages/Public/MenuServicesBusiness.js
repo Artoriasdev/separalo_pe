@@ -37,21 +37,24 @@ export const MenuServicesBusiness = () => {
 
       <div className="page-container" style={{ width: "90%", margin: " auto" }}>
         <div style={{ width: "100%", marginBottom: "30px" }}>
-          <div className="service-description">
-            <h1 style={{ marginRight: "30px", color: "black" }}>
-              {categorysByServices[0] &&
-                categorysByServices[0].tradenameBusiness}
-            </h1>
-            <RatingService rate={5} style={{ marginTop: "5px" }} />
-            <h3>
-              {categorysByServices[0] && categorysByServices[0].businessAddress}
-            </h3>
-          </div>
-          <div>
-            <p style={{ opacity: "0.8", margin: "0", padding: "0" }}>
-              {categorysByServices[0] &&
-                categorysByServices[0].businessDescription}
-            </p>
+          <div className="service">
+            <div className="service-rating">
+              <h1 style={{ color: "black" }}>
+                {categorysByServices[0] &&
+                  categorysByServices[0].tradenameBusiness}
+              </h1>
+              <RatingService rate={5} style={{ marginTop: "5px" }} />
+            </div>
+            <div className="service-description">
+              <h3>
+                {categorysByServices[0] &&
+                  categorysByServices[0].businessAddress}
+              </h3>
+              <p style={{ opacity: "0.8", marginTop: "0" }}>
+                {categorysByServices[0] &&
+                  categorysByServices[0].businessDescription}
+              </p>
+            </div>
           </div>
         </div>
         <div className="flip-container">
