@@ -1,10 +1,10 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import CarouselItem from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Flippy, { FrontSide, BackSide } from "react-flippy";
-import { ArrowLeftSVG, ArrowRightSVG } from "../assets/images/svg";
 import { useHistory } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { ArrowLeftSVG, ArrowRightSVG } from "../assets/images/svg";
 import { cleanSearch } from "../actions/search";
 
 const responsive = {
@@ -65,14 +65,12 @@ export const ItemCarousel = (props) => {
         // ssr={true} // means to render carousel on server-side.
         infinite={false}
         autoPlay={false}
-        // autoPlaySpeed={1000}
         transitionDuration={500}
         containerClass="carousel-container"
-        removeArrowOnDeviceType={["mobile"]}
+        removeArrowOnDeviceType={false}
         deviceType={props.deviceType}
         itemClass="carousel-item-padding-100-px"
         renderButtonGroupOutside={true}
-        // customRightArrow={<CustomLefttArrow />}
         customLeftArrow={<CustomLeftArrow />}
         customRightArrow={<CustomRightArrow />}
       >
