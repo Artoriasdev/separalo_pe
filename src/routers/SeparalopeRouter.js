@@ -7,6 +7,7 @@ import { loadCategorys } from "../actions/category";
 import { checkShoppingItems } from "../actions/shoppingCar";
 import { CookiesBanner } from "../components/CookiesBanner";
 import { Footer } from "../components/Footer";
+import FullPageLoader from "../components/FullPageLoader";
 import ScrollToTop from "../components/ScrollToTop";
 import { BusinessRoute } from "./BusinessRouter";
 import { PublicRouter } from "./PublicRouter";
@@ -24,12 +25,9 @@ export const SeparalopeRouter = () => {
     dispatch(checkShoppingItems());
   }, [dispatch]);
 
-  if (check) {
-    return <h1>Espere...</h1>;
-  }
-
   return (
     <Router>
+      <FullPageLoader isLoading={check} />
       <div style={{ minHeight: "80vh" }}>
         <ScrollToTop />
         <Switch>

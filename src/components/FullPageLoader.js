@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import CircularProgress from "@mui/material/CircularProgress";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
