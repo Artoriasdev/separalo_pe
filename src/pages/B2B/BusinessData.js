@@ -203,6 +203,9 @@ const FormHandler = () => {
             error={!!errors.direccion && touched.direccion}
             onBlur={handleBlur}
             onChange={handleChange}
+            inputProps={{
+              maxLength: 200,
+            }}
           />
         </div>
       </div>
@@ -431,7 +434,7 @@ export const BusinessData = () => {
           documentos: "",
           numDocumento: "",
           ingreso: "[0-9]",
-          maxLengthValue: 8,
+          maxLengthValue: 20,
           minLengthValue: 5,
         }}
         validate={(values) => {

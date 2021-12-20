@@ -192,10 +192,6 @@ const SelectHandler = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             required
-            // inputProps={{
-            //   maxLength: 9,
-            // }}
-            onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
           />
           <ErrorMessage
             className="error"
