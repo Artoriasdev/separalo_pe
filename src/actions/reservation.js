@@ -11,7 +11,9 @@ export const reservation = (reserveModel) => {
       const { data } = await handleRegisterReservationInvited(reserveModel);
       if (data.response === "true") {
         dispatch(reserve(data));
-        dispatch(modalOpen("Su reserva se realizó exitosamente"));
+        dispatch(
+          modalOpen("¡Su reserva ha sido registrada de manera exitosa!")
+        );
         dispatch(modalRedirect());
       } else if (data.response === "false") {
         dispatch(modalOpen(data.message));
@@ -33,7 +35,9 @@ export const reservationClient = (reserveModel, token) => {
       const { data } = await handleRegisterReservation(reserveModel, token);
       if (data.response === "true") {
         dispatch(reserve(data));
-        dispatch(modalOpen("Su reserva se realizó exitosamente"));
+        dispatch(
+          modalOpen("¡Su reserva ha sido registrada de manera exitosa!")
+        );
         dispatch(modalRedirect());
       } else if (data.response === "false") {
         dispatch(modalOpen(data.message));
