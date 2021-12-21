@@ -2,7 +2,7 @@
   "name": "enmicasafront",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/build",
+  "homepage": ".",
   "dependencies": {
     "@date-io/date-fns": "1.x",
     "@emotion/react": "^11.5.0",
