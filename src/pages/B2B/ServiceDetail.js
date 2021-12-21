@@ -982,17 +982,17 @@ export const ServiceDetail = () => {
           className="font"
           style={{ marginLeft: "50px" }}
         >
-          <Link href="/" color="textPrimary">
+          <Link href="/" color="textPrimary" style={{ textDecoration: "none" }}>
             Inicio
           </Link>
           <Link
             color="textPrimary"
             onClick={handleClick}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", textDecoration: "none" }}
           >
             Mis Servicios
           </Link>
-          <Link color="textSecondary">
+          <Link color="textSecondary" style={{ textDecoration: "none" }}>
             {serviceData[0] && serviceData[0].title}
           </Link>
         </Breadcrumbs>

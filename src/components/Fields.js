@@ -59,7 +59,7 @@ export const MyPasswordInput = ({ label, ...props }) => {
     setShow(!show);
   };
   return (
-    <div>
+    <div style={{ marginBottom: "10px" }}>
       <OutlinedInput
         {...field}
         {...props}

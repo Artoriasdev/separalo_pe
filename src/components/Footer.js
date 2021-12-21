@@ -21,10 +21,10 @@ import {
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 
-import Facebook from "../assets/images/Facebook_1.png";
-import Instagram from "../assets/images/Instagram_1.png";
-import Twitter from "../assets/images/Twitter_1.png";
-import LinkedIn from "../assets/images/LinkedIn_1.png";
+import Facebook from "../assets/images/facebook.svg";
+import Instagram from "../assets/images/instagram.svg";
+import Twitter from "../assets/images/Twitter.svg";
+import LinkedIn from "../assets/images/LikedIn.svg";
 import { termsLoad } from "../actions/termsLoad";
 
 const tema = createTheme({

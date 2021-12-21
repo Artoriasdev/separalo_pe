@@ -47,14 +47,14 @@ export const BusinessReports = () => {
         >
           <Link
             color="textPrimary"
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", textDecoration: "none" }}
             onClick={() => handleClick(2)}
           >
             Inicio
           </Link>
           <Link
             color="textSecondary"
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", textDecoration: "none" }}
             onClick={() => handleClick(2)}
           >
             Mis Reportes

@@ -63,22 +63,22 @@ export const BusinessServicesCategory = () => {
           className="font"
         >
           <Link
-            color="inherit"
-            style={{ cursor: "pointer" }}
+            color="textPrimary"
+            style={{ cursor: "pointer", textDecoration: "none" }}
             onClick={() => handleClick(1)}
           >
             Inicio
           </Link>
           <Link
             color="textPrimary"
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", textDecoration: "none" }}
             onClick={() => handleClick(2)}
           >
             Mis servicios
           </Link>
           <Link
-            color="textPrimary"
-            style={{ cursor: "pointer" }}
+            color="textSecondary"
+            style={{ cursor: "pointer", textDecoration: "none" }}
             onClick={() => handleClick(3)}
           >
             {category && category.name}
@@ -87,7 +87,7 @@ export const BusinessServicesCategory = () => {
 
         <div
           className="form-profile"
-          style={{ width: "100%", marginLeft: "0" }}
+          style={{ width: "100%", marginLeft: "0", flexDirection: "row" }}
         >
           <h1>Mis servicios</h1>
 

@@ -58,10 +58,10 @@ export const LoginClient = () => {
                   <MyTextInput
                     label="Correo"
                     name="username"
-                    placeholder="jane@gmail.com"
+                    placeholder="Ingrese aquí su correo electrónico"
                     error={errors.username && touched.username}
                     fullWidth
-                    style={{ marginBottom: "10px" }}
+                    style={{ marginBottom: "5px" }}
                   />
 
                   <MyPasswordInput
@@ -69,7 +69,7 @@ export const LoginClient = () => {
                     label="Contraseña"
                     name="password"
                     error={errors.password && touched.password}
-                    style={{ marginBottom: "10px" }}
+                    style={{ marginBottom: "5px" }}
                   />
 
                   <MyButton

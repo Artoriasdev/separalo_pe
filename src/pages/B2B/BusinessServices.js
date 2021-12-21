@@ -51,14 +51,14 @@ export const BusinessServices = () => {
         >
           <Link
             color="textPrimary"
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", textDecoration: "none" }}
             onClick={() => handleClick(1)}
           >
             Inicio
           </Link>
           <Link
             color="textSecondary"
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", textDecoration: "none" }}
             onClick={() => handleClick(2)}
           >
             Mis servicios
@@ -66,7 +66,11 @@ export const BusinessServices = () => {
         </Breadcrumbs>
         <div
           className="form-profile"
-          style={{ width: "100%", marginLeft: "0" }}
+          style={{
+            width: "100%",
+            marginLeft: "0",
+            flexDirection: "row",
+          }}
         >
           <h1>Mis servicios</h1>
 

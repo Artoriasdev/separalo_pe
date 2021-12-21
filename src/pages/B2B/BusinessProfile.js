@@ -109,15 +109,15 @@ export const BusinessProfile = () => {
             style={{ margin: "0" }}
           >
             <Link
-              color="textSecondary"
-              style={{ cursor: "pointer" }}
+              color="textPrimary"
+              style={{ cursor: "pointer", textDecoration: "none" }}
               onClick={() => handleClick(1)}
             >
               Inicio
             </Link>
             <Link
-              color="textPrimary"
-              style={{ cursor: "pointer" }}
+              color="textSecondary"
+              style={{ cursor: "pointer", textDecoration: "none" }}
               onClick={() => handleClick(2)}
             >
               Mi Perfil

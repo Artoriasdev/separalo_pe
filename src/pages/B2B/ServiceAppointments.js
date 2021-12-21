@@ -49,18 +49,20 @@ export const ServiceAppointment = () => {
         <Link
           color="textPrimary"
           onClick={() => handleClick(1)}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", textDecoration: "none" }}
         >
           Inicio
         </Link>
         <Link
           color="textPrimary"
           onClick={() => handleClick(2)}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", textDecoration: "none" }}
         >
           Mis Servicios
         </Link>
-        <Link color="textSecondary">{service && service.title}</Link>
+        <Link color="textSecondary" style={{ textDecoration: "none" }}>
+          {service && service.title}
+        </Link>
       </Breadcrumbs>
 
       <div className="appointment-service-container">

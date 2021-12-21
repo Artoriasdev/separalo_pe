@@ -49,14 +49,14 @@ export const BusinessCategory = () => {
         >
           <Link
             color="textPrimary"
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", textDecoration: "none" }}
             onClick={() => handleClick(1)}
           >
             Inicio
           </Link>
           <Link
             color="textSecondary"
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", textDecoration: "none" }}
             onClick={() => handleClick(2)}
           >
             Categorías
