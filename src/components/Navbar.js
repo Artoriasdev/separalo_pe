@@ -38,7 +38,7 @@ const Navbar = () => {
         <AppBar className="header" position="static">
           <Toolbar className="bar" variant="dense">
             <Button
-              className="font buttonHeader "
+              className="font buttonHeader__figure"
               onClick={handleRedirectHome}
               style={{
                 textTransform: "none",
