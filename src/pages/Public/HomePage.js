@@ -11,6 +11,7 @@ import trb2 from "../../assets/images/trabaja con nosotros 1325 x 325.jpg";
 import trb4 from "../../assets/images/Transforma tu negocio 273 x 271.jpg";
 import { MySearchHomeInput } from "../../components/Fields";
 import { loadSearch } from "../../actions/search";
+import { ItemCategory } from "../../components/ItemCategory";
 
 export const HomePage = () => {
   // const history = useHistory();
@@ -66,7 +67,7 @@ export const HomePage = () => {
         </div>
         <br />
         <div className="carousel">
-          <ItemCarousel />
+          {windowWith > 500 ? <ItemCarousel /> : <ItemCategory />}
         </div>
 
         {windowWith > 1200 ? (

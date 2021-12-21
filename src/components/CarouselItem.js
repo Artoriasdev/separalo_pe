@@ -1,9 +1,11 @@
 import React from "react";
+import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
+import Flippy, { FrontSide, BackSide } from "react-flippy";
+
 import CarouselItem from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import Flippy, { FrontSide, BackSide } from "react-flippy";
-import { useHistory } from "react-router";
+
 import { ArrowLeftSVG, ArrowRightSVG } from "../assets/images/svg";
 import { cleanSearch } from "../actions/search";
 
