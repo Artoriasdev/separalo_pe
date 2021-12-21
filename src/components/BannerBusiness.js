@@ -39,9 +39,7 @@ class Banner extends Component {
         className="banner-container"
         style={{
           backgroundImage: `url(${this.props.imagen})`,
-          backgroundSize: "60% 100%",
           marginBottom: "40px",
-          backgroundColor: "rgba(0, 0, 0, 0.3)",
         }}
       >
         <div className="carousel-background" style={{ background: "none" }}>
