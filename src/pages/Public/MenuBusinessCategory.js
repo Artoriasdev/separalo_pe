@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 
@@ -8,6 +8,7 @@ import { MySearchHomeInput } from "../../components/Fields";
 import { loadSearch } from "../../actions/search";
 import { loadBusinessCategorys } from "../../actions/categoryByBusiness";
 import Banner from "../../components/BannerCategory";
+import { PublicBusinessMobile } from "../../components/PublicBusinessMobile";
 
 export const MenuBusinessCategory = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,14 @@ export const MenuBusinessCategory = () => {
     (typeCategory) => typeCategory.id === JSON.parse(params.value)
   );
   var values;
+
+  const [windowWith, setWindowWith] = useState(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener("resize", function (event) {
+      setWindowWith(window.innerWidth);
+    });
+  }, [windowWith]);
 
   const handleInputChange = ({ target }) => {
     const val = target.value;
@@ -62,10 +71,17 @@ export const MenuBusinessCategory = () => {
         </div>
 
         <div className="flip-container">
-          <PublicBusiness
-            typeBusiness={categorysByBusiness}
-            category={params.value}
-          />
+          {windowWith > 768 ? (
+            <PublicBusiness
+              typeBusiness={categorysByBusiness}
+              category={params.value}
+            />
+          ) : (
+            <PublicBusinessMobile
+              typeBusiness={categorysByBusiness}
+              category={params.value}
+            />
+          )}
         </div>
       </div>
     </>

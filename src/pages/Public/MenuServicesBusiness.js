@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router";
 
@@ -7,6 +7,7 @@ import { MyModal } from "../../components/Modal";
 import { loadServicesCategorys } from "../../actions/categoryByServices";
 import { FlipServices } from "../../components/FlipServices";
 import { RatingService } from "../../helpers/RatingService";
+import { FlipServicesMobile } from "../../components/FlipServicesMobile";
 
 export const MenuServicesBusiness = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,14 @@ export const MenuServicesBusiness = () => {
   const { categorysByServices } = useSelector(
     (state) => state.categoryServices
   );
+
+  const [windowWith, setWindowWith] = useState(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener("resize", function (event) {
+      setWindowWith(window.innerWidth);
+    });
+  }, [windowWith]);
 
   useEffect(() => {
     try {
@@ -58,7 +67,11 @@ export const MenuServicesBusiness = () => {
           </div>
         </div>
         <div className="flip-container">
-          <FlipServices typeCategorys={categorysByServices} />
+          {windowWith > 768 ? (
+            <FlipServices typeCategorys={categorysByServices} />
+          ) : (
+            <FlipServicesMobile typeCategorys={categorysByServices} />
+          )}
         </div>
       </div>
     </>
