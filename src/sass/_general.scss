@@ -1249,13 +1249,13 @@ button {
   border-bottom: solid 4px #232323;
 
   background-size: 65% 100%;
-  background-color: black;
+  background-color: #232323;
   @include mobile {
     background-size: 100% 100%;
   }
 
   .carousel-background {
-    background: rgba(0, 0, 0, 0.3);
+    // background: rgba(0, 0, 0, 0.3);
     height: 370px;
     @include mobile {
       height: 200px;
@@ -1264,7 +1264,9 @@ button {
   .content {
     height: 100%;
     width: 30vw;
+    padding-top: 20px;
     @include mobile {
+      padding-top: 0;
       width: 15%;
     }
   }

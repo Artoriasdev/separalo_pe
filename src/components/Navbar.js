@@ -10,11 +10,12 @@ import ShoppingItems from "../assets/images/Carrito_compras_1.svg";
 import { NavbarSectionPublic } from "./NavbarSectionPublic";
 import { NavbarSectionClient } from "./NavbarSectionClient";
 
+let value = 0;
+
 const Navbar = () => {
   const { categorys } = useSelector((state) => state.category);
   const { logged, workflow } = useSelector((state) => state.auth);
   const { shoppingCarItems } = useSelector((state) => state.shoppingCar);
-  const [value, setValue] = useState(0);
   const history = useHistory();
 
   const handleRedirectHome = () => {
@@ -26,7 +27,8 @@ const Navbar = () => {
   };
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    value = newValue;
+    console.log(value);
   };
   const handleRedirect = (id) => {
     history.push(`/services-menu/${id}`);
@@ -61,7 +63,7 @@ const Navbar = () => {
               onClick={handleRedirectShopping}
               style={{
                 textTransform: "none",
-                backgroundColor: "black",
+                backgroundColor: "#232323",
                 marginTop: "-5px",
                 height: "46px",
                 borderRadius: "0",
