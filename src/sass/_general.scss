@@ -137,6 +137,16 @@ button {
     bottom: 0;
   }
 }
+.success {
+  margin-top: 0.1rem;
+  color: #594fa1;
+  font-size: 0.8rem;
+  font-weight: bold;
+  position: relative;
+  &.bottom {
+    bottom: 0;
+  }
+}
 
 .row {
   display: flex;

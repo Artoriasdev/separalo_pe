@@ -20,7 +20,11 @@ import {
 } from "@mui/material";
 
 import Shopping from "../../assets/images/ShoppingPage.svg";
-import { shoppingCarDeleteItems } from "../../actions/shoppingCar";
+import {
+  cuponClear,
+  shoppingCarDeleteItems,
+  shoppingDiscount,
+} from "../../actions/shoppingCar";
 import { shoppingCarDone } from "../../actions/shoppingCarDone";
 
 const style = {
@@ -37,6 +41,7 @@ const style = {
 
 export const ShoppingPage = () => {
   const { shoppingCarItems } = useSelector((state) => state.shoppingCar);
+  const { show, valid, message } = useSelector((state) => state.cupon);
   const dispatch = useDispatch();
   const history = useHistory();
   const [pricing, setPricing] = useState(0);
@@ -64,6 +69,13 @@ export const ShoppingPage = () => {
   const handleInputChange = ({ target }) => {
     const val = target.value;
     values = val;
+    if (val === "") {
+      dispatch(cuponClear());
+    }
+  };
+
+  const handleDiscount = () => {
+    dispatch(shoppingDiscount(values));
   };
 
   const handleReserveMore = () => {
@@ -98,7 +110,7 @@ export const ShoppingPage = () => {
     if (shoppingCarItems.length > 0) {
       for (let i = 0; i < shoppingCarItems.length; i++) {
         var element = JSON.parse(shoppingCarItems[i].price.split("/").pop());
-        total = total + element;
+        total = total + element - shoppingCarItems[i].discount;
       }
       setPricing(total);
     }
@@ -223,6 +235,7 @@ export const ShoppingPage = () => {
                         price,
                         nameCategory,
                         timeReservation,
+                        discount,
                       }) => {
                         const isItemSelected = isSelected(codeReservation);
                         return (
@@ -255,7 +268,10 @@ export const ShoppingPage = () => {
                             <TableCell
                               className="font"
                               align="center"
-                            ></TableCell>
+                              style={{ color: "#5950A2" }}
+                            >
+                              -S/ {discount}
+                            </TableCell>
                             <TableCell className="font" align="center">
                               {state}
                             </TableCell>
@@ -269,18 +285,33 @@ export const ShoppingPage = () => {
             <div className="inputs-shopping-container">
               <div className="discount-container">
                 <p style={{ marginRight: "10px" }}>Agregar cupón de dcto.</p>
-                <TextField
-                  value={values}
-                  style={{ marginRight: "10px", marginTop: "0" }}
-                  variant="outlined"
-                  onChange={handleInputChange}
-                />
-                <button className="text-button" style={{ color: "#5950A2" }}>
+                <div className="cupon-field">
+                  <TextField
+                    value={values}
+                    style={{ marginTop: "0" }}
+                    variant="outlined"
+                    onChange={handleInputChange}
+                  />
+                  {show ? (
+                    <div
+                      className={valid ? "success" : "error"}
+                      style={{ textAlign: "center", marginTop: "5px" }}
+                    >
+                      {message}
+                    </div>
+                  ) : null}
+                </div>
+                <button
+                  className="text-button"
+                  style={{ color: "#5950A2", marginLeft: "10px" }}
+                  onClick={handleDiscount}
+                >
                   Aplicar cupón
                 </button>
               </div>
               <div className="payment-container">
                 <p style={{ marginRight: "10px" }}>Total a pagar S/</p>
+
                 <TextField
                   value={pricing}
                   style={{ marginRight: "10px" }}
