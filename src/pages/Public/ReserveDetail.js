@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { Button } from "@mui/material";
-import { shoppingCar } from "../../actions/shoppingCar";
+import { addItemCar } from "../../actions/shoppingCar";
 
 export const ReserveDetail = () => {
   const history = useHistory();
@@ -11,7 +11,7 @@ export const ReserveDetail = () => {
   const { reservationUser } = useSelector((state) => state.reservation);
 
   const handleReserveMore = () => {
-    dispatch(shoppingCar(reservationUser));
+    dispatch(addItemCar(reservationUser));
     history.push("/");
   };
 

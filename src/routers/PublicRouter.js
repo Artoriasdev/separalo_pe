@@ -38,8 +38,6 @@ export const PublicRouter = () => {
       const { shoppingCarItems } = items;
       if (shoppingCarItems.length > 0) {
         localStorage.setItem("Car Items", JSON.stringify(items));
-      } else if (shoppingCarItems.length === 0) {
-        localStorage.removeItem("Car Items");
       }
     }
   }, [items]);

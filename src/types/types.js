@@ -74,4 +74,10 @@ export const types = {
   shoppingCarItemsLoad: "[Shopping Car] Shopping Car Item Load",
   shoppingCarRemoveItems: "[Shopping Car] Shopping Car Items Removed",
   shoppingCarItemsPayed: " [Shopping Car] Payment Done",
+
+  shoppingCarDiscount: "[Shopping Car] Shopping Car Discount",
+
+  cuponValid: "[Cupon Validity] Cupon Message Valid",
+  cuponInvalid: "[Cupon Validity] Cupon Message Invalid",
+  cuponEmpty: "[Cupon Validity]  Cupon Message Cleared",
 };
