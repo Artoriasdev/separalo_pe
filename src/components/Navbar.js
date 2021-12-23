@@ -44,6 +44,8 @@ const Navbar = () => {
               onClick={handleRedirectHome}
               style={{
                 textTransform: "none",
+                marginTop: "-5px",
+                borderRadius: "0",
               }}
             >
               <img
