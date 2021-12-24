@@ -40,20 +40,22 @@ export const MenuServicesBusiness = () => {
         <Banner
           negocio={categorysByServices[0].businessName}
           imagen={JSON.stringify(categorysByServices[0].imageBig)}
-          logo={categorysByServices[0].logoBusiness}
         />
       )}
 
       <div className="page-container" style={{ width: "90%", margin: " auto" }}>
+        <div className="logo-container-services">
+          <img
+            src={categorysByServices[0] && categorysByServices[0].logoBusiness}
+            alt="logo"
+          />
+          <h1>
+            {categorysByServices[0] && categorysByServices[0].tradenameBusiness}
+          </h1>
+          <RatingService rate={5} style={{ marginTop: "5px" }} />
+        </div>
         <div style={{ width: "100%", marginBottom: "30px" }}>
           <div className="service">
-            <div className="service-rating">
-              <h1 style={{ color: "black" }}>
-                {categorysByServices[0] &&
-                  categorysByServices[0].tradenameBusiness}
-              </h1>
-              <RatingService rate={5} style={{ marginTop: "5px" }} />
-            </div>
             <div className="service-description">
               <h3>
                 {categorysByServices[0] &&
