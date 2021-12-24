@@ -16,6 +16,7 @@ export const shoppingCarReducer = (state = initialState, action) => {
         shoppingCarItems: action.payload,
       };
     case types.shoppingCarItemsPayed:
+      localStorage.removeItem("Car Items");
       return {
         ...state,
         shoppingCarItems: [],
