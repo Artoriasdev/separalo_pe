@@ -1,24 +1,17 @@
+import { handleGetShoppingCart } from "../helpers/handlers";
 import { types } from "../types/types";
 import { modalOpen } from "./modal";
 
-export const checkShoppingItems = () => {
+export const checkShoppingItems = (token) => {
   return async (dispatch) => {
     try {
-      if (localStorage.getItem("Car Items") !== null) {
-        const { shoppingCarItems } = JSON.parse(
-          localStorage.getItem("Car Items")
-        );
-        if (shoppingCarItems.length > 0) {
-          var oneMinute = 1000 * 60 * 10;
-          for (let i = 0; i < shoppingCarItems.length; i++) {
-            if (new Date().getTime() - shoppingCarItems[i].time > oneMinute) {
-              shoppingCarItems[i].state = "Caducado";
-            }
-          }
-          dispatch(shoppingCarLoad(shoppingCarItems));
-        } else if (shoppingCarItems.length < 1) {
-          localStorage.removeItem("Car Items");
-        }
+      const { data } = await handleGetShoppingCart(token);
+      console.log(data);
+
+      if (data.response === "true") {
+        dispatch(shoppingCarLoad(data.data));
+      } else if (data.response === "false") {
+        console.log(data);
       }
     } catch (error) {
       console.log(error);

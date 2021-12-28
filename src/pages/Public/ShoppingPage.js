@@ -21,11 +21,13 @@ import {
 
 import Shopping from "../../assets/images/ShoppingPage.svg";
 import {
+  checkShoppingItems,
   cuponClear,
   shoppingCarDeleteItems,
   shoppingDiscount,
 } from "../../actions/shoppingCar";
 import { shoppingCarDone } from "../../actions/shoppingCarDone";
+import { payment } from "../../actions/payment";
 
 const style = {
   position: "absolute",
@@ -42,11 +44,19 @@ const style = {
 export const ShoppingPage = () => {
   const { shoppingCarItems } = useSelector((state) => state.shoppingCar);
   const { show, valid, message } = useSelector((state) => state.cupon);
+  const { token } = useSelector((state) => state.auth.data);
+  const { logged } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useHistory();
   const [pricing, setPricing] = useState(0);
   const [selected, setSelected] = React.useState([]);
   const [opened, setOpened] = useState(false);
+
+  useEffect(() => {
+    if (logged) {
+      dispatch(checkShoppingItems(token));
+    }
+  }, [dispatch, logged, token]);
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -83,8 +93,11 @@ export const ShoppingPage = () => {
   };
 
   const handleReservePayment = () => {
-    dispatch(shoppingCarDone(shoppingCarItems));
-    history.push("/reservations-completed");
+    // dispatch(shoppingCarDone(shoppingCarItems));
+    if (logged) {
+      dispatch(payment(token));
+    }
+    history.push("/payment");
   };
 
   const handleClick = (event, name) => {
@@ -227,32 +240,31 @@ export const ShoppingPage = () => {
                   {shoppingCarItems &&
                     shoppingCarItems.map(
                       ({
-                        codeReservation,
+                        index,
                         titleService,
-                        tradeName,
+                        tradeNameBusiness,
                         state,
                         dateReservation,
                         price,
                         nameCategory,
                         timeReservation,
-                        discount,
                       }) => {
-                        const isItemSelected = isSelected(codeReservation);
+                        const isItemSelected = isSelected(index);
                         return (
-                          <TableRow key={codeReservation}>
+                          <TableRow key={index}>
                             <TableCell padding="checkbox">
                               <Checkbox
                                 color="default"
                                 checked={isItemSelected}
-                                onClick={(event) =>
-                                  handleClick(event, codeReservation)
-                                }
+                                onClick={(event) => handleClick(event, index)}
                               />
                             </TableCell>
                             <TableCell className="font">
                               {nameCategory}
                             </TableCell>
-                            <TableCell className="font">{tradeName}</TableCell>
+                            <TableCell className="font">
+                              {tradeNameBusiness}
+                            </TableCell>
                             <TableCell className="font">
                               {titleService}
                             </TableCell>
@@ -270,7 +282,7 @@ export const ShoppingPage = () => {
                               align="center"
                               style={{ color: "#5950A2" }}
                             >
-                              -S/ {discount}
+                              -S/ {"0.00"}
                             </TableCell>
                             <TableCell className="font" align="center">
                               {state}

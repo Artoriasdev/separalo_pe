@@ -1137,5 +1137,48 @@ export const handleRegisterService = async (formModel, tk) => {
     });
 
   return rspApi;
-  //
+};
+
+export const handleGetShoppingCart = (tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/shopping/getShoppingCart`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleCreatePayment = (tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/payment/createPayment`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
 };

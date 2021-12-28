@@ -1,22 +1,25 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  // useDispatch,
+  useSelector,
+} from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { Button } from "@mui/material";
-import { addItemCar } from "../../actions/shoppingCar";
+// import { addItemCar } from "../../actions/shoppingCar";
 
 export const ReserveDetail = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { reservationUser } = useSelector((state) => state.reservation);
 
   const handleReserveMore = () => {
-    dispatch(addItemCar(reservationUser));
+    // dispatch(addItemCar(reservationUser));
     history.push("/");
   };
 
   const handleReservePayment = () => {
-    history.push("/reserve-complete");
+    history.push("/shopping");
   };
 
   useEffect(() => {

@@ -80,4 +80,6 @@ export const types = {
   cuponValid: "[Cupon Validity] Cupon Message Valid",
   cuponInvalid: "[Cupon Validity] Cupon Message Invalid",
   cuponEmpty: "[Cupon Validity]  Cupon Message Cleared",
+
+  clientPayment: "[Payment] Client Payment",
 };

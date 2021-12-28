@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Redirect, Route, Switch } from "react-router";
 import { useSelector } from "react-redux";
 
@@ -28,19 +28,10 @@ import { Password } from "../pages/Public/PasswordChange";
 import { ReserveDetail } from "../pages/Public/ReserveDetail";
 import { ShoppingPage } from "../pages/Public/ShoppingPage";
 import { ReserveCompleteShopping } from "../pages/Public/ReserveCompleteShopping";
+import { PaymentPage } from "../pages/Public/PaymentPage";
 
 export const PublicRouter = () => {
   const { workflow } = useSelector((state) => state.auth);
-  const items = useSelector((state) => state.shoppingCar);
-
-  useEffect(() => {
-    if (items.shoppingCarItems !== undefined) {
-      const { shoppingCarItems } = items;
-      if (shoppingCarItems.length > 0) {
-        localStorage.setItem("Car Items", JSON.stringify(items));
-      }
-    }
-  }, [items]);
 
   return (
     <>
@@ -118,6 +109,8 @@ export const PublicRouter = () => {
             path="/reservations-completed"
             component={ReserveCompleteShopping}
           />
+          <Route exact path="/payment" component={PaymentPage} />
+
           <Redirect to="/" />
         </Switch>
       </div>
