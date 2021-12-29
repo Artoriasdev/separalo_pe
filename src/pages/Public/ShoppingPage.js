@@ -124,8 +124,8 @@ export const ShoppingPage = () => {
   function handlePricing() {
     if (shoppingCarItems.length > 0) {
       for (let i = 0; i < shoppingCarItems.length; i++) {
-        var element = JSON.parse(shoppingCarItems[i].price.split("/").pop());
-        total = total + element - shoppingCarItems[i].discount;
+        var element = shoppingCarItems[i].priceUnformatted;
+        total = total + element;
       }
       setPricing(total);
     }
@@ -241,16 +241,18 @@ export const ShoppingPage = () => {
                 <TableBody>
                   {shoppingCarItems &&
                     shoppingCarItems.map(
-                      ({
-                        index,
-                        titleService,
-                        tradeNameBusiness,
-                        state,
-                        dateReservation,
-                        price,
-                        nameCategory,
-                        timeReservation,
-                      }) => {
+                      (
+                        {
+                          titleService,
+                          tradeNameBusiness,
+                          state,
+                          dateReservation,
+                          price,
+                          nameCategory,
+                          timeReservation,
+                        },
+                        index
+                      ) => {
                         const isItemSelected = isSelected(index);
                         return (
                           <TableRow key={index}>
