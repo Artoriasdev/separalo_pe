@@ -97,7 +97,9 @@ export const ShoppingPage = () => {
     if (logged) {
       dispatch(payment(token));
     }
-    history.push("/payment");
+    setTimeout(() => {
+      history.push("/payment");
+    }, 2000);
   };
 
   const handleClick = (event, name) => {
