@@ -14,7 +14,7 @@ export const BusinessServices = () => {
   const history = useHistory();
   const { servicesList } = useSelector((state) => state.serviceList);
   const { redirect } = useSelector((state) => state.modal);
-  // const { data } = useSelector((state) => state.auth);
+  const { id } = useSelector((state) => state.auth.data);
 
   if (redirect) {
     history.go();
@@ -36,7 +36,7 @@ export const BusinessServices = () => {
   };
 
   useEffect(() => {
-    dispatch(serviceList(3));
+    dispatch(serviceList(id));
   }, [dispatch]);
 
   return (

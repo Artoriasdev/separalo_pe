@@ -17,7 +17,7 @@ export const BusinessServicesCategory = () => {
   const { servicesListByCategory } = useSelector(
     (state) => state.serviceListByCategory
   );
-  const { token } = useSelector((state) => state.auth.data);
+  const { token, id } = useSelector((state) => state.auth.data);
 
   const cat = useSelector((state) => state.category.categorys);
 
@@ -49,7 +49,7 @@ export const BusinessServicesCategory = () => {
   };
 
   useEffect(() => {
-    dispatch(serviceListByCategory(3, params.value, token));
+    dispatch(serviceListByCategory(id, params.value, token));
   }, [dispatch, params.value, token]);
 
   return (
