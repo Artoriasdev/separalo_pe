@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import KRGlue from "@lyracom/embedded-form-glue";
 import { useSelector } from "react-redux";
-import axios from "axios";
 
 export const PaymentPage = () => {
-  const { token } = useSelector((state) => state.payment);
+  const { formToken: token } = useSelector((state) => state.payment.data);
+  const history = useHistory();
 
   useEffect(() => {
     const endpoint =
@@ -13,55 +14,22 @@ export const PaymentPage = () => {
       "71537712:testpublickey_nfUiwwMyZVJPxmOAHROfrZe2smhKfOY3ltdHjSqSqvB7R";
     const formToken = token;
 
-    KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
+    KRGlue.loadLibrary(endpoint, publicKey)
       .then(({ KR }) =>
         KR.setFormConfig({
-          /* set the minimal configuration */
           formToken: formToken,
-          "kr-language": "en-US" /* to update initialization parameter */,
         })
       )
-      .then(({ KR }) =>
-        KR.validateForm()
-          .then(({ KR, result }) => {
-            console.log(KR, result);
-
-            /* there is no error */
-            /* result == null */
-          })
-          .catch(({ KR, result }) => {
-            /* Get the error message */
-            var code = result.errorCode;
-            var message = result.errorMessage;
-            var myMessage = code + ": " + message;
-            console.log(myMessage);
-
-            /* if you have defined a callback using      */
-            /* result.onError(), you can trigger it calling: */
-            return result.doOnError();
-          })
-      )
-      .then(({ KR }) =>
+      .then(({ KR, result }) => {
         KR.onSubmit((paymentData) => {
-          const rsp = axios
-            .post(endpoint, paymentData)
-            .then((response) => {
-              console.log(response);
-              if (response.status === 200) console.log("Pago exitoso");
-              else console.log(response);
-            })
-            .catch((response) => {
-              console.log(response);
-            });
-          return rsp; // Return false to prevent the redirection
-        })
-      ) // Custom payment callback
-      .then(({ KR }) =>
-        KR.addForm("#paymentForm")
-      ) /* add a payment form  to myPaymentForm div*/
-      .then(({ KR, result }) =>
-        KR.showForm(result.formId)
-      ); /* show the payment form */
+          console.log(paymentData, "payment");
+          if (paymentData.clientAnswer.orderStatus === "PAID") {
+            alert("Se hizo el pago correctamente");
+            history.push("/");
+          }
+          return false;
+        });
+      });
   }, [token]);
 
   return (
@@ -71,9 +39,8 @@ export const PaymentPage = () => {
         <div className="kr-expiry"></div>
         <div className="kr-security-code"></div>
 
-        <button className="kr-payment-button"></button>
-
         <div className="kr-form-error"></div>
+        <button className="kr-payment-button"></button>
       </div>
     </div>
   );
