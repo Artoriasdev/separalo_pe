@@ -16,14 +16,18 @@ import { RedirectPublicRoute } from "./RedirectPublicRoute";
 
 export const SeparalopeRouter = () => {
   const dispatch = useDispatch();
+  const { logged } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth.data);
   const { workflow } = useSelector((state) => state.auth);
   const { check } = useSelector((state) => state.checking);
 
   useEffect(() => {
     dispatch(checkAuth());
     dispatch(loadCategorys());
-    dispatch(checkShoppingItems());
-  }, [dispatch]);
+    if (logged) {
+      dispatch(checkShoppingItems(token));
+    }
+  }, [dispatch, logged, token]);
 
   return (
     <Router>
