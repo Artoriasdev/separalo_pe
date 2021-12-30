@@ -26,8 +26,9 @@ import {
   shoppingCarDeleteItems,
   shoppingDiscount,
 } from "../../actions/shoppingCar";
-import { shoppingCarDone } from "../../actions/shoppingCarDone";
+// import { shoppingCarDone } from "../../actions/shoppingCarDone";
 import { payment } from "../../actions/payment";
+import { finishChecking, startChecking } from "../../actions/checking";
 
 const style = {
   position: "absolute",
@@ -96,8 +97,10 @@ export const ShoppingPage = () => {
     // dispatch(shoppingCarDone(shoppingCarItems));
     if (logged) {
       dispatch(payment(token));
+      dispatch(startChecking());
     }
     setTimeout(() => {
+      dispatch(finishChecking());
       history.push("/payment");
     }, 2000);
   };
@@ -127,7 +130,7 @@ export const ShoppingPage = () => {
         var element = shoppingCarItems[i].priceUnformatted;
         total = total + element;
       }
-      setPricing(total);
+      setPricing(total.toFixed(2));
     }
   }
 
