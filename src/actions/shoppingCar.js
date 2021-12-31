@@ -6,7 +6,6 @@ export const checkShoppingItems = (token) => {
   return async (dispatch) => {
     try {
       const { data } = await handleGetShoppingCart(token);
-      console.log(data);
 
       if (data.response === "true") {
         dispatch(shoppingCarLoad(data.data));
