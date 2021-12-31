@@ -22,8 +22,9 @@ export const shoppingCarReducer = (state = initialState, action) => {
         shoppingCarItems: [],
       };
     case types.shoppingCarRemoveItems:
+      console.log(action.payload);
       const items = state.shoppingCarItems.filter(
-        (item) => !action.payload.includes(item.codeReservation)
+        (item) => item.codeReservation !== action.payload
       );
       if (items.length === 0) {
         localStorage.removeItem("Car Items");

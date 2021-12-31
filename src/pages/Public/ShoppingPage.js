@@ -6,8 +6,8 @@ import {
   Backdrop,
   Box,
   Button,
-  Checkbox,
   Fade,
+  IconButton,
   Modal,
   Table,
   TableBody,
@@ -29,6 +29,8 @@ import {
 // import { shoppingCarDone } from "../../actions/shoppingCarDone";
 import { payment } from "../../actions/payment";
 import { finishChecking, startChecking } from "../../actions/checking";
+import Delete from "../../assets/images/Delete.svg";
+import CustomizedTooltips from "../../components/ToolTip";
 
 const style = {
   position: "absolute",
@@ -50,8 +52,8 @@ export const ShoppingPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [pricing, setPricing] = useState(0);
-  const [selected, setSelected] = React.useState([]);
   const [opened, setOpened] = useState(false);
+  const [selected, setSelected] = useState();
 
   useEffect(() => {
     if (logged) {
@@ -59,12 +61,11 @@ export const ShoppingPage = () => {
     }
   }, [dispatch, logged, token]);
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
-
   var values;
   var total = 0;
 
-  const handleDeleteModal = () => {
+  const handleDeleteModal = (id) => {
+    setSelected(id);
     setOpened(true);
   };
 
@@ -103,25 +104,6 @@ export const ShoppingPage = () => {
       dispatch(finishChecking());
       history.push("/payment");
     }, 2000);
-  };
-
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
   };
 
   function handlePricing() {
@@ -256,15 +238,16 @@ export const ShoppingPage = () => {
                         },
                         index
                       ) => {
-                        const isItemSelected = isSelected(index);
                         return (
                           <TableRow key={index}>
-                            <TableCell padding="checkbox">
-                              <Checkbox
-                                color="default"
-                                checked={isItemSelected}
-                                onClick={(event) => handleClick(event, index)}
-                              />
+                            <TableCell>
+                              <IconButton
+                                className=""
+                                onClick={() => handleDeleteModal(index)}
+                                style={{ margin: "0" }}
+                              >
+                                <img src={Delete} alt="logo" />
+                              </IconButton>
                             </TableCell>
                             <TableCell className="font">
                               {nameCategory}
@@ -291,8 +274,14 @@ export const ShoppingPage = () => {
                             >
                               -S/ {"0.00"}
                             </TableCell>
-                            <TableCell className="font" align="center">
-                              {state}
+                            <TableCell className="font">
+                              {state === "Caducado" ? (
+                                <>
+                                  {state} <CustomizedTooltips />
+                                </>
+                              ) : (
+                                state
+                              )}
                             </TableCell>
                           </TableRow>
                         );
@@ -329,27 +318,24 @@ export const ShoppingPage = () => {
                 </button>
               </div>
               <div className="payment-container">
-                <p style={{ marginRight: "10px" }}>Total a pagar S/</p>
-
-                <TextField
-                  value={pricing}
-                  style={{ marginRight: "10px" }}
-                  variant="outlined"
-                  disabled
-                />
+                <div className="totals">
+                  <p>Subtotal </p>
+                  <p>S/ {pricing}</p>
+                </div>
+                <div className="totals">
+                  <p>Descuento </p>
+                  <p>-S/ {"0.00"}</p>
+                </div>
+                <div className="totals" style={{ color: "#5950A2" }}>
+                  <p style={{ fontWeight: "bold" }}>Total a pagar </p>
+                  <p style={{ lineHeight: "18px", fontWeight: "900" }}>
+                    S/ {pricing}
+                  </p>
+                </div>
               </div>
             </div>
             <div>
               <div className="reserve-accions">
-                <div className="reserve-accions-delete">
-                  <button
-                    className="text-button_delete"
-                    style={{ color: "#23232399" }}
-                    onClick={handleDeleteModal}
-                  >
-                    Eliminar reserva
-                  </button>
-                </div>
                 <div className="reserve-accions-shopping">
                   <Button
                     size="large"

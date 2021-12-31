@@ -2171,23 +2171,25 @@ button {
   .discount-container {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .payment-container {
+    background: rgba(229, 229, 229, 0.6);
+    border-radius: 2px;
+    width: 276px;
+    height: 133px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
+    padding: 10px 0 20px 0;
 
-    input {
-      &:disabled {
-        color: black !important;
-        font-size: 15px;
-        line-height: 18px;
-        font-weight: 500;
-        -webkit-text-fill-color: rgb(0, 0, 0) !important;
-        background-color: rgba(229, 229, 229, 0.6);
-      }
+    .totals {
+      display: flex;
+      justify-content: space-between;
+      width: 80%;
+      font-size: 15.2px;
+      font-weight: 500;
     }
   }
 }
@@ -2232,13 +2234,13 @@ button {
 }
 
 .reserve-accions-shopping {
-  width: 60%;
-  float: right;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin-top: 50px;
   button {
     width: 45%;
+    max-width: 450px;
   }
 }
 .disclaimer-container {
