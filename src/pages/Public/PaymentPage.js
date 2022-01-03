@@ -44,7 +44,7 @@ export const PaymentPage = () => {
           });
         });
     }, 1000);
-  }, [token]);
+  }, [token, history]);
 
   return (
     <div className="page-container">

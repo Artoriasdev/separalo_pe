@@ -37,7 +37,7 @@ export const BusinessServices = () => {
 
   useEffect(() => {
     dispatch(serviceList(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   return (
     <>

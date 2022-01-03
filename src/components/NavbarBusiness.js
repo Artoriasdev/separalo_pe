@@ -188,7 +188,11 @@ export const NavbarBusines = () => {
   return (
     <header className="header">
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar className="header" position="static">
+        <AppBar
+          className="header"
+          position="static"
+          style={{ padding: "0 20px" }}
+        >
           <Toolbar className="bar" variant="dense">
             <Button
               className="font  buttonHeader"

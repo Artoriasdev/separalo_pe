@@ -50,7 +50,7 @@ export const BusinessServicesCategory = () => {
 
   useEffect(() => {
     dispatch(serviceListByCategory(id, params.value, token));
-  }, [dispatch, params.value, token]);
+  }, [dispatch, params.value, token, id]);
 
   return (
     <>

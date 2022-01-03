@@ -26,7 +26,7 @@ export const ReserveDetail = () => {
     if (reservationUser.length < 1) history.push("/");
   }, [history, reservationUser.length]);
   return (
-    <div className="page-container">
+    <div className="page-container" style={{ padding: "20px 0" }}>
       <div className="reserve-detail-container">
         <div className="reserve-details">
           <div className="reserve-detail-title">

@@ -136,7 +136,7 @@ const FormDocumentChange = () => {
           onBlur={handleBlur}
         >
           <MenuItem disabled value={""}>
-            <span className="empty--option">Tipo de documento</span>
+            <span className="empty--option">Tipo de documento*</span>
           </MenuItem>
           {document &&
             document.map(({ id, descriptionLarge }) => (
@@ -395,7 +395,7 @@ export const RegisterCustomer = () => {
                           </IconButton>
                         </InputAdornment>
                       }
-                      placeholder="Contraseña"
+                      placeholder="Contraseña*"
                     />
                     <ErrorMessage
                       className="error"
@@ -425,7 +425,7 @@ export const RegisterCustomer = () => {
                           </IconButton>
                         </InputAdornment>
                       }
-                      placeholder="Repetir contraseña"
+                      placeholder="Repetir contraseña*"
                     />
                     <ErrorMessage
                       className="error"
