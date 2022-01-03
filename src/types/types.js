@@ -51,6 +51,8 @@ export const types = {
 
   loadBanks: "[Banks] Banks Loaded",
   loadBanksType: "[Banks] Banks Types Loaded",
+  banksUpdate: "[Banks] Banks Update ",
+  banksUpdateFinish: "[Banks] Banks Update Finish ",
 
   clientData: "[Client Data] Client Data Loaded",
 

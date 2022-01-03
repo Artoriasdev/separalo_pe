@@ -3,7 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { ErrorMessage, Form, Formik, useFormikContext } from "formik";
 
-import { Button, MenuItem, Select, TextField } from "@mui/material";
+import {
+  Backdrop,
+  Box,
+  Button,
+  Fade,
+  MenuItem,
+  Modal,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Save } from "@mui/icons-material";
 
 import { banksTypeList } from "../actions/banksTypeList";
@@ -15,6 +25,20 @@ import {
 } from "../utils/constants";
 import { EMAIL_REGEXP } from "../utils/regexp";
 import { registerDataBank } from "../actions/registerDataBank";
+import { businessDataBank } from "../actions/businessDataBank";
+import { bankUpdateFinish } from "../actions/editDataBank";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  maxWidth: 400,
+  bgcolor: "white",
+  borderRadius: "4px",
+  boxShadow: 10,
+  p: 4,
+};
 
 const SelectHandler = () => {
   const dispatch = useDispatch();
@@ -73,11 +97,6 @@ const SelectHandler = () => {
             required
             variant="outlined"
             fullWidth
-            style={{
-              marginTop: "10px",
-              textAlign: "center",
-              marginBottom: "5px",
-            }}
             displayEmpty
           >
             <MenuItem disabled value={""}>
@@ -148,10 +167,56 @@ const SelectHandler = () => {
 
 export const BankFormRegister = () => {
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth.data);
+  const { update, message, opened } = useSelector((state) => state.banksUpdate);
+
+  const handleClose = () => {
+    if (update) {
+      dispatch(businessDataBank(token));
+    }
+    dispatch(bankUpdateFinish());
+  };
 
   return (
     <div>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={opened}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+        className="modal-container"
+      >
+        <Fade in={opened}>
+          <Box sx={style}>
+            <Typography
+              id="transition-modal-title"
+              variant="h8"
+              component="p"
+              style={{ fontWeight: "unset", marginBottom: "10px" }}
+            >
+              {message}
+            </Typography>
+
+            <div>
+              <Button
+                size="large"
+                color="primary"
+                variant="contained"
+                className="btn-primary"
+                onClick={handleClose}
+                fullWidth
+              >
+                Aceptar
+              </Button>
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
       <h2 style={{ color: "black", textAlign: "center", marginTop: "20px" }}>
         No cuentas con ningun dato bancario registrado, por favor registra tus
         datos aquí
@@ -229,7 +294,7 @@ export const BankFormRegister = () => {
           <Form name="formBank" onSubmit={handleSubmit}>
             <SelectHandler />
             <div className="files">
-              <div className="txt-left">
+              <div className="txt-left" style={{ margin: "5px 0 5px 5px" }}>
                 <TextField
                   name="numeroInterbancario"
                   className="TxtField"

@@ -35,6 +35,7 @@ import { shoppingCarReducer } from "../reducers/shoppingCarReducer";
 import { shoppingCarCompletedReducer } from "../reducers/shoppingCarCompletedReducer";
 import { cuponMessage } from "../reducers/cuponMessage";
 import { paymentReducer } from "../reducers/paymentReducer";
+import { banksUpdateReducer } from "../reducers/banksUpdateReducer";
 
 const composeEnhancers =
   (typeof window !== "undefined" &&
@@ -64,6 +65,7 @@ const reducers = combineReducers({
   documents: documentsReducer,
   banksList: banksReducer,
   banksTypeList: banksAccountTypeReducer,
+  banksUpdate: banksUpdateReducer,
   clientData: clientData,
   clientAppointment: clientAppointment,
   clientAppointmentHistory: clientAppointmentHistory,

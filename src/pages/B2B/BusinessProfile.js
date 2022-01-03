@@ -2,7 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 
-import { AppBar, Breadcrumbs, Link, Tabs } from "@mui/material";
+import {
+  AppBar,
+  Backdrop,
+  Box,
+  Breadcrumbs,
+  Button,
+  Fade,
+  Link,
+  Modal,
+  Tabs,
+  Typography,
+} from "@mui/material";
 import { ImageOutlined, NavigateNext, PhotoCamera } from "@mui/icons-material";
 
 import { businessData } from "../../actions/businessData";
@@ -10,17 +21,32 @@ import { businessData } from "../../actions/businessData";
 // import BusinessData from "./BusinessData.js";
 import { LinkTab } from "../../helpers/LinkTab.js";
 import { TabPanel } from "../../helpers/TabPanel.js";
-import { modalOpen } from "../../actions/modal";
-import { bannerUpload, logoUpload } from "../../actions/imageUpload";
-import { MyModal } from "../../components/Modal";
+import { bannerUpload, finish, logoUpload } from "../../actions/imageUpload";
 import { BusinessData } from "./BusinessData";
 import { BusinessDataBank } from "./BusinessDataBank";
+import { MyModal } from "../../components/Modal";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  maxWidth: 400,
+  bgcolor: "background.paper",
+  borderRadius: "4px",
+  boxShadow: 10,
+  p: 4,
+};
 
 export const BusinessProfile = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { token } = useSelector((state) => state.auth.data);
   const { data } = useSelector((state) => state.businessData);
+  const { uploaded, response } = useSelector((state) => state.imageUpload);
+
+  const [opened, setOpened] = useState(false);
+  const [message, setMessage] = useState("");
 
   const [value, setValue] = useState(0);
 
@@ -30,6 +56,13 @@ export const BusinessProfile = () => {
   useEffect(() => {
     dispatch(businessData(token));
   }, [dispatch, token]);
+
+  useEffect(() => {
+    if (uploaded) {
+      setOpened(true);
+      setMessage(response);
+    }
+  }, [uploaded]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -45,10 +78,12 @@ export const BusinessProfile = () => {
         if (sizeFile < 1048576) {
           dispatch(logoUpload(file, token));
         } else {
-          dispatch(modalOpen(wMessage));
+          setOpened(true);
+          setMessage(wMessage);
         }
       } else {
-        dispatch(modalOpen(fMessage));
+        setOpened(true);
+        setMessage(fMessage);
       }
     } catch (error) {
       console.log(error);
@@ -65,10 +100,12 @@ export const BusinessProfile = () => {
         if (sizeFile < 1048576) {
           dispatch(bannerUpload(file, token));
         } else {
-          dispatch(modalOpen(wMessage));
+          setOpened(true);
+          setMessage(wMessage);
         }
       } else {
-        dispatch(modalOpen(fMessage));
+        setOpened(true);
+        setMessage(fMessage);
       }
     } catch (error) {
       console.log(error);
@@ -81,6 +118,14 @@ export const BusinessProfile = () => {
 
   const handleAttachBannerClick = () => {
     document.querySelector("#banner").click();
+  };
+
+  const handleClose = () => {
+    setOpened(false);
+    if (uploaded) {
+      dispatch(businessData(token));
+      dispatch(finish());
+    }
   };
 
   const handleClick = (id) => {
@@ -99,6 +144,44 @@ export const BusinessProfile = () => {
   return (
     <div className="page-container" style={{ padding: "0", width: "100%" }}>
       <MyModal />
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={opened}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+        className="modal-container"
+      >
+        <Fade in={opened}>
+          <Box sx={style}>
+            <Typography
+              id="transition-modal-title"
+              variant="h8"
+              component="p"
+              style={{ fontWeight: "unset", marginBottom: "10px" }}
+            >
+              {message}
+            </Typography>
+
+            <div>
+              <Button
+                size="large"
+                color="primary"
+                variant="contained"
+                className="btn-primary"
+                onClick={handleClose}
+                fullWidth
+              >
+                Aceptar
+              </Button>
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
 
       <div className="profile-container">
         <div className="form-profile">

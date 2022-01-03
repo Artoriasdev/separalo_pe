@@ -1,13 +1,13 @@
+import { types } from "../types/types";
 import { handleUpdateBusinessBankData } from "../helpers/handlers";
-import { modalOpen, modalRedirect } from "./modal";
+import { modalOpen } from "./modal";
 
 export const editBusinessBank = (dataModel, tk) => {
   return async (dispatch) => {
     try {
       const { data } = await handleUpdateBusinessBankData(dataModel, tk);
       if (data.response === "true") {
-        dispatch(modalOpen(data.message));
-        dispatch(modalRedirect());
+        dispatch(bankUpdate(data.message));
       } else {
         dispatch(modalOpen(data.message));
       }
@@ -21,3 +21,12 @@ export const editBusinessBank = (dataModel, tk) => {
     }
   };
 };
+
+export const bankUpdate = (message) => ({
+  type: types.banksUpdate,
+  payload: message,
+});
+
+export const bankUpdateFinish = () => ({
+  type: types.banksUpdateFinish,
+});

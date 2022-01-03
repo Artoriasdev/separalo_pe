@@ -1,10 +1,18 @@
 import React, { useEffect } from "react";
-import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Formik, Form, useFormikContext, ErrorMessage } from "formik";
 
-import { Button, MenuItem, Select, TextField } from "@mui/material";
+import {
+  Backdrop,
+  Button,
+  Fade,
+  MenuItem,
+  Modal,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Save } from "@mui/icons-material";
 
 import { documents } from "../../actions/documents";
@@ -18,8 +26,23 @@ import {
   E_MINLENGTH,
 } from "../../utils/constants";
 import { handleRegexDisable } from "../../utils/utilitaries";
+import { Box } from "@mui/system";
+import { modalClose, modalRedirectFinished } from "../../actions/modal";
+import { businessData } from "../../actions/businessData";
 
 // import FullPageLoader from "./FullPageLoader";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  maxWidth: 400,
+  bgcolor: "white",
+  borderRadius: "4px",
+  boxShadow: 10,
+  p: 4,
+};
 
 const FormHandler = () => {
   const dispatch = useDispatch();
@@ -226,7 +249,7 @@ const FormHandler = () => {
             onBlur={handleBlur}
           >
             <MenuItem disabled value={""}>
-              <span className="empty--option">Provincia</span>
+              <span className="empty--option">Provincia*</span>
             </MenuItem>
             {provincesList &&
               provincesList.map(({ key, value }) => (
@@ -252,7 +275,7 @@ const FormHandler = () => {
             onBlur={handleBlur}
           >
             <MenuItem disabled value="">
-              Distrito
+              Distrito*
             </MenuItem>
             {districsList.length === 0 ? (
               <MenuItem disabled value={" "}>
@@ -362,7 +385,7 @@ const FormHandler = () => {
             onBlur={handleBlur}
           >
             <MenuItem disabled value="">
-              Tipo de documento
+              Tipo de documento*
             </MenuItem>
             {documentos &&
               documentos.map(({ id, descriptionLarge }) => (
@@ -403,13 +426,20 @@ const FormHandler = () => {
 
 export const BusinessData = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const { token } = useSelector((state) => state.auth.data);
-  const { redirect } = useSelector((state) => state.modal);
+  const { opened, message, redirect } = useSelector((state) => state.modal);
 
-  if (redirect) {
-    history.go();
-  }
+  // if (redirect) {
+  //   history.go();
+  // }
+
+  const handleClose = () => {
+    dispatch(modalClose());
+    if (redirect) {
+      dispatch(businessData(token));
+      dispatch(modalRedirectFinished());
+    }
+  };
 
   useEffect(() => {
     dispatch(documents());
@@ -418,6 +448,44 @@ export const BusinessData = () => {
 
   return (
     <>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={opened}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+        className="modal-container"
+      >
+        <Fade in={opened}>
+          <Box sx={style}>
+            <Typography
+              id="transition-modal-title"
+              variant="h8"
+              component="p"
+              style={{ fontWeight: "unset", marginBottom: "10px" }}
+            >
+              {message}
+            </Typography>
+
+            <div>
+              <Button
+                size="large"
+                color="primary"
+                variant="contained"
+                className="btn-primary"
+                onClick={handleClose}
+                fullWidth
+              >
+                Aceptar
+              </Button>
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
       <Formik
         initialValues={{
           nombreCompañia: "",

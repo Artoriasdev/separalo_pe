@@ -1,17 +1,20 @@
 import { types } from "../types/types";
 const initialState = {
-  redirect: false,
+  uploaded: false,
+  response: "",
 };
 
 export const imageUpload = (state = initialState, action) => {
   switch (action.type) {
     case types.imageUploaded:
       return {
-        redirect: true,
+        uploaded: true,
+        response: action.payload,
       };
     case types.imageUploadedFinished:
       return {
-        redirect: false,
+        uploaded: false,
+        response: "",
       };
 
     default:

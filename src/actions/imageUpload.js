@@ -10,7 +10,7 @@ export const logoUpload = (file, token) => {
     try {
       const { data } = await handleUploadLogoBusiness(file, token);
       if (data.response === "true") {
-        dispatch(upload());
+        dispatch(upload(data.message));
       } else {
         console.log(data);
       }
@@ -29,7 +29,7 @@ export const bannerUpload = (file, token) => {
     try {
       const { data } = await handleUploadBannerBusiness(file, token);
       if (data.response === "true") {
-        dispatch(upload());
+        dispatch(upload(data.message));
       } else {
         console.log(data);
       }
@@ -44,8 +44,9 @@ export const bannerUpload = (file, token) => {
   };
 };
 
-export const upload = () => ({
+export const upload = (message) => ({
   type: types.imageUploaded,
+  payload: message,
 });
 export const finish = () => ({
   type: types.imageUploadedFinished,
