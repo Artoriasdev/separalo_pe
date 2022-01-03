@@ -2140,8 +2140,16 @@ button {
   .reserve-accions {
     display: flex;
     justify-content: space-between;
+    @include mobile {
+      flex-direction: column;
+    }
     button {
       width: 40%;
+      max-width: 450px;
+      @include mobile {
+        width: 100%;
+        max-width: unset;
+      }
     }
   }
 }
@@ -2167,11 +2175,25 @@ button {
 .inputs-shopping-container {
   display: flex;
   justify-content: space-between;
-
+  @include mobile {
+    flex-direction: column;
+  }
   .discount-container {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    @include mobile {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .cupon-field {
+      display: flex;
+      @include mobile {
+        width: 100%;
+      }
+    }
   }
 
   .payment-container {
@@ -2183,6 +2205,10 @@ button {
     flex-direction: column;
     align-items: center;
     padding: 10px 0 20px 0;
+
+    @include mobile {
+      width: 100%;
+    }
 
     .totals {
       display: flex;
@@ -2241,6 +2267,14 @@ button {
   button {
     width: 45%;
     max-width: 450px;
+    @include mobile {
+      width: 100%;
+      max-width: unset;
+    }
+  }
+  @include mobile {
+    flex-direction: column;
+    margin-top: 20px;
   }
 }
 .disclaimer-container {
@@ -2250,4 +2284,76 @@ button {
   font-size: 11px;
   line-height: 12px;
   color: rgba(35, 35, 35, 0.8);
+}
+
+.shop-card-container {
+  width: 100%;
+  .shop-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border: 0.5px solid #c4c4c4;
+    margin-bottom: 30px;
+    .shop-card-title {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background: rgba(229, 229, 229, 0.7);
+      border-bottom: 0.8px solid #c4c4c4;
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 23px;
+    }
+    .shop-card-content {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+
+      .shop-card-text {
+        display: flex;
+        justify-content: space-between;
+        .shop-card-bold {
+          font-weight: bold;
+          line-height: 23px;
+        }
+      }
+    }
+  }
+}
+
+.service-card-container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  border: 0.5px solid #c4c4c4;
+  box-sizing: border-box;
+
+  .service-card {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-bottom: 0.3px solid rgba(35, 35, 35, 0.7);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 20px;
+    .service-card-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 30%;
+    }
+    .service-button {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-decoration: underline;
+        font-weight: bold;
+      }
+    }
+  }
 }
