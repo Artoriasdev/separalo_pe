@@ -20,30 +20,42 @@ export const PaymentPage = () => {
   const history = useHistory();
 
   useEffect(() => {
-    setTimeout(() => {
-      const endpoint =
-        "https://static.micuentaweb.pe/static/js/krypton-client/V4.0/stable/kr-payment-form.min.js";
-      const publicKey =
-        "71537712:testpublickey_nfUiwwMyZVJPxmOAHROfrZe2smhKfOY3ltdHjSqSqvB7R";
-      const formToken = token;
+    const endpoint =
+      "https://static.micuentaweb.pe/static/js/krypton-client/V4.0/stable/kr-payment-form.min.js";
+    const publicKey =
+      "71537712:testpublickey_nfUiwwMyZVJPxmOAHROfrZe2smhKfOY3ltdHjSqSqvB7R";
+    const formToken = token;
 
-      KRGlue.loadLibrary(endpoint, publicKey)
-        .then(({ KR }) =>
-          KR.setFormConfig({
-            formToken: formToken,
-          })
-        )
-        .then(({ KR, result }) => {
-          KR.onSubmit((paymentData) => {
-            console.log(paymentData, "payment");
-            if (paymentData.clientAnswer.orderStatus === "PAID") {
-              alert("Se hizo el pago correctamente");
-              history.push("/");
-            }
-            return false;
-          });
+    KRGlue.loadLibrary(endpoint, publicKey).then(({ KR }) => {
+      try {
+        KR.setFormConfig({
+          formToken: formToken,
+          "kr-language": "es-ES",
         });
-    }, 1000);
+        KR.onSubmit((paymentData) => {
+          console.log(paymentData, "payment");
+          if (paymentData.clientAnswer.orderStatus === "PAID") {
+            alert("Se hizo el pago correctamente");
+            history.push("/");
+            history.go();
+          }
+          return false;
+        });
+        KR.onError((event) => {
+          var code = event.detailedErrorCode;
+          var message = event.errorMessage;
+          var myMessage = code + ": " + message;
+
+          console.log(event);
+          document.getElementsByClassName("customerror")[0].innerText =
+            myMessage;
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+    // .then(({ KR, result }) => {
+    // });
   }, [token, history]);
 
   return (
@@ -63,9 +75,10 @@ export const PaymentPage = () => {
             <div className="kr-expiry"></div>
             <div className="kr-security-code"></div>
 
-            <div className="kr-form-error"></div>
-            <button className="kr-payment-button"></button>
+            <button disabled={true} className="kr-payment-button"></button>
+            {/* <div className="kr-form-error"></div> */}
           </div>
+          <div className="customerror"></div>
         </div>
       </div>
     </div>
