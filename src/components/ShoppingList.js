@@ -121,7 +121,7 @@ export const ShoppingList = () => {
     setTimeout(() => {
       dispatch(finishChecking());
       history.push("/payment");
-    }, 2000);
+    }, 2500);
   };
 
   return (
