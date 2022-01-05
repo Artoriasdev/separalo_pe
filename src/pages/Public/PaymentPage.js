@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -9,6 +9,8 @@ import postscribe from "postscribe";
 import Shopping from "../../assets/images/ShoppingPage.svg";
 
 export const PaymentPage = () => {
+  const [error, setError] = useState(false);
+
   useEffect(() => {
     postscribe(
       "#script",
@@ -26,8 +28,8 @@ export const PaymentPage = () => {
       "71537712:testpublickey_nfUiwwMyZVJPxmOAHROfrZe2smhKfOY3ltdHjSqSqvB7R";
     const formToken = token;
 
-    KRGlue.loadLibrary(endpoint, publicKey).then(({ KR }) => {
-      try {
+    try {
+      KRGlue.loadLibrary(endpoint, publicKey).then(({ KR }) => {
         KR.setFormConfig({
           formToken: formToken,
           "kr-language": "es-ES",
@@ -36,6 +38,7 @@ export const PaymentPage = () => {
           console.log(paymentData, "payment");
           if (paymentData.clientAnswer.orderStatus === "PAID") {
             alert("Se hizo el pago correctamente");
+            setError(false);
             history.push("/");
             history.go();
           }
@@ -45,15 +48,16 @@ export const PaymentPage = () => {
           var code = event.detailedErrorCode;
           var message = event.errorMessage;
           var myMessage = code + ": " + message;
+          setError(true);
 
           console.log(event);
           document.getElementsByClassName("customerror")[0].innerText =
             myMessage;
         });
-      } catch (error) {
-        console.log(error);
-      }
-    });
+      });
+    } catch (error) {
+      console.log(error);
+    }
     // .then(({ KR, result }) => {
     // });
   }, [token, history]);
@@ -75,10 +79,13 @@ export const PaymentPage = () => {
             <div className="kr-expiry"></div>
             <div className="kr-security-code"></div>
 
-            <button disabled={true} className="kr-payment-button"></button>
+            <button className="kr-payment-button"></button>
             {/* <div className="kr-form-error"></div> */}
           </div>
-          <div className="customerror"></div>
+          <div
+            className="customerror"
+            style={{ display: error ? "flex" : "none" }}
+          ></div>
         </div>
       </div>
     </div>
