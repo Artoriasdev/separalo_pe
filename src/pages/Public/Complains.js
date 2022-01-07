@@ -12,6 +12,7 @@ import {
   EMAIL_INVALID,
   EMAIL_MINLENGTH,
   E_MINLENGTH,
+  REQUIRED,
 } from "../../utils/constants";
 import { MyModal } from "../../components/Modal";
 import { useDispatch, useSelector } from "react-redux";
@@ -92,7 +93,6 @@ const FormDocumentChange = () => {
           error={!!errors.tipoCliente && touched.tipoCliente}
           name="tipoCliente"
           displayEmpty
-          required
           onChange={handleDocumentChange}
           onBlur={handleBlur}
         >
@@ -104,6 +104,11 @@ const FormDocumentChange = () => {
           <MenuItem value="U">No cliente</MenuItem>
         </Select>
       </div>
+      <ErrorMessage
+        className="error bottom"
+        name="tipoCliente"
+        component="div"
+      />
       <div className="files">
         <Select
           style={{
@@ -117,7 +122,6 @@ const FormDocumentChange = () => {
           error={!!errors.tipoDocumento && touched.tipoDocumento}
           name="tipoDocumento"
           displayEmpty
-          required
           onChange={handleDocumentChange}
           onBlur={handleBlur}
         >
@@ -138,6 +142,11 @@ const FormDocumentChange = () => {
           )}
         </Select>
       </div>
+      <ErrorMessage
+        className="error bottom"
+        name="tipoDocumento"
+        component="div"
+      />
       <div className="files" style={{ flexDirection: "column" }}>
         <TextField
           name="numDocumento"
@@ -148,7 +157,6 @@ const FormDocumentChange = () => {
           error={!!errors.numDocumento && touched.numDocumento}
           onBlur={handleBlur}
           onChange={handleDocumentChange}
-          required
           fullWidth
           autoComplete="off"
           style={{
@@ -187,30 +195,36 @@ const FormComplainChange = () => {
   };
 
   return (
-    <div className="files">
-      <Select
-        style={{
-          backgroundColor: "white",
-          marginTop: "10px",
-          marginBottom: "10px",
-        }}
-        fullWidth
-        variant="outlined"
-        value={values.tipoSolicitud}
-        error={errors.tipoSolicitud && touched.tipoSolicitud}
+    <>
+      <div className="files">
+        <Select
+          style={{
+            backgroundColor: "white",
+            marginTop: "10px",
+            marginBottom: "10px",
+          }}
+          fullWidth
+          variant="outlined"
+          value={values.tipoSolicitud}
+          error={errors.tipoSolicitud && touched.tipoSolicitud}
+          name="tipoSolicitud"
+          displayEmpty
+          onChange={handleComplaintChange}
+          onBlur={handleBlur}
+        >
+          <MenuItem disabled value={""}>
+            <span className="empty--option">Tipo de solicitud</span>
+          </MenuItem>
+          <MenuItem value="QUE">Queja</MenuItem>
+          <MenuItem value="REC">Reclamo</MenuItem>
+        </Select>
+      </div>
+      <ErrorMessage
+        className="error bottom"
         name="tipoSolicitud"
-        displayEmpty
-        required
-        onChange={handleComplaintChange}
-        onBlur={handleBlur}
-      >
-        <MenuItem disabled value={""}>
-          <span className="empty--option">Tipo de solicitud</span>
-        </MenuItem>
-        <MenuItem value="QUE">Queja</MenuItem>
-        <MenuItem value="REC">Reclamo</MenuItem>
-      </Select>
-    </div>
+        component="div"
+      />
+    </>
   );
 };
 
@@ -249,21 +263,49 @@ export const Complains = () => {
             }}
             validate={(values) => {
               const errors = {};
-              if (!values.correo) {
-                errors.correo = "";
+
+              if (values.tipoCliente === "") {
+                errors.tipoCliente = REQUIRED;
+              }
+
+              if (values.tipoDocumento === "") {
+                errors.tipoDocumento = REQUIRED;
+              }
+
+              if (values.tipoSolicitud === "") {
+                errors.tipoSolicitud = REQUIRED;
+              }
+
+              if (values.categoria === "") {
+                errors.categoria = REQUIRED;
+              }
+
+              if (values.nombre.trim().length < 1) {
+                errors.nombre = REQUIRED;
+              }
+
+              if (values.apellidos.trim().length < 1) {
+                errors.apellidos = REQUIRED;
+              }
+
+              if (values.correo.trim().length < 1) {
+                errors.correo = REQUIRED;
               } else if (!EMAIL_REGEXP.test(values.correo)) {
                 errors.correo = EMAIL_INVALID;
               } else if (values.correo.length < E_MINLENGTH) {
                 errors.correo = EMAIL_MINLENGTH;
               }
-              if (!values.numDocumento) {
-                errors.numDocumento = "";
-              } else if (values.numDocumento.length < values.minLengthValue) {
+              if (values.numDocumento.trim().length < 1) {
+                errors.numDocumento = REQUIRED;
+              } else if (
+                values.numDocumento.length < values.minLengthValue ||
+                values.numDocumento.trim().length < values.minLengthValue
+              ) {
                 errors.numDocumento = `*El número de documento debe tener un minimo de ${values.minLengthValue} dígitos`;
               }
 
-              if (!values.celular) {
-                errors.numCelular = "";
+              if (values.celular.length < 1) {
+                errors.celular = REQUIRED;
               } else if (
                 values.celular.length <= 9 &&
                 !values.celular.startsWith("9")
@@ -272,9 +314,7 @@ export const Complains = () => {
                   "*El número de celular debe iniciar con el dígito 9 y debe ser de 9 dígitos .";
               }
 
-              if (!values.descripcion) {
-                errors.descripcion = "";
-              } else if (values.descripcion.trim().length < 1) {
+              if (values.descripcion.trim().length < 1) {
                 errors.descripcion = "*Este campo es requerido";
               }
 
@@ -336,18 +376,19 @@ export const Complains = () => {
                         error={errors.nombre && touched.nombre}
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        required
                         fullWidth
                         style={{
                           marginTop: "10px",
                           marginBottom: "10px",
                         }}
-                        // inputProps={{
-                        //   maxLength: 9,
-                        // }}
                         onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
                       />
                     </div>
+                    <ErrorMessage
+                      className="error bottom"
+                      name="nombre"
+                      component="div"
+                    />
                     <div className="files">
                       <TextField
                         name="apellidos"
@@ -358,18 +399,19 @@ export const Complains = () => {
                         error={errors.apellidos && touched.apellidos}
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        required
                         fullWidth
                         style={{
                           marginTop: "10px",
                           marginBottom: "10px",
                         }}
-                        // inputProps={{
-                        //   maxLength: 9,
-                        // }}
                         onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
                       />
                     </div>
+                    <ErrorMessage
+                      className="error bottom"
+                      name="apellidos"
+                      component="div"
+                    />
                     <div className="files" style={{ flexDirection: "column" }}>
                       <TextField
                         name="correo"
@@ -381,15 +423,11 @@ export const Complains = () => {
                         onBlur={handleBlur}
                         onChange={handleChange}
                         autoComplete="off"
-                        required
                         fullWidth
                         style={{
                           marginTop: "10px",
                           marginBottom: "10px",
                         }}
-                        // inputProps={{
-                        //   maxLength: 9,
-                        // }}
                         onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
                       />
                       <ErrorMessage
@@ -410,7 +448,6 @@ export const Complains = () => {
                         onBlur={handleBlur}
                         onChange={handleChange}
                         autoComplete="off"
-                        required
                         fullWidth
                         style={{
                           marginTop: "10px",
@@ -476,7 +513,6 @@ export const Complains = () => {
                         onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
                       />
                     </div>
-                    {/* Form */}
 
                     <FormComplainChange />
 
@@ -493,7 +529,6 @@ export const Complains = () => {
                         error={errors.categoria && touched.categoria}
                         name="categoria"
                         displayEmpty
-                        required
                         onChange={handleChange}
                         onBlur={handleBlur}
                       >
@@ -508,6 +543,11 @@ export const Complains = () => {
                           ))}
                       </Select>
                     </div>
+                    <ErrorMessage
+                      className="error bottom"
+                      name="categoria"
+                      component="div"
+                    />
 
                     <div className="files">
                       <TextField
@@ -520,7 +560,6 @@ export const Complains = () => {
                         onBlur={handleBlur}
                         onChange={handleChange}
                         autoComplete="off"
-                        required
                         fullWidth
                         style={{
                           marginTop: "10px",

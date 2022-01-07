@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 
-import { Form, Formik, useFormikContext } from "formik";
+import { ErrorMessage, Form, Formik, useFormikContext } from "formik";
 
 import { MenuItem, Select, TextField } from "@mui/material";
 
@@ -14,6 +14,7 @@ import { serviceById } from "../../actions/serviceById";
 import { MyButton, MyCheckbox } from "../../components/Fields";
 import { reservationClient } from "../../actions/reservation";
 import { termsLoad } from "../../actions/termsLoad";
+import { REQUIRED } from "../../utils/constants";
 
 const FormRegister = () => {
   const params = useParams();
@@ -161,7 +162,6 @@ const FormRegister = () => {
             error={errors.fechaDisponible && touched.fechaDisponible}
             name="fechaDisponible"
             displayEmpty
-            required
             onChange={handleDateChange}
             onBlur={handleBlur}
           >
@@ -175,6 +175,11 @@ const FormRegister = () => {
                 </MenuItem>
               ))}
           </Select>
+          <ErrorMessage
+            className="error bottom"
+            name="fechaDisponible"
+            component="div"
+          />
         </div>
       </div>
       <div className="files">
@@ -191,7 +196,6 @@ const FormRegister = () => {
           error={errors.horarioDisponible && touched.horarioDisponible}
           name="horarioDisponible"
           displayEmpty
-          required
           onChange={handleChange}
           onBlur={handleBlur}
         >
@@ -211,6 +215,11 @@ const FormRegister = () => {
             ))
           )}
         </Select>
+        <ErrorMessage
+          className="error bottom"
+          name="horarioDisponible"
+          component="div"
+        />
       </div>
     </>
   );
@@ -252,6 +261,14 @@ export const ReserveAppointment = () => {
             }}
             validate={(values) => {
               const errors = {};
+
+              if (values.fechaDisponible === "") {
+                errors.fechaDisponible = REQUIRED;
+              }
+
+              if (values.horarioDisponible === "") {
+                errors.horarioDisponible = REQUIRED;
+              }
 
               if (values.checkbox === false) {
                 errors.checkbox = "Debes aceptar los términos y condiciones";

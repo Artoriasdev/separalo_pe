@@ -2,13 +2,18 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 
-import * as Yup from "yup";
-
 import { Button, TextField } from "@mui/material";
 
 import { ErrorMessage, Formik } from "formik";
 import { MyModal } from "../../components/Modal";
 import { passwordRecovery } from "../../actions/passwordRecovery";
+import { EMAIL_REGEXP } from "../../utils/regexp";
+import {
+  EMAIL_INVALID,
+  EMAIL_MINLENGTH,
+  E_MINLENGTH,
+  REQUIRED,
+} from "../../utils/constants";
 
 export const PasswordRecovery = () => {
   const dispatch = useDispatch();
@@ -41,9 +46,19 @@ export const PasswordRecovery = () => {
               initialValues={{
                 correo: "",
               }}
-              validationSchema={Yup.object({
-                correo: Yup.string().email().required("Requerido"),
-              })}
+              validate={(values) => {
+                const errors = {};
+
+                if (values.correo.trim().length < 1) {
+                  errors.correo = REQUIRED;
+                } else if (!EMAIL_REGEXP.test(values.correo)) {
+                  errors.correo = EMAIL_INVALID;
+                } else if (values.correo.length < E_MINLENGTH) {
+                  errors.correo = EMAIL_MINLENGTH;
+                }
+
+                return errors;
+              }}
               onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(false);
                 const RecoveryModel = {
@@ -75,8 +90,7 @@ export const PasswordRecovery = () => {
                       name="correo"
                       className="TxtField"
                       variant="outlined"
-                      label="Ingrese su correo electrónico"
-                      required
+                      label="Ingrese su correo electrónico *"
                       value={values.correo}
                       error={errors.correo && touched.correo}
                       onBlur={handleBlur}
@@ -85,9 +99,6 @@ export const PasswordRecovery = () => {
                       style={{
                         marginBottom: "10px",
                       }}
-                      // inputProps={{
-                      //   maxLength: 9,
-                      // }}
                     />
                   </div>
                   <ErrorMessage

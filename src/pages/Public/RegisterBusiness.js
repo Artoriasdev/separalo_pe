@@ -23,6 +23,7 @@ import {
   MATCH,
   PASSN_MINLENGTH,
   PASS_INVALID,
+  REQUIRED,
 } from "../../utils/constants";
 import { MyCheckbox } from "../../components/Fields";
 import { documents } from "../../actions/documents";
@@ -83,12 +84,11 @@ const FormDocument = () => {
           error={!!errors.documentos && touched.documentos}
           name="documentos"
           displayEmpty
-          required
           onChange={handleDocumentChange}
           onBlur={handleBlur}
         >
           <MenuItem disabled value={""}>
-            <span className="empty--option">Tipo de documento*</span>
+            <span className="empty--option">Tipo de documento *</span>
           </MenuItem>
           {document &&
             document.map(({ id, descriptionLarge }) => (
@@ -97,6 +97,11 @@ const FormDocument = () => {
               </MenuItem>
             ))}
         </Select>
+        <ErrorMessage
+          className="error bottom"
+          name="documentos"
+          component="div"
+        />
       </div>
       <div className="txt-right-nomid">
         <TextField
@@ -104,8 +109,7 @@ const FormDocument = () => {
           className="TxtField"
           variant="outlined"
           placeholder="Número de documento"
-          label="Número de documento"
-          required
+          label="Número de documento *"
           fullWidth
           value={values.numDocumento}
           error={!!errors.numDocumento && touched.numDocumento}
@@ -181,25 +185,51 @@ export const RegisterBusiness = () => {
             validate={(values) => {
               const errors = {};
 
-              if (values.nroDocumento.length < 11) {
+              if (values.documentos === "") {
+                errors.documentos = REQUIRED;
+              }
+
+              if (values.razon.trim().length < 1) {
+                errors.razon = REQUIRED;
+              }
+
+              if (values.nombre.trim().length < 1) {
+                errors.nombre = REQUIRED;
+              }
+
+              if (values.nombres.trim().length < 1) {
+                errors.nombres = REQUIRED;
+              }
+
+              if (values.apellidos.trim().length < 1) {
+                errors.apellidos = REQUIRED;
+              }
+
+              if (values.nroDocumento.trim().length < 1) {
+                errors.nroDocumento = REQUIRED;
+              } else if (values.nroDocumento.trim().length < 11) {
                 errors.nroDocumento =
                   "*El número de documento debe ser de 11 dígitos.";
               }
 
-              if (!values.numDocumento) {
-                errors.numDocumento = "";
-              } else if (values.numDocumento.length < values.minLengthValue) {
+              if (values.numDocumento.trim().length < 1) {
+                errors.numDocumento = REQUIRED;
+              } else if (
+                values.numDocumento.trim().length < values.minLengthValue
+              ) {
                 errors.numDocumento = `*El número de documento debe tener un mínimo de ${values.minLengthValue} dígitos`;
               }
 
-              if (!EMAIL_REGEXP.test(values.correo)) {
+              if (values.correo.trim().length < 1) {
+                errors.correo = REQUIRED;
+              } else if (!EMAIL_REGEXP.test(values.correo)) {
                 errors.correo = EMAIL_INVALID;
               } else if (values.correo.length < E_MINLENGTH) {
                 errors.correo = EMAIL_MINLENGTH;
               }
 
-              if (!values.contraseña) {
-                errors.contraseña = "";
+              if (values.contraseña.trim().length < 1) {
+                errors.contraseña = REQUIRED;
               } else if (
                 !PASSWORD_REGEXP.test(values.contraseña) ||
                 values.contraseña.length < PASSN_MINLENGTH
@@ -207,8 +237,8 @@ export const RegisterBusiness = () => {
                 errors.contraseña = PASS_INVALID;
               }
 
-              if (!values.repContraseña) {
-                errors.repContraseña = "";
+              if (values.repContraseña.trim().length < 1) {
+                errors.repContraseña = REQUIRED;
               } else if (
                 !PASSWORD_REGEXP.test(values.repContraseña) ||
                 values.repContraseña.length < PASSN_MINLENGTH
@@ -271,7 +301,6 @@ export const RegisterBusiness = () => {
                   modal={termsModal}
                   setChecked={setChecked}
                   setTermsModal={setTermsModal}
-                  text="hola"
                 />
                 <div className="files">
                   <div className="txt-left-nomid">
@@ -280,13 +309,17 @@ export const RegisterBusiness = () => {
                       className="TxtField"
                       variant="outlined"
                       placeholder="Razón social"
-                      label="Razón social"
-                      required
+                      label="Razón social *"
                       fullWidth
                       value={values.razon}
                       error={!!errors.razon && touched.razon}
                       onBlur={handleBlur}
                       onChange={handleChange}
+                    />
+                    <ErrorMessage
+                      className="error"
+                      name="razon"
+                      component="div"
                     />
                   </div>
 
@@ -296,13 +329,17 @@ export const RegisterBusiness = () => {
                       className="TxtField"
                       variant="outlined"
                       placeholder="Nombre comercial"
-                      label="Nombre comercial"
-                      required
+                      label="Nombre comercial *"
                       fullWidth
                       value={values.nombre}
                       error={!!errors.nombre && touched.nombre}
                       onBlur={handleBlur}
                       onChange={handleChange}
+                    />
+                    <ErrorMessage
+                      className="error"
+                      name="nombre"
+                      component="div"
                     />
                   </div>
                 </div>
@@ -314,8 +351,7 @@ export const RegisterBusiness = () => {
                       className="TxtField"
                       variant="outlined"
                       placeholder="RUC"
-                      label="RUC"
-                      required
+                      label="RUC *"
                       fullWidth
                       value={values.nroDocumento}
                       error={!!errors.nroDocumento && touched.nroDocumento}
@@ -338,9 +374,8 @@ export const RegisterBusiness = () => {
                       className="TxtField"
                       variant="outlined"
                       placeholder="Correo electrónico"
-                      label="Correo electrónico"
+                      label="Correo electrónico *"
                       type="email"
-                      required
                       fullWidth
                       value={values.correo}
                       error={!!errors.correo && touched.correo}
@@ -360,7 +395,6 @@ export const RegisterBusiness = () => {
                     <OutlinedInput
                       name="contraseña"
                       fullWidth
-                      required
                       autoComplete="off"
                       type={show ? "text" : "password"}
                       value={values.contraseña}
@@ -370,7 +404,7 @@ export const RegisterBusiness = () => {
                       endAdornment={
                         <InputAdornment position="end">
                           <IconButton
-                            aria-label="toggle password visibility"
+                            aria-label="toggle password visibility *"
                             onClick={() => handleShowPassword(1)}
                             edge="end"
                           >
@@ -378,7 +412,7 @@ export const RegisterBusiness = () => {
                           </IconButton>
                         </InputAdornment>
                       }
-                      placeholder="Contraseña*"
+                      placeholder="Contraseña *"
                     />
                     <ErrorMessage
                       className="error"
@@ -390,7 +424,6 @@ export const RegisterBusiness = () => {
                     <OutlinedInput
                       name="repContraseña"
                       fullWidth
-                      required
                       autoComplete="off"
                       type={show2 ? "text" : "password"}
                       value={values.repContraseña}
@@ -400,7 +433,7 @@ export const RegisterBusiness = () => {
                       endAdornment={
                         <InputAdornment position="end">
                           <IconButton
-                            aria-label="toggle password visibility"
+                            aria-label="toggle password visibility *"
                             onClick={() => handleShowPassword(2)}
                             edge="end"
                           >
@@ -408,7 +441,7 @@ export const RegisterBusiness = () => {
                           </IconButton>
                         </InputAdornment>
                       }
-                      placeholder="Repetir contraseña*"
+                      placeholder="Repetir contraseña *"
                     />
                     <ErrorMessage
                       className="error"
@@ -426,8 +459,7 @@ export const RegisterBusiness = () => {
                       className="TxtField"
                       variant="outlined"
                       placeholder="Nombres"
-                      label="Nombres"
-                      required
+                      label="Nombres *"
                       fullWidth
                       value={values.nombres}
                       error={!!errors.nombres && touched.nombres}
@@ -438,6 +470,11 @@ export const RegisterBusiness = () => {
                       }}
                       onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
                     />
+                    <ErrorMessage
+                      className="error"
+                      name="nombres"
+                      component="div"
+                    />
                   </div>
                   <div className="txt-right-nomid">
                     <TextField
@@ -446,8 +483,7 @@ export const RegisterBusiness = () => {
                       className="TxtField"
                       variant="outlined"
                       placeholder="Apellidos"
-                      label="Apellidos"
-                      required
+                      label="Apellidos *"
                       fullWidth
                       value={values.apellidos}
                       error={!!errors.apellidos && touched.apellidos}
@@ -457,6 +493,11 @@ export const RegisterBusiness = () => {
                         marginBottom: "5px",
                       }}
                       onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
+                    />
+                    <ErrorMessage
+                      className="error"
+                      name="apellidos"
+                      component="div"
                     />
                   </div>
                 </div>

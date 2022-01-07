@@ -22,6 +22,7 @@ import {
   EMAIL_INVALID,
   EMAIL_MINLENGTH,
   E_MINLENGTH,
+  REQUIRED,
 } from "../utils/constants";
 import { EMAIL_REGEXP } from "../utils/regexp";
 import { registerDataBank } from "../actions/registerDataBank";
@@ -94,7 +95,6 @@ const SelectHandler = () => {
             name="bancoId"
             onChange={handleDocumentChange}
             onBlur={handleBlur}
-            required
             variant="outlined"
             fullWidth
             displayEmpty
@@ -109,6 +109,7 @@ const SelectHandler = () => {
                 </MenuItem>
               ))}
           </Select>
+          <ErrorMessage className="error" name="bancoId" component="div" />
         </div>
         <div className="txt-mid">
           <Select
@@ -117,7 +118,6 @@ const SelectHandler = () => {
             name="tipoId"
             onChange={handleDocumentChange}
             onBlur={handleBlur}
-            required
             variant="outlined"
             fullWidth
             displayEmpty
@@ -138,6 +138,7 @@ const SelectHandler = () => {
               ))
             )}
           </Select>
+          <ErrorMessage className="error" name="tipoId" component="div" />
         </div>
         <div className="txt-right">
           <TextField
@@ -151,7 +152,6 @@ const SelectHandler = () => {
             error={!!errors.numeroCuenta && touched.numeroCuenta}
             onBlur={handleBlur}
             onChange={handleDocumentChange}
-            required
             autoComplete="off"
             inputProps={{
               maxLength: values.maxLengthValue,
@@ -233,8 +233,16 @@ export const BankFormRegister = () => {
         }}
         validate={(values, props) => {
           const errors = {};
-          if (!values.correoBancario) {
-            errors.correoBancario = "";
+
+          if (values.bancoId === "") {
+            errors.bancoId = REQUIRED;
+          }
+          if (values.tipoId === "" || values.tipoId === " ") {
+            errors.tipoId = REQUIRED;
+          }
+
+          if (values.correoBancario.length < 1) {
+            errors.correoBancario = REQUIRED;
           } else if (!EMAIL_REGEXP.test(values.correoBancario)) {
             errors.correoBancario = EMAIL_INVALID;
           } else if (values.correoBancario.length < E_MINLENGTH) {
@@ -243,7 +251,10 @@ export const BankFormRegister = () => {
 
           if (!values.numeroCuenta) {
             errors.numeroCuenta = "";
-          } else if (values.numeroCuenta.length < values.minLengthValue) {
+          } else if (
+            values.numeroCuenta.length < values.minLengthValue ||
+            values.numeroCuenta.trim().length < values.minLengthValue
+          ) {
             errors.numeroCuenta = `El número de cuenta debe tener ${values.minLengthValue} dígitos`;
           } else if (
             !values.numeroCuenta.startsWith("0011") &&
@@ -254,7 +265,10 @@ export const BankFormRegister = () => {
 
           if (!values.numeroInterbancario) {
             errors.numeroInterbancario = "";
-          } else if (values.numeroInterbancario.length < 20) {
+          } else if (
+            values.numeroInterbancario.length < 20 ||
+            values.numeroInterbancario.trim().length < 20
+          ) {
             errors.numeroInterbancario =
               "El número de cuenta interbancaria debe ser de 20 dígitos";
           }
@@ -308,7 +322,6 @@ export const BankFormRegister = () => {
                   }
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  required
                   autoComplete="off"
                   inputProps={{
                     maxLength: 20,
@@ -335,7 +348,6 @@ export const BankFormRegister = () => {
                   error={!!errors.correoBancario && touched.correoBancario}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  required
                   // inputProps={{
                   //   maxLength: 9,
                   // }}

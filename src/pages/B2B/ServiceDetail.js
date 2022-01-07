@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Formik, useFormikContext } from "formik";
+import { ErrorMessage, Formik, useFormikContext } from "formik";
 
 import {
   Button,
@@ -35,6 +35,7 @@ import {
 } from "../../actions/serviceDelete";
 import { serviceEdit } from "../../actions/servideEdit";
 import { MyModal } from "../../components/Modal";
+import { REQUIRED } from "../../utils/constants";
 
 const style = {
   position: "absolute",
@@ -334,17 +335,18 @@ const FormFields = ({
               name="servicio"
               className="TxtField"
               variant="outlined"
-              required
               fullWidth
               placeholder="Servicio"
               value={values.servicio}
               error={errors.servicio && touched.servicio}
               onBlur={handleBlur}
               onChange={handleChange}
-              // inputProps={{
-              //   maxLength: 9,
-              // }}
               onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
+            />
+            <ErrorMessage
+              className="error bottom"
+              name="servicio"
+              component="div"
             />
           </div>
           <div className="txt-right-nomid">
@@ -354,7 +356,6 @@ const FormFields = ({
               name="hora"
               onChange={handleChange}
               onBlur={handleBlur}
-              required
               fullWidth
               variant="outlined"
               displayEmpty
@@ -369,6 +370,11 @@ const FormFields = ({
                   </MenuItem>
                 ))}
             </Select>
+            <ErrorMessage
+              className="error bottom"
+              name="hora"
+              component="div"
+            />
           </div>
         </div>
         <div className="files">
@@ -378,7 +384,6 @@ const FormFields = ({
               className="TxtField"
               variant="outlined"
               fullWidth
-              required
               placeholder="Descripción"
               value={values.descripcion}
               error={errors.descripcion && touched.descripcion}
@@ -392,6 +397,11 @@ const FormFields = ({
               }}
               onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
             />
+            <ErrorMessage
+              className="error bottom"
+              name="descripcion"
+              component="div"
+            />
           </div>
           <div className="txt-right-nomid">
             <TextField
@@ -400,13 +410,17 @@ const FormFields = ({
               className="TxtField"
               variant="outlined"
               fullWidth
-              required
               placeholder="Precio"
               value={values.precio}
               error={errors.precio && touched.precio}
               onBlur={handleBlur}
               onChange={handlePrice}
               onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
+            />
+            <ErrorMessage
+              className="error bottom"
+              name="precio"
+              component="div"
             />
           </div>
         </div>
@@ -1043,6 +1057,31 @@ export const ServiceDetail = () => {
                 domingoHoraInicio: "",
                 domingoHoraFinal: "",
               },
+            }}
+            validate={(values) => {
+              const errors = {};
+
+              if (values.categoria === "") {
+                errors.categoria = REQUIRED;
+              }
+
+              if (values.servicio.trim().length < 1) {
+                errors.servicio = REQUIRED;
+              }
+
+              if (values.descripcion.trim().length < 1) {
+                errors.descripcion = REQUIRED;
+              }
+
+              if (values.hora === "") {
+                errors.hora = REQUIRED;
+              }
+
+              if (values.precio.trim().length < 1) {
+                errors.precio = REQUIRED;
+              }
+
+              return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
               setSubmitting(false);

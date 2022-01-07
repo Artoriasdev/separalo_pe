@@ -2366,3 +2366,22 @@ button {
   justify-content: center;
   align-items: center;
 }
+
+.kr-embedded {
+  font-family: VarelaRound-Regular, MavenPro-Regular, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
+  border-radius: 10px !important;
+  .kr-pan {
+    border-radius: 10px;
+  }
+  .kr-field-component {
+    border-radius: 10px !important;
+  }
+  .kr-icon {
+    border-radius: 10px !important;
+  }
+  .kr-icon-wrapper-root {
+    border-radius: 10px !important;
+  }
+}

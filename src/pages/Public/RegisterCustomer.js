@@ -21,6 +21,7 @@ import {
   MATCH,
   PASSN_MINLENGTH,
   PASS_INVALID,
+  REQUIRED,
 } from "../../utils/constants";
 import { EMAIL_REGEXP, PASSWORD_REGEXP } from "../../utils/regexp";
 import { handleRegexDisable } from "../../utils/utilitaries";
@@ -50,14 +51,14 @@ const FormMayus = () => {
           className="TxtField"
           variant="outlined"
           placeholder="Nombres"
-          label="Nombres"
-          required
+          label="Nombres *"
           fullWidth
           value={values.nombre}
           error={!!errors.nombre && touched.nombre}
           onBlur={handleBlur}
           onChange={handleMayus}
         />
+        <ErrorMessage className="error" name="nombre" component="div" />
       </div>
       <div className="txt-right-nomid">
         <TextField
@@ -65,14 +66,14 @@ const FormMayus = () => {
           className="TxtField"
           variant="outlined"
           placeholder="Apellidos"
-          label="Apellidos"
-          required
+          label="Apellidos *"
           fullWidth
           value={values.apellido}
           error={!!errors.apellido && touched.apellido}
           onBlur={handleBlur}
           onChange={handleMayus}
         />
+        <ErrorMessage className="error" name="apellido" component="div" />
       </div>
     </div>
   );
@@ -131,12 +132,11 @@ const FormDocumentChange = () => {
           error={!!errors.documentos && touched.documentos}
           name="documentos"
           displayEmpty
-          required
           onChange={handleDocumentChange}
           onBlur={handleBlur}
         >
           <MenuItem disabled value={""}>
-            <span className="empty--option">Tipo de documento*</span>
+            <span className="empty--option">Tipo de documento *</span>
           </MenuItem>
           {document &&
             document.map(({ id, descriptionLarge }) => (
@@ -145,6 +145,11 @@ const FormDocumentChange = () => {
               </MenuItem>
             ))}
         </Select>
+        <ErrorMessage
+          className="error bottom"
+          name="documentos"
+          component="div"
+        />
       </div>
 
       <div className="txt-right-nomid">
@@ -153,8 +158,7 @@ const FormDocumentChange = () => {
           className="TxtField"
           variant="outlined"
           placeholder="Número de documento"
-          label="Número de documento"
-          required
+          label="Número de documento *"
           fullWidth
           value={values.nroDocumento}
           error={!!errors.nroDocumento && touched.nroDocumento}
@@ -229,19 +233,34 @@ export const RegisterCustomer = () => {
             validate={(values) => {
               const errors = {};
 
-              if (!EMAIL_REGEXP.test(values.correo)) {
+              if (values.documentos === "") {
+                errors.documentos = REQUIRED;
+              }
+
+              if (values.nombre.trim().length < 1) {
+                errors.nombre = REQUIRED;
+              }
+              if (values.apellido.trim().length < 1) {
+                errors.apellido = REQUIRED;
+              }
+
+              if (values.correo.trim().length < 1) {
+                errors.correo = REQUIRED;
+              } else if (!EMAIL_REGEXP.test(values.correo)) {
                 errors.correo = EMAIL_INVALID;
               } else if (values.correo.length < E_MINLENGTH) {
                 errors.correo = EMAIL_MINLENGTH;
               }
-              if (!values.nroDocumento) {
-                errors.nroDocumento = "";
-              } else if (values.nroDocumento.length < values.minLengthValue) {
+              if (values.nroDocumento.trim().length < 1) {
+                errors.nroDocumento = REQUIRED;
+              } else if (
+                values.nroDocumento.trim().length < values.minLengthValue
+              ) {
                 errors.nroDocumento = `*El número de documento debe tener un mínimo de ${values.minLengthValue} dígitos`;
               }
 
-              if (!values.celular) {
-                errors.numCelular = " ";
+              if (values.celular.length < 1) {
+                errors.celular = REQUIRED;
               } else if (
                 values.celular.length <= 9 &&
                 !values.celular.startsWith("9")
@@ -250,8 +269,8 @@ export const RegisterCustomer = () => {
                   "*El número de celular debe iniciar con el dígito 9 y debe ser de 9 dígitos .";
               }
 
-              if (!values.contraseña) {
-                errors.contraseña = "";
+              if (values.contraseña.trim().length < 1) {
+                errors.contraseña = REQUIRED;
               } else if (
                 !PASSWORD_REGEXP.test(values.contraseña) ||
                 values.contraseña.length < PASSN_MINLENGTH
@@ -259,8 +278,8 @@ export const RegisterCustomer = () => {
                 errors.contraseña = PASS_INVALID;
               }
 
-              if (!values.repContraseña) {
-                errors.repContraseña = "";
+              if (values.repContraseña.trim().length < 1) {
+                errors.repContraseña = REQUIRED;
               } else if (
                 !PASSWORD_REGEXP.test(values.repContraseña) ||
                 values.repContraseña.length < PASSN_MINLENGTH
@@ -331,11 +350,10 @@ export const RegisterCustomer = () => {
                       className="TxtField"
                       variant="outlined"
                       placeholder="Número de celular"
-                      label="Número de celular"
+                      label="Número de celular *"
                       fullWidth
                       value={values.celular}
                       error={!!errors.celular && touched.celular}
-                      required
                       onBlur={handleBlur}
                       onChange={handleChange}
                       inputProps={{
@@ -355,8 +373,7 @@ export const RegisterCustomer = () => {
                       className="TxtField"
                       variant="outlined"
                       placeholder="Correo electrónico"
-                      label="Correo electrónico"
-                      required
+                      label="Correo electrónico *"
                       fullWidth
                       value={values.correo}
                       error={!!errors.correo && touched.correo}
@@ -377,7 +394,6 @@ export const RegisterCustomer = () => {
                     <OutlinedInput
                       name="contraseña"
                       fullWidth
-                      required
                       autoComplete="off"
                       type={show ? "text" : "password"}
                       value={values.contraseña}
@@ -395,7 +411,7 @@ export const RegisterCustomer = () => {
                           </IconButton>
                         </InputAdornment>
                       }
-                      placeholder="Contraseña*"
+                      placeholder="Contraseña *"
                     />
                     <ErrorMessage
                       className="error"
@@ -407,7 +423,6 @@ export const RegisterCustomer = () => {
                     <OutlinedInput
                       name="repContraseña"
                       fullWidth
-                      required
                       autoComplete="off"
                       type={show2 ? "text" : "password"}
                       value={values.repContraseña}
@@ -425,7 +440,7 @@ export const RegisterCustomer = () => {
                           </IconButton>
                         </InputAdornment>
                       }
-                      placeholder="Repetir contraseña*"
+                      placeholder="Repetir contraseña *"
                     />
                     <ErrorMessage
                       className="error"

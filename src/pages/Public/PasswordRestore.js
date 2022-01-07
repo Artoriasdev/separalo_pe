@@ -13,8 +13,16 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import { ErrorMessage, Formik, useFormikContext } from "formik";
 
-import { MATCH, PASSN_MINLENGTH, PASS_INVALID } from "../../utils/constants";
-import { PASSWORD_REGEXP } from "../../utils/regexp";
+import {
+  EMAIL_INVALID,
+  EMAIL_MINLENGTH,
+  E_MINLENGTH,
+  MATCH,
+  PASSN_MINLENGTH,
+  PASS_INVALID,
+  REQUIRED,
+} from "../../utils/constants";
+import { EMAIL_REGEXP, PASSWORD_REGEXP } from "../../utils/regexp";
 import { MyModal } from "../../components/Modal";
 import { passwordRestore } from "../../actions/passwordRecovery";
 
@@ -30,15 +38,14 @@ const FormText = () => {
   }, [setFieldValue]);
 
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       <TextField
         type="email"
         name="correo"
         className="TxtField"
         variant="outlined"
-        label="Correo electronico"
+        label="Correo electronico *"
         value={values.correo}
-        required
         error={!!errors.correo && touched.correo}
         onBlur={handleBlur}
         onChange={handleChange}
@@ -48,7 +55,8 @@ const FormText = () => {
           marginBottom: "10px",
         }}
       />
-    </>
+      <ErrorMessage className="error" name="correo" component="div" />
+    </div>
   );
 };
 
@@ -100,8 +108,16 @@ export const PasswordRestore = () => {
               validate={(values) => {
                 const errors = {};
 
-                if (!values.contraseña) {
-                  errors.contraseña = "";
+                if (values.correo.trim().length < 1) {
+                  errors.correo = REQUIRED;
+                } else if (!EMAIL_REGEXP.test(values.correo)) {
+                  errors.correo = EMAIL_INVALID;
+                } else if (values.correo.length < E_MINLENGTH) {
+                  errors.correo = EMAIL_MINLENGTH;
+                }
+
+                if (values.contraseña.trim().length < 1) {
+                  errors.contraseña = REQUIRED;
                 } else if (
                   !PASSWORD_REGEXP.test(values.contraseña) ||
                   values.contraseña.length < PASSN_MINLENGTH
@@ -109,8 +125,8 @@ export const PasswordRestore = () => {
                   errors.contraseña = PASS_INVALID;
                 }
 
-                if (!values.repetirContraseña) {
-                  errors.repetirContraseña = "";
+                if (values.repetirContraseña.trim().length < 1) {
+                  errors.repetirContraseña = REQUIRED;
                 } else if (
                   !PASSWORD_REGEXP.test(values.repetirContraseña) ||
                   values.repetirContraseña.length < PASSN_MINLENGTH
@@ -159,7 +175,6 @@ export const PasswordRestore = () => {
                       <OutlinedInput
                         name="contraseña"
                         fullWidth
-                        required
                         autoComplete="off"
                         type={show ? "text" : "password"}
                         value={values.contraseña}
@@ -177,7 +192,7 @@ export const PasswordRestore = () => {
                             </IconButton>
                           </InputAdornment>
                         }
-                        placeholder="Contraseña"
+                        placeholder="Contraseña *"
                       />
                       <ErrorMessage
                         className="error"
@@ -189,7 +204,6 @@ export const PasswordRestore = () => {
                       <OutlinedInput
                         name="repetirContraseña"
                         fullWidth
-                        required
                         autoComplete="off"
                         type={show2 ? "text" : "password"}
                         value={values.repetirContraseña}
@@ -210,7 +224,7 @@ export const PasswordRestore = () => {
                             </IconButton>
                           </InputAdornment>
                         }
-                        placeholder="Repite tu nueva contraseña"
+                        placeholder="Repite tu nueva contraseña *"
                       />
                       <ErrorMessage
                         className="error"

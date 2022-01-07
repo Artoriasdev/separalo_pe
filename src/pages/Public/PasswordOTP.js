@@ -8,6 +8,13 @@ import { Formik, ErrorMessage, useFormikContext } from "formik";
 
 import { MyModal } from "../../components/Modal";
 import { passwordRecoveryOTP } from "../../actions/passwordRecovery";
+import { EMAIL_REGEXP } from "../../utils/regexp";
+import {
+  EMAIL_INVALID,
+  EMAIL_MINLENGTH,
+  E_MINLENGTH,
+  REQUIRED,
+} from "../../utils/constants";
 
 const FormText = () => {
   const { values, errors, touched, handleChange, handleBlur, setFieldValue } =
@@ -29,12 +36,12 @@ const FormText = () => {
         variant="outlined"
         label="Ingrese su correo electrónico"
         value={values.correo}
-        required
         error={!!errors.correo && touched.correo}
         onBlur={handleBlur}
         onChange={handleChange}
         fullWidth
       />
+      <ErrorMessage className="error" name="correo" component="div" />
     </>
   );
 };
@@ -77,8 +84,16 @@ export const PasswordOTP = () => {
               validate={(values) => {
                 const errors = {};
 
-                if (!values.otp) {
-                  errors.otp = "";
+                if (values.correo.trim().length < 1) {
+                  errors.correo = REQUIRED;
+                } else if (!EMAIL_REGEXP.test(values.correo)) {
+                  errors.correo = EMAIL_INVALID;
+                } else if (values.correo.length < E_MINLENGTH) {
+                  errors.correo = EMAIL_MINLENGTH;
+                }
+
+                if (values.otp.trim().length < 1) {
+                  errors.otp = REQUIRED;
                 } else if (values.otp.length < 5) {
                   errors.otp = "*El código debe ser mayor a 5 dígitos";
                 }
@@ -126,7 +141,6 @@ export const PasswordOTP = () => {
                         error={errors.otp && touched.otp}
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        required
                         fullWidth
                         inputProps={{
                           maxLength: 5,

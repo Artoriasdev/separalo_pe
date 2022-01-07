@@ -55,8 +55,8 @@ export const GROUP_TIMING = 60000;
 export const WIZARD_CAROUSEL_TIMING = 600000;
 export const WIZARD_MESSAGE_TIMING = 60000;
 
-// export const REQUIRED = "*Este campo es obligatorio.";
-export const REQUIRED = "Estos campos son obligatorios.";
+export const REQUIRED = "*Este campo es obligatorio.";
+//export const REQUIRED = "Estos campos son obligatorios.";
 export const U_MINLENGTH = (minLength) =>
   `Debes subir al menos ${minLength} documentos.`;
 

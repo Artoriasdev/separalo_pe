@@ -24,6 +24,7 @@ import {
   EMAIL_INVALID,
   EMAIL_MINLENGTH,
   E_MINLENGTH,
+  REQUIRED,
 } from "../../utils/constants";
 import { handleRegexDisable } from "../../utils/utilitaries";
 import { Box } from "@mui/system";
@@ -163,14 +164,18 @@ const FormHandler = () => {
             name="nombreComercial"
             className="TxtField"
             variant="outlined"
-            label="Nombre comercial"
+            label="Nombre comercial *"
             fullWidth
             value={values.nombreComercial}
             error={!!errors.nombreComercial && touched.nombreComercial}
             onBlur={handleBlur}
             onChange={handleChange}
-            required
             style={{ margin: "5px 0" }}
+          />
+          <ErrorMessage
+            className="error"
+            name="nombreComercial"
+            component="div"
           />
         </div>
         <div className="txt-right">
@@ -204,9 +209,8 @@ const FormHandler = () => {
             name="correo"
             className="TxtField"
             variant="outlined"
-            label="Correo de la empresa"
+            label="Correo de la empresa *"
             fullWidth
-            required
             value={values.correo}
             error={!!errors.correo && touched.correo}
             onBlur={handleBlur}
@@ -219,8 +223,7 @@ const FormHandler = () => {
             name="direccion"
             className="TxtField"
             variant="outlined"
-            label="Dirección"
-            required
+            label="Dirección *"
             fullWidth
             value={values.direccion}
             error={!!errors.direccion && touched.direccion}
@@ -230,6 +233,7 @@ const FormHandler = () => {
               maxLength: 200,
             }}
           />
+          <ErrorMessage className="error" name="direccion" component="div" />
         </div>
       </div>
       <div className="files">
@@ -237,6 +241,7 @@ const FormHandler = () => {
           <Select
             style={{
               backgroundColor: "white",
+              marginBottom: "5px",
             }}
             fullWidth
             variant="outlined"
@@ -244,12 +249,11 @@ const FormHandler = () => {
             error={!!errors.provincia && touched.provincia}
             name="provincia"
             displayEmpty
-            required
             onChange={handleProvinceChange}
             onBlur={handleBlur}
           >
             <MenuItem disabled value={""}>
-              <span className="empty--option">Provincia*</span>
+              <span className="empty--option">Provincia *</span>
             </MenuItem>
             {provincesList &&
               provincesList.map(({ key, value }) => (
@@ -258,11 +262,13 @@ const FormHandler = () => {
                 </MenuItem>
               ))}
           </Select>
+          <ErrorMessage className="error" name="provincia" component="div" />
         </div>
         <div className="txt-mid">
           <Select
             style={{
               backgroundColor: "white",
+              marginBottom: "5px",
             }}
             fullWidth
             variant="outlined"
@@ -270,12 +276,11 @@ const FormHandler = () => {
             error={!!errors.distrito && touched.distrito}
             name="distrito"
             displayEmpty
-            required
             onChange={handleProvinceChange}
             onBlur={handleBlur}
           >
             <MenuItem disabled value="">
-              Distrito*
+              Distrito *
             </MenuItem>
             {districsList.length === 0 ? (
               <MenuItem disabled value={" "}>
@@ -290,6 +295,7 @@ const FormHandler = () => {
               ))
             )}
           </Select>
+          <ErrorMessage className="error" name="distrito" component="div" />
         </div>
         <div className="txt-right"></div>
       </div>
@@ -299,9 +305,8 @@ const FormHandler = () => {
             name="tarjeta"
             className="TxtField"
             variant="outlined"
-            label="Descripción de la tarjeta"
+            label="Descripción de la tarjeta *"
             placeholder="Max. 200 caracteres"
-            required
             multiline
             minRows={4}
             maxRows={4}
@@ -321,9 +326,8 @@ const FormHandler = () => {
             name="descripcion"
             className="TxtField"
             variant="outlined"
-            label="Descripción del negocio"
+            label="Descripción del negocio *"
             placeholder="Max. 500 caracteres"
-            required
             multiline
             minRows={4}
             maxRows={4}
@@ -346,28 +350,28 @@ const FormHandler = () => {
             name="nombres"
             className="TxtField"
             variant="outlined"
-            label="Nombres"
+            label="Nombres *"
             fullWidth
-            required
             value={values.nombres}
             error={!!errors.nombres && touched.nombres}
             onBlur={handleBlur}
             onChange={handleChange}
           />
+          <ErrorMessage className="error" name="nombres" component="div" />
         </div>
         <div className="txt-quarter">
           <TextField
             name="apellidos"
             className="TxtField"
             variant="outlined"
-            label="Apellidos"
+            label="Apellidos *"
             fullWidth
-            required
             value={values.apellidos}
             error={!!errors.apellidos && touched.apellidos}
             onBlur={handleBlur}
             onChange={handleChange}
           />
+          <ErrorMessage className="error" name="apellidos" component="div" />
         </div>
         <div className="txt-quarter">
           <Select
@@ -380,12 +384,11 @@ const FormHandler = () => {
             error={errors.documentos && touched.documentos}
             name="documentos"
             displayEmpty
-            required
             onChange={handleDocumentChange}
             onBlur={handleBlur}
           >
             <MenuItem disabled value="">
-              Tipo de documento*
+              Tipo de documento *
             </MenuItem>
             {documentos &&
               documentos.map(({ id, descriptionLarge }) => (
@@ -394,14 +397,14 @@ const FormHandler = () => {
                 </MenuItem>
               ))}
           </Select>
+          <ErrorMessage className="error" name="documentos" component="div" />
         </div>
         <div className="txt-quarter">
           <TextField
             name="numDocumento"
             className="TxtField"
             variant="outlined"
-            label="Número de documento"
-            required
+            label="Número de documento *"
             fullWidth
             value={values.numDocumento}
             error={!!errors.numDocumento && touched.numDocumento}
@@ -508,29 +511,78 @@ export const BusinessData = () => {
         validate={(values) => {
           const errors = {};
 
+          if (values.nombreComercial.length < 1) {
+            errors.nombreComercial = REQUIRED;
+          } else if (values.nombreComercial.trim().length < 1) {
+            errors.nombreComercial = REQUIRED;
+          }
+
+          if (values.direccion.length < 1) {
+            errors.direccion = REQUIRED;
+          } else if (values.direccion.trim().length < 1) {
+            errors.direccion = REQUIRED;
+          }
+
+          if (values.distrito === "") {
+            errors.distrito = REQUIRED;
+          } else if (values.distrito.trim().length < 1) {
+            errors.distrito = REQUIRED;
+          }
+
+          if (values.provincia === "") {
+            errors.provincia = REQUIRED;
+          } else if (values.provincia.trim().length < 1) {
+            errors.provincia = REQUIRED;
+          }
+
+          if (values.nombres.length < 1) {
+            errors.nombres = REQUIRED;
+          } else if (values.nombres.trim().length < 1) {
+            errors.nombres = REQUIRED;
+          }
+
+          if (values.apellidos.length < 1) {
+            errors.apellidos = REQUIRED;
+          } else if (values.apellidos.trim().length < 1) {
+            errors.apellidos = REQUIRED;
+          }
+
+          if (values.documentos === "") {
+            errors.documentos = REQUIRED;
+          } else if (values.documentos.trim().length < 1) {
+            errors.documentos = REQUIRED;
+          }
+
           if (values.tarjeta.length === 0) {
-            errors.tarjeta = "Este campo es requerido";
+            errors.tarjeta = "*Este campo es requerido";
           } else if (values.tarjeta.trim().length <= 1) {
-            errors.tarjeta = "Este campo es requerido";
+            errors.tarjeta = "*Este campo es requerido";
           }
           if (values.descripcion.length === 0) {
-            errors.descripcion = "Este campo es requerido";
+            errors.descripcion = "*Este campo es requerido";
           } else if (values.descripcion.trim().length <= 1) {
-            errors.descripcion = "Este campo es requerido";
+            errors.descripcion = "*Este campo es requerido";
           }
 
           if (values.numeroDocumento.length < 11) {
             errors.numeroDocumento =
-              "El número de documento debe ser de 11 dígitos.";
+              "*El número de documento debe ser de 11 dígitos.";
           }
 
-          if (!values.numDocumento) {
-            errors.numDocumento = "";
-          } else if (values.numDocumento.length < values.minLengthValue) {
-            errors.numDocumento = `*El número de documento debe tener un mínimo de ${values.minLengthValue} dígitos`;
+          if (values.numDocumento === "") {
+            errors.numDocumento = REQUIRED;
+          } else if (values.numDocumento.trim().length < 1) {
+            errors.numDocumento = REQUIRED;
+          } else if (
+            values.numDocumento.length < values.minLengthValue ||
+            values.numDocumento.trim().length < values.minLengthValue
+          ) {
+            errors.numDocumento = ` *El número de documento debe tener un mínimo de ${values.minLengthValue} dígitos`;
           }
 
-          if (!EMAIL_REGEXP.test(values.correo)) {
+          if (values.correo.length < 1) {
+            errors.correo = REQUIRED;
+          } else if (!EMAIL_REGEXP.test(values.correo)) {
             errors.correo = EMAIL_INVALID;
           } else if (values.correo.length < E_MINLENGTH) {
             errors.correo = EMAIL_MINLENGTH;
@@ -584,7 +636,7 @@ export const BusinessData = () => {
           >
             <FormHandler />
             <div style={{ float: "left" }}>
-              <p style={{ color: "#23232366" }}>*Datos obligatorios</p>
+              <p style={{ color: "#23232366" }}> *Datos obligatorios</p>
             </div>
             <div className="files" style={{ float: "right" }}>
               <Button

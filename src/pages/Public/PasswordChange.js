@@ -8,7 +8,12 @@ import { Button, TextField } from "@mui/material";
 import { Save, Visibility, VisibilityOff } from "@mui/icons-material";
 
 import { PASSWORD_REGEXP } from "../../utils/regexp";
-import { MATCH, PASSN_MINLENGTH, PASS_INVALID } from "../../utils/constants";
+import {
+  MATCH,
+  PASSN_MINLENGTH,
+  PASS_INVALID,
+  REQUIRED,
+} from "../../utils/constants";
 import { useState } from "react";
 import { MyModal } from "../../components/Modal";
 import { changePassword } from "../../actions/changePassword";
@@ -43,8 +48,17 @@ export const Password = () => {
             validate={(values) => {
               const errors = {};
 
-              if (!values.cambiarContraseña) {
-                errors.cambiarContraseña = "";
+              if (values.contraseña.trim().length < 1) {
+                errors.contraseña = REQUIRED;
+              } else if (
+                values.contraseña.length < PASSN_MINLENGTH ||
+                !PASSWORD_REGEXP.test(values.contraseña)
+              ) {
+                errors.contraseña = PASS_INVALID;
+              }
+
+              if (values.cambiarContraseña.trim().length < 1) {
+                errors.cambiarContraseña = REQUIRED;
               } else if (
                 values.cambiarContraseña.length < PASSN_MINLENGTH ||
                 !PASSWORD_REGEXP.test(values.cambiarContraseña)
@@ -52,8 +66,8 @@ export const Password = () => {
                 errors.cambiarContraseña = PASS_INVALID;
               }
 
-              if (!values.repetirContraseña) {
-                errors.repetirContraseña = "";
+              if (values.repetirContraseña.trim().length < 1) {
+                errors.repetirContraseña = REQUIRED;
               } else if (
                 !PASSWORD_REGEXP.test(values.repetirContraseña) ||
                 values.repetirContraseña.length < PASSN_MINLENGTH
@@ -135,12 +149,11 @@ export const Password = () => {
                     name="contraseña"
                     className="TxtField"
                     variant="outlined"
-                    label="Contraseña actual"
+                    label="Contraseña actual *"
                     value={values.contraseña}
                     error={!!errors.contraseña && touched.contraseña}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    required
                     fullWidth
                     type={show ? "text" : "password"}
                     style={{
@@ -150,12 +163,12 @@ export const Password = () => {
                       marginBottom: "5px",
                     }}
                   />
-                  <ErrorMessage
-                    className="error"
-                    name="contraseña"
-                    component="div"
-                  />
                 </div>
+                <ErrorMessage
+                  className="error"
+                  name="contraseña"
+                  component="div"
+                />
 
                 <div className="files">
                   <div className="txt-left-nomid">
@@ -163,7 +176,7 @@ export const Password = () => {
                       name="cambiarContraseña"
                       className="TxtField"
                       variant="outlined"
-                      label="Ingresa tu nueva contraseña"
+                      label="Ingresa tu nueva contraseña *"
                       fullWidth
                       value={values.cambiarContraseña}
                       error={
@@ -171,7 +184,6 @@ export const Password = () => {
                       }
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      required
                       type={show ? "text" : "password"}
                     />
                     <ErrorMessage
@@ -186,7 +198,7 @@ export const Password = () => {
                       name="repetirContraseña"
                       className="TxtField"
                       variant="outlined"
-                      label="Repite tu nueva contraseña"
+                      label="Repite tu nueva contraseña *"
                       value={values.repetirContraseña}
                       fullWidth
                       error={
@@ -194,7 +206,6 @@ export const Password = () => {
                       }
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      required
                       type={show ? "text" : "password"}
                     />
                     <ErrorMessage

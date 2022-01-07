@@ -84,7 +84,6 @@ const FormEdit = ({ edit }) => {
             onChange={handleChange}
             disabled={true}
             autoComplete="off"
-            required
           />
         </div>
 
@@ -101,7 +100,6 @@ const FormEdit = ({ edit }) => {
             onBlur={handleBlur}
             onChange={handleChange}
             autoComplete="off"
-            required
             disabled={true}
           />
         </div>
@@ -116,7 +114,6 @@ const FormEdit = ({ edit }) => {
             onBlur={handleBlur}
             displayEmpty
             disabled={true}
-            required
             variant="outlined"
             fullWidth
           >
@@ -150,7 +147,6 @@ const FormEdit = ({ edit }) => {
               minLength: values.minLengthValue,
               maxLength: values.maxLengthValue,
             }}
-            required
             onInput={handleRegexDisable(values.ingreso)} // TODO haz el manejo correcto con NUMBER_REGEXP
           />
           <ErrorMessage
@@ -174,7 +170,6 @@ const FormEdit = ({ edit }) => {
             onBlur={handleBlur}
             onChange={handleChange}
             disabled={!edit}
-            required
             inputProps={{
               maxLength: 9,
             }}
@@ -196,11 +191,8 @@ const FormEdit = ({ edit }) => {
             onBlur={handleBlur}
             onChange={handleChange}
             disabled={!edit}
-            required
           />
-          {errors.correo && (
-            <div className="error">El correo electrónico no es válido.</div>
-          )}
+          <ErrorMessage className="error" name="correo" component="div" />
         </div>
       </div>
     </>
@@ -262,13 +254,14 @@ export const ClientProfile = () => {
               if (!values.numeroDocumento) {
                 errors.numeroDocumento = "";
               } else if (
-                values.numeroDocumento.length < values.minLengthValue
+                values.numeroDocumento.length < values.minLengthValue ||
+                values.numeroDocumento.trim().length < values.minLengthValue
               ) {
                 errors.numeroDocumento = `*El número de documento debe ser mínimo de ${values.minLengthValue} dígitos`;
               }
 
               if (!values.celular) {
-                errors.numCelular = " ";
+                errors.numCelular = "";
               } else if (
                 values.celular.length <= 9 &&
                 !values.celular.startsWith("9")
