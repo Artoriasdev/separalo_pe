@@ -1,4 +1,7 @@
-import { handleGetShoppingCart } from "../helpers/handlers";
+import {
+  handleDeleteShoppingCartItem,
+  handleGetShoppingCart,
+} from "../helpers/handlers";
 import { types } from "../types/types";
 import { modalOpen } from "./modal";
 
@@ -14,7 +17,11 @@ export const checkShoppingItems = (token) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalOpen(""));
+      dispatch(
+        modalOpen(
+          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
+        )
+      );
     }
   };
 };
@@ -35,6 +42,27 @@ export const addItemCar = (item) => {
   };
 };
 
+export const shoppingCarDelete = (item, token) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await handleDeleteShoppingCartItem(item, token);
+      console.log(data);
+      if (data.response === "true") {
+        dispatch(shoppingCarDeleteItems(item));
+      } else if (data.response === "false") {
+        dispatch(modalOpen(data.message));
+      }
+    } catch (error) {
+      console.log(error);
+      dispatch(
+        modalOpen(
+          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
+        )
+      );
+    }
+  };
+};
+
 export const shoppingCar = (item) => ({
   type: types.shoppingCarItemsAdd,
   payload: item,
@@ -45,7 +73,7 @@ const shoppingCarLoad = (item) => ({
   payload: item,
 });
 
-export const shoppingCarDeleteItems = (items) => ({
+const shoppingCarDeleteItems = (items) => ({
   type: types.shoppingCarRemoveItems,
   payload: items,
 });

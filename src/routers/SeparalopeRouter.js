@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 
 import { checkAuth } from "../actions/auth";
 import { loadCategorys } from "../actions/category";
-import { checkShoppingItems } from "../actions/shoppingCar";
 import { CookiesBanner } from "../components/CookiesBanner";
 import { Footer } from "../components/Footer";
 import FullPageLoader from "../components/FullPageLoader";
@@ -16,18 +15,14 @@ import { RedirectPublicRoute } from "./RedirectPublicRoute";
 
 export const SeparalopeRouter = () => {
   const dispatch = useDispatch();
-  const { logged } = useSelector((state) => state.auth);
-  const { token } = useSelector((state) => state.auth.data);
+
   const { workflow } = useSelector((state) => state.auth);
   const { check } = useSelector((state) => state.checking);
 
   useEffect(() => {
     dispatch(checkAuth());
     dispatch(loadCategorys());
-    if (logged) {
-      dispatch(checkShoppingItems(token));
-    }
-  }, [dispatch, logged, token]);
+  }, [dispatch]);
 
   return (
     <Router>

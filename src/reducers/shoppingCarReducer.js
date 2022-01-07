@@ -16,7 +16,6 @@ export const shoppingCarReducer = (state = initialState, action) => {
         shoppingCarItems: action.payload,
       };
     case types.shoppingCarItemsPayed:
-      localStorage.removeItem("Car Items");
       return {
         ...state,
         shoppingCarItems: [],
@@ -24,11 +23,8 @@ export const shoppingCarReducer = (state = initialState, action) => {
     case types.shoppingCarRemoveItems:
       console.log(action.payload);
       const items = state.shoppingCarItems.filter(
-        (item) => item.codeReservation !== action.payload
+        (item) => item.preCodeReservation !== action.payload
       );
-      if (items.length === 0) {
-        localStorage.removeItem("Car Items");
-      }
       return {
         ...state,
         shoppingCarItems: items,

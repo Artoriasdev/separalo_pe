@@ -7,6 +7,7 @@ import { Button } from "@mui/material";
 import Shopping from "../../assets/images/ShoppingPage.svg";
 import { checkShoppingItems } from "../../actions/shoppingCar";
 import { ShoppingList } from "../../components/ShoppingList";
+import { MyModal } from "../../components/Modal";
 // import { shoppingCarDone } from "../../actions/shoppingCarDone";
 
 export const ShoppingPage = () => {
@@ -28,6 +29,7 @@ export const ShoppingPage = () => {
   };
   return (
     <div className="page-container" style={{ padding: "20px 0" }}>
+      <MyModal />
       <h1>
         <img src={Shopping} alt="logo" style={{ marginRight: "8px" }} />
         Carrito de compras

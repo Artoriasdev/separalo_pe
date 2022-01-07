@@ -1117,7 +1117,7 @@ export const handleDeleteService = (id, tk) => {
   return rspApi;
 };
 
-export const handleRegisterService = async (formModel, tk) => {
+export const handleRegisterService = (formModel, tk) => {
   var headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -1180,5 +1180,27 @@ export const handleCreatePayment = (tk) => {
     .catch(({ response }) => {
       return response;
     });
+  return rspApi;
+};
+
+export const handleDeleteShoppingCartItem = (item, tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+  let linkRegisterApi = `${process.env.REACT_APP_PATH_SERVICE}/shopping/deleteShoppingCartItem/${item}`;
+
+  const rspApi = axios
+    .post(linkRegisterApi, item, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
   return rspApi;
 };

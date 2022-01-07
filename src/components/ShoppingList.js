@@ -22,8 +22,9 @@ import {
 } from "@mui/material";
 
 import {
+  checkShoppingItems,
   cuponClear,
-  shoppingCarDeleteItems,
+  shoppingCarDelete,
   shoppingDiscount,
 } from "../actions/shoppingCar";
 import { payment } from "../actions/payment";
@@ -62,32 +63,23 @@ export const ShoppingList = () => {
   const { logged } = useSelector((state) => state.auth);
   const { shoppingCarItems } = useSelector((state) => state.shoppingCar);
   const { show, valid, message } = useSelector((state) => state.cupon);
-  const [pricing, setPricing] = useState(0);
   const [opened, setOpened] = useState(false);
   const [selected, setSelected] = useState();
 
   var values;
-  var total = 0;
-
-  function handlePricing() {
-    if (shoppingCarItems.length > 0) {
-      for (let i = 0; i < shoppingCarItems.length; i++) {
-        var element = shoppingCarItems[i].priceUnformatted;
-        total = total + element;
-      }
-      setPricing(total.toFixed(2));
-    }
-  }
 
   useEffect(() => {
-    handlePricing();
-  }, [shoppingCarItems]);
+    dispatch(checkShoppingItems(token));
+  }, [shoppingCarItems, token]);
+
   const handleClose = () => {
     setOpened(false);
   };
 
   const handleReserveDelete = () => {
-    dispatch(shoppingCarDeleteItems(selected));
+    if (logged) {
+      dispatch(shoppingCarDelete(selected, token));
+    }
     setOpened(false);
   };
 
@@ -190,13 +182,13 @@ export const ShoppingList = () => {
                   <TableCell className="font-tittle">Servicio</TableCell>
                   <TableCell className="font-tittle">Fecha</TableCell>
                   <TableCell className="font-tittle">Hora</TableCell>
-                  <TableCell className="font-tittle" align="center">
+                  <TableCell className="font-tittle" align="left">
                     Precio
                   </TableCell>
-                  <TableCell className="font-tittle" align="center">
+                  <TableCell className="font-tittle" align="left">
                     Dsctos.
                   </TableCell>
-                  <TableCell className="font-tittle" align="center">
+                  <TableCell className="font-tittle" align="left">
                     Estado
                   </TableCell>
                 </TableRow>
@@ -204,23 +196,23 @@ export const ShoppingList = () => {
               <TableBody>
                 {shoppingCarItems &&
                   shoppingCarItems.map(
-                    (
-                      {
-                        titleService,
-                        tradeNameBusiness,
-                        state,
-                        dateReservation,
-                        price,
-                        nameCategory,
-                        timeReservation,
-                      },
-                      index
-                    ) => {
+                    ({
+                      preCodeReservation,
+                      titleService,
+                      tradeNameBusiness,
+                      state,
+                      dateReservation,
+                      price,
+                      nameCategory,
+                      timeReservation,
+                    }) => {
                       return (
-                        <TableRow key={index}>
+                        <TableRow key={preCodeReservation}>
                           <TableCell>
                             <IconButton
-                              onClick={() => handleDeleteModal(index)}
+                              onClick={() =>
+                                handleDeleteModal(preCodeReservation)
+                              }
                               style={{ margin: "0" }}
                             >
                               <img src={Delete} alt="logo" />
@@ -237,21 +229,27 @@ export const ShoppingList = () => {
                           <TableCell className="font">
                             {timeReservation}
                           </TableCell>
-                          <TableCell className="font" align="center">
+                          <TableCell className="font" align="left">
                             {price}
                           </TableCell>
                           <TableCell
                             className="font"
-                            align="center"
+                            align="left"
                             style={{ color: "#5950A2" }}
                           >
                             -S/ {"0.00"}
                           </TableCell>
                           <TableCell className="font">
                             {state === "Caducado" ? (
-                              <>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                }}
+                              >
                                 {state} <CustomizedTooltips />
-                              </>
+                              </div>
                             ) : (
                               state
                             )}
@@ -362,7 +360,7 @@ export const ShoppingList = () => {
           <div className="payment-container">
             <div className="totals">
               <p>Subtotal </p>
-              <p>S/ {pricing}</p>
+              <p>{shoppingCarItems[0] && shoppingCarItems[0].sumPrice}</p>
             </div>
             <div className="totals">
               <p>Descuento </p>
@@ -371,7 +369,7 @@ export const ShoppingList = () => {
             <div className="totals" style={{ color: "#5950A2" }}>
               <p style={{ fontWeight: "bold" }}>Total a pagar </p>
               <p style={{ lineHeight: "18px", fontWeight: "900" }}>
-                S/ {pricing}
+                {shoppingCarItems[0] && shoppingCarItems[0].sumPrice}
               </p>
             </div>
           </div>
