@@ -922,7 +922,7 @@ export const ServiceDetail = () => {
   };
 
   const handleRedirect = () => {
-    history.push(`/reserve/invited/${params.id}`);
+    history.push(`/business/reservation/${params.id}`);
   };
   const handleDelete = () => {
     setModal(true);
