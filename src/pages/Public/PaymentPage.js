@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import KRGlue from "@lyracom/embedded-form-glue";
@@ -7,6 +7,8 @@ import KRGlue from "@lyracom/embedded-form-glue";
 import postscribe from "postscribe";
 
 import Shopping from "../../assets/images/ShoppingPage.svg";
+import { shoppingCarCompleted } from "../../actions/shoppingCarDone";
+import { paymentDone } from "../../actions/payment";
 
 export const PaymentPage = () => {
   const [error, setError] = useState(false);
@@ -18,8 +20,12 @@ export const PaymentPage = () => {
     );
   }, []);
 
-  const { formToken: token } = useSelector((state) => state.payment.data);
   const history = useHistory();
+  const dispatch = useDispatch();
+  const { formToken: token, orderId } = useSelector(
+    (state) => state.payment.data
+  );
+  const { token: tk } = useSelector((state) => state.auth.data);
 
   useEffect(() => {
     const endpoint =
@@ -39,8 +45,13 @@ export const PaymentPage = () => {
           if (paymentData.clientAnswer.orderStatus === "PAID") {
             alert("Se hizo el pago correctamente");
             setError(false);
-            history.push("/");
-            history.go();
+            dispatch(shoppingCarCompleted(orderId, tk));
+            dispatch(paymentDone());
+            setTimeout(() => {
+              history.push("/reservations-completed");
+            }, 1000);
+
+            // history.go();
           }
           return false;
         });
@@ -66,14 +77,22 @@ export const PaymentPage = () => {
     <div className="page-container">
       <h1>
         <img src={Shopping} alt="logo" style={{ marginRight: "8px" }} />
-        Proceso de pago de reservas
+        Finaliza tu pago
       </h1>
-      <h3>
-        Por favor complete el formulario de pago para proceder con el pago de
-        sus reservas
-      </h3>
+      <h3>Completa el formulario para finalizar el pago de tus reservas</h3>
       <div className="shopping-container">
         <div className="empty-container">
+          <p
+            style={{
+              color: "#594FA1",
+              lineHeight: "20px",
+              fontSize: "16px",
+            }}
+          >
+            Recuerda que tienes{" "}
+            <span style={{ fontWeight: "bold" }}>15 minutos</span> para hacer
+            esta operación.
+          </p>
           <div id="paymentForm" className="kr-embedded" kr-form-token={token}>
             <div className="kr-pan"></div>
             <div className="kr-expiry"></div>

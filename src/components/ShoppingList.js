@@ -70,7 +70,7 @@ export const ShoppingList = () => {
 
   useEffect(() => {
     dispatch(checkShoppingItems(token));
-  }, [shoppingCarItems, token]);
+  }, [dispatch, token]);
 
   const handleClose = () => {
     setOpened(false);
@@ -229,7 +229,14 @@ export const ShoppingList = () => {
                           <TableCell className="font">
                             {timeReservation}
                           </TableCell>
-                          <TableCell className="font" align="left">
+                          <TableCell
+                            className="font"
+                            align="left"
+                            style={{
+                              textDecoration:
+                                state === "Caducado" ? "line-through" : "",
+                            }}
+                          >
                             {price}
                           </TableCell>
                           <TableCell
@@ -392,6 +399,12 @@ export const ShoppingList = () => {
                 variant="contained"
                 className="btn-primary"
                 onClick={handleReservePayment}
+                disabled={
+                  shoppingCarItems[0] &&
+                  shoppingCarItems[0].sumPrice === "S/ 0.00"
+                    ? true
+                    : false
+                }
               >
                 Continuar con el pago
               </Button>

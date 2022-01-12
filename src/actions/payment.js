@@ -27,3 +27,7 @@ const paymentData = (data) => ({
   type: types.clientPayment,
   payload: data,
 });
+
+export const paymentDone = () => ({
+  type: types.clientPaymentCompleted,
+});

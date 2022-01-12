@@ -1204,3 +1204,25 @@ export const handleDeleteShoppingCartItem = (item, tk) => {
 
   return rspApi;
 };
+
+export const handleGetReservationByOrderId = (code, tk) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${tk}`,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/reservation/getReservationByOrderId/${code}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
