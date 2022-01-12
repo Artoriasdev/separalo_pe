@@ -20,8 +20,12 @@ export const shoppingCarReducer = (state = initialState, action) => {
         ...state,
         shoppingCarItems: [],
       };
+    case types.clientLogout:
+      return {
+        ...state,
+        shoppingCarItems: [],
+      };
     case types.shoppingCarRemoveItems:
-      console.log(action.payload);
       const items = state.shoppingCarItems.filter(
         (item) => item.preCodeReservation !== action.payload
       );
