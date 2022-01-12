@@ -5,6 +5,7 @@ import { NavbarBusines } from "../components/NavbarBusiness";
 import { BusinessCategory } from "../pages/B2B/BusinessCategory";
 import { BusinessProfile } from "../pages/B2B/BusinessProfile";
 import { BusinessReports } from "../pages/B2B/BusinessReports";
+import { BusinessReserveAppointment } from "../pages/B2B/BusinessReserveAppointment";
 import { BusinessServices } from "../pages/B2B/BusinessServices";
 import { BusinessServicesCategory } from "../pages/B2B/BusinessServicesCategory";
 import { ServiceAppointment } from "../pages/B2B/ServiceAppointments";
@@ -47,6 +48,12 @@ export const BusinessRoute = () => {
           />
           <Route exact path="/business/password_change" component={Password} />
           <Route exact path="/business/complains" component={Complains} />
+          <Route
+            exact
+            path="/business/reservation/:id"
+            component={BusinessReserveAppointment}
+          />
+
           <Redirect to="/business/category" />
         </Switch>
       </div>
