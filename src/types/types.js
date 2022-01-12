@@ -84,4 +84,5 @@ export const types = {
   cuponEmpty: "[Cupon Validity]  Cupon Message Cleared",
 
   clientPayment: "[Payment] Client Payment",
+  clientPaymentCompleted: "[Payment] Client Payment Completed",
 };

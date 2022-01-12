@@ -9,6 +9,10 @@ export const paymentReducer = (state = initialState, action) => {
       return {
         data: action.payload,
       };
+    case types.clientPaymentCompleted:
+      return {
+        data: [],
+      };
     default:
       return state;
   }
