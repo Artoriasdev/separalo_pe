@@ -4,8 +4,10 @@ import { useParams } from "react-router";
 import "animate.css";
 
 import {
+  Box,
   Card,
   CardContent,
+  createTheme,
   IconButton,
   Table,
   TableBody,
@@ -13,6 +15,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  ThemeProvider,
 } from "@mui/material";
 import { Search, Timer } from "@mui/icons-material";
 
@@ -23,6 +26,18 @@ import fecha from "../../assets/images/fecha.svg";
 import Cerrar from "../../assets/images/Cerrar.svg";
 import { MyModal } from "../../components/Modal";
 import { reservationListConfirmed } from "../../actions/reservationList";
+
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 768,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+});
 
 export const FutureAppointments = () => {
   const dispatch = useDispatch();
@@ -46,81 +61,159 @@ export const FutureAppointments = () => {
   };
 
   const handleCardClose = () => {
-    setCard(true);
+    setCard(false);
   };
 
   return (
     <div>
       <MyModal />
       <div className="appointment-cards">
-        <TableContainer className="table">
-          <Table sx={{ minWidth: 650 }}>
-            <TableHead className="table-head">
-              <TableRow>
-                <TableCell className="font-tittle">Categoría</TableCell>
-                <TableCell className="font-tittle">Servicio</TableCell>
-                <TableCell className="font-tittle">Fecha</TableCell>
-                <TableCell className="font-tittle">Hora</TableCell>
-                <TableCell className="font-tittle" width="12%">
-                  Usuario
-                </TableCell>
-                <TableCell className="font-tittle">
-                  Nombres y Apellidos
-                </TableCell>
-                <TableCell className="font-tittle" align="center">
-                  Código Reserva
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {reservationConfirm.map(
-                ({
-                  category,
-                  titleService,
-                  dateReservation,
-                  timeReservation,
-                  emailCustomer,
-                  nameCustomer,
-                  codeReservation,
-                }) => (
-                  <TableRow key={codeReservation}>
-                    <TableCell className="font">{category}</TableCell>
-                    <TableCell className="font">{titleService}</TableCell>
-                    <TableCell className="font">{dateReservation}</TableCell>
-                    <TableCell className="font">{timeReservation}</TableCell>
-                    <TableCell
-                      className="font"
+        <ThemeProvider theme={theme}>
+          <TableContainer
+            className="table"
+            sx={{ display: { xs: "none", sm: "flex" } }}
+          >
+            <Table sx={{ minWidth: 650 }}>
+              <TableHead className="table-head">
+                <TableRow>
+                  <TableCell className="font-tittle">Categoría</TableCell>
+                  <TableCell className="font-tittle">Servicio</TableCell>
+                  <TableCell className="font-tittle">Fecha</TableCell>
+                  <TableCell className="font-tittle">Hora</TableCell>
+                  <TableCell className="font-tittle" width="12%">
+                    Usuario
+                  </TableCell>
+                  <TableCell className="font-tittle">
+                    Nombres y Apellidos
+                  </TableCell>
+                  <TableCell className="font-tittle">Número celular</TableCell>
+                  <TableCell className="font-tittle">Código Reserva</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {reservationConfirm &&
+                  reservationConfirm.map(
+                    ({
+                      category,
+                      titleService,
+                      dateReservation,
+                      timeReservation,
+                      emailCustomer,
+                      nameCustomer,
+                      codeReservation,
+                      mobileCustomer,
+                    }) => (
+                      <TableRow key={codeReservation}>
+                        <TableCell className="font">{category}</TableCell>
+                        <TableCell className="font">{titleService}</TableCell>
+                        <TableCell className="font">
+                          {dateReservation}
+                        </TableCell>
+                        <TableCell className="font">
+                          {timeReservation}
+                        </TableCell>
+                        <TableCell
+                          className="font"
+                          style={{
+                            textDecoration: "underline",
+                            color: "#0862B5",
+                          }}
+                        >
+                          {emailCustomer}
+                        </TableCell>
+                        <TableCell className="font">{nameCustomer}</TableCell>
+                        <TableCell className="font">{mobileCustomer}</TableCell>
+                        <TableCell
+                          onClick={() => handleCard(codeReservation)}
+                          className="font"
+                          style={{
+                            textDecoration: "underline",
+                            cursor: "pointer",
+                          }}
+                        >
+                          {codeReservation}
+                          <Search
+                            style={{
+                              marginBottom: "-4px",
+                              color: "#5950A2",
+                              marginLeft: "5px",
+                            }}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    )
+                  )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Box sx={{ display: { sm: "none", xs: "flex" } }}>
+            <div
+              className="service-card-container"
+              style={{ marginTop: "10px" }}
+            >
+              {reservationConfirm &&
+                reservationConfirm.map(
+                  (
+                    {
+                      category,
+                      titleService,
+                      dateReservation,
+                      timeReservation,
+                      codeReservation,
+                      nameCustomer,
+                      mobileCustomer,
+                    },
+                    index
+                  ) => (
+                    <div
+                      className="service-card"
+                      key={index}
                       style={{
-                        textDecoration: "underline",
-                        color: "#0862B5",
+                        backgroundColor: index % 2 === 0 ? "#f5f5f5" : null,
+                        borderRadius: "0",
                       }}
                     >
-                      {emailCustomer}
-                    </TableCell>
-                    <TableCell className="font">{nameCustomer}</TableCell>
-                    <TableCell
-                      onClick={() => handleCard(codeReservation)}
-                      className="font"
-                      style={{
-                        textDecoration: "underline",
-                        cursor: "pointer",
-                      }}
-                    >
-                      {codeReservation}
-                      <Search
-                        style={{
-                          marginBottom: "-4px",
-                          color: "#5950A2",
-                          marginLeft: "5px",
-                        }}
-                      />
-                    </TableCell>
-                  </TableRow>
-                )
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                      <div className="service-card-text">
+                        <p style={{ fontWeight: "bold" }}>Categoría</p>
+                        <p>{category} </p>
+                      </div>
+                      <div className="service-card-text">
+                        <p style={{ fontWeight: "bold" }}>Servicio</p>
+                        <p>{titleService} </p>
+                      </div>
+                      <div className="service-card-text">
+                        <p style={{ fontWeight: "bold" }}>Fecha</p>
+                        <p> {dateReservation} </p>
+                      </div>
+                      <div className="service-card-text">
+                        <p style={{ fontWeight: "bold" }}>Hora</p>
+                        <p>{timeReservation} </p>
+                      </div>
+                      <div className="service-card-text">
+                        <p style={{ fontWeight: "bold" }}>
+                          Nombres y apellidos
+                        </p>
+                        <p>{nameCustomer}</p>
+                      </div>
+                      <div className="service-card-text">
+                        <p style={{ fontWeight: "bold" }}>Número celular</p>
+                        <p>{mobileCustomer}</p>
+                      </div>
+
+                      <div className="service-button">
+                        <button
+                          className="font"
+                          onClick={() => handleCard(codeReservation)}
+                        >
+                          Ver reserva
+                        </button>
+                      </div>
+                    </div>
+                  )
+                )}
+            </div>
+          </Box>
+        </ThemeProvider>
         {card ? (
           <div className="mdal animate__animated animate__fadeIn">
             <div className="overlay" onClick={() => handleCardClose()} />
