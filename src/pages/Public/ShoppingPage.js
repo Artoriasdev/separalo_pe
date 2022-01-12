@@ -32,7 +32,7 @@ export const ShoppingPage = () => {
       <MyModal />
       <h1>
         <img src={Shopping} alt="logo" style={{ marginRight: "8px" }} />
-        Carrito de compras
+        Carrito de reservas
       </h1>
       <h3>Estos son los servicios que han sido registrados en tu carrito</h3>
 

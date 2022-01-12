@@ -215,12 +215,12 @@ const FormRegister = () => {
             ))
           )}
         </Select>
-        <ErrorMessage
-          className="error bottom"
-          name="horarioDisponible"
-          component="div"
-        />
       </div>
+      <ErrorMessage
+        className="error bottom"
+        name="horarioDisponible"
+        component="div"
+      />
     </>
   );
 };
