@@ -1551,7 +1551,7 @@ button {
 .confirm-page {
   display: flex;
   text-align: center;
-  min-height: 70vh;
+  min-height: 85vh;
   width: 100%;
   .content-container {
     margin: auto;
@@ -1562,6 +1562,85 @@ button {
         max-width: 350px;
       }
     }
+
+    .info-text {
+      width: 100%;
+      margin: auto;
+      padding-bottom: 1rem;
+      text-align: center;
+      @include mobile {
+        display: none;
+      }
+    }
+
+    .reserve-info-container {
+      margin: 20px 0px;
+      .reserve-info {
+        color: rgb(89, 79, 161);
+        text-align: left;
+        font-size: 19.5px;
+        font-weight: bold;
+        line-height: 23px;
+        @include mobile {
+          text-align: center;
+          margin: 0 10px 0 0;
+          padding: 0;
+        }
+      }
+      .reserve-details-container {
+        background: rgba(229, 229, 229, 0.3);
+        border-radius: 1.85942px;
+        margin-bottom: 30px;
+        padding: 20px 35px;
+        .reserve-place {
+          text-align: left;
+          margin: 5px 0px;
+          font-weight: bold;
+        }
+        .reserve-subtitle {
+          display: flex;
+          justify-content: space-between;
+          @include mobile {
+            flex-direction: column;
+          }
+          p {
+            margin: 10px 0px;
+            text-align: left;
+          }
+        }
+        .reserve-rows {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          @include mobile {
+            flex-direction: column;
+          }
+          .reserve-row {
+            display: flex;
+            flex-direction: column;
+            text-align: left !important;
+            @include mobile {
+              flex-direction: column;
+            }
+            .reserve-row-element {
+              @include mobile {
+                display: flex;
+                justify-content: space-between;
+              }
+            }
+          }
+          hr {
+            color: rgb(255, 221, 0);
+            width: 0px;
+            border-left: 1px solid rgb(255, 221, 0);
+            @include mobile {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
     button {
       width: 40%;
       text-transform: capitalize;
@@ -2027,10 +2106,10 @@ button {
 }
 
 .appointment-service-container {
-  width: 90%;
+  width: 95%;
   margin: 3% auto;
   @include mobile {
-    width: 90%;
+    width: 95%;
   }
 }
 .business-profile-container {
@@ -2340,8 +2419,11 @@ button {
     .service-card-text {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       width: 30%;
+      p {
+        min-height: 34px;
+      }
     }
     .service-button {
       width: 100%;
@@ -2365,23 +2447,4 @@ button {
   width: 266px;
   justify-content: center;
   align-items: center;
-}
-
-.kr-embedded {
-  font-family: VarelaRound-Regular, MavenPro-Regular, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
-    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
-  border-radius: 10px !important;
-  .kr-pan {
-    border-radius: 10px;
-  }
-  .kr-field-component {
-    border-radius: 10px !important;
-  }
-  .kr-icon {
-    border-radius: 10px !important;
-  }
-  .kr-icon-wrapper-root {
-    border-radius: 10px !important;
-  }
 }
