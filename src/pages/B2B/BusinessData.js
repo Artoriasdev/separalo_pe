@@ -19,7 +19,7 @@ import { documents } from "../../actions/documents";
 import { provinces } from "../../actions/provinces";
 import { districs } from "../../actions/districs";
 import { editBusiness } from "../../actions/editBusiness";
-import { EMAIL_REGEXP } from "../../utils/regexp";
+import { EMAIL_REGEXP, UNICODE_REGEXP } from "../../utils/regexp";
 import {
   EMAIL_INVALID,
   EMAIL_MINLENGTH,
@@ -106,6 +106,7 @@ const FormHandler = () => {
       const { documentos } = values;
       let maxLengthInput;
       let minLengthInput;
+
       let valor = "[0-9]";
 
       const id = documentsList.find((arreglo) => arreglo.id === documentos);
@@ -115,7 +116,7 @@ const FormHandler = () => {
       }
 
       if (documentos === "04" || documentos === "07") {
-        valor = "";
+        valor = "[a-zA-Z0-9]";
       } else {
         valor = "[0-9]";
       }
