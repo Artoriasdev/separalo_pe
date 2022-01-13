@@ -432,10 +432,6 @@ export const BusinessData = () => {
   const { token } = useSelector((state) => state.auth.data);
   const { opened, message, redirect } = useSelector((state) => state.modal);
 
-  // if (redirect) {
-  //   history.go();
-  // }
-
   const handleClose = () => {
     dispatch(modalClose());
     if (redirect) {
@@ -504,7 +500,7 @@ export const BusinessData = () => {
           apellidos: "",
           documentos: "",
           numDocumento: "",
-          ingreso: "[0-9]",
+          ingreso: "",
           maxLengthValue: 20,
           minLengthValue: 5,
         }}
