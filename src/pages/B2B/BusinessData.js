@@ -19,7 +19,7 @@ import { documents } from "../../actions/documents";
 import { provinces } from "../../actions/provinces";
 import { districs } from "../../actions/districs";
 import { editBusiness } from "../../actions/editBusiness";
-import { EMAIL_REGEXP, UNICODE_REGEXP } from "../../utils/regexp";
+import { EMAIL_REGEXP } from "../../utils/regexp";
 import {
   EMAIL_INVALID,
   EMAIL_MINLENGTH,
