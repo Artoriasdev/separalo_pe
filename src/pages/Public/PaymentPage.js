@@ -43,12 +43,11 @@ export const PaymentPage = () => {
         KR.onSubmit((paymentData) => {
           console.log(paymentData, "payment");
           if (paymentData.clientAnswer.orderStatus === "PAID") {
-            alert("Se hizo el pago correctamente");
             setError(false);
             dispatch(shoppingCarCompleted(orderId, tk));
-            dispatch(paymentDone());
             setTimeout(() => {
               history.push("/reservations-completed");
+              dispatch(paymentDone());
             }, 1000);
 
             // history.go();
@@ -59,6 +58,7 @@ export const PaymentPage = () => {
           var code = event.detailedErrorCode;
           var message = event.errorMessage;
           var myMessage = code + ": " + message;
+
           setError(true);
 
           console.log(event);
@@ -69,44 +69,44 @@ export const PaymentPage = () => {
     } catch (error) {
       console.log(error);
     }
-    // .then(({ KR, result }) => {
-    // });
   }, [token, history]);
 
   return (
-    <div className="page-container">
-      <h1>
-        <img src={Shopping} alt="logo" style={{ marginRight: "8px" }} />
-        Finaliza tu pago
-      </h1>
-      <h3>Completa el formulario para finalizar el pago de tus reservas</h3>
-      <div className="shopping-container">
-        <div className="empty-container">
-          <p
-            style={{
-              color: "#594FA1",
-              lineHeight: "20px",
-              fontSize: "16px",
-            }}
-          >
-            Recuerda que tienes{" "}
-            <span style={{ fontWeight: "bold" }}>15 minutos</span> para hacer
-            esta operación.
-          </p>
-          <div id="paymentForm" className="kr-embedded" kr-form-token={token}>
-            <div className="kr-pan"></div>
-            <div className="kr-expiry"></div>
-            <div className="kr-security-code"></div>
+    <section>
+      <div className="page-container">
+        <h1>
+          <img src={Shopping} alt="logo" style={{ marginRight: "8px" }} />
+          Finaliza tu pago
+        </h1>
+        <h3>Completa el formulario para finalizar el pago de tus reservas</h3>
+        <div className="shopping-container">
+          <div className="empty-container">
+            <p
+              style={{
+                color: "#594FA1",
+                lineHeight: "20px",
+                fontSize: "16px",
+              }}
+            >
+              Recuerda que tienes{" "}
+              <span style={{ fontWeight: "bold" }}>15 minutos</span> para hacer
+              esta operación.
+            </p>
+            <div id="paymentForm" className="kr-embedded" kr-form-token={token}>
+              <div className="kr-pan"></div>
+              <div className="kr-expiry"></div>
+              <div className="kr-security-code"></div>
 
-            <button className="kr-payment-button"></button>
-            {/* <div className="kr-form-error"></div> */}
+              <button className="kr-payment-button"></button>
+              {/* <div className="kr-form-error"></div> */}
+            </div>
+            <div
+              className="customerror"
+              style={{ display: error ? "flex" : "none" }}
+            ></div>
           </div>
-          <div
-            className="customerror"
-            style={{ display: error ? "flex" : "none" }}
-          ></div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
