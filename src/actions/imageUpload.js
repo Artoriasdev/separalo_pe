@@ -3,7 +3,7 @@ import {
   handleUploadLogoBusiness,
 } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalOpen } from "./modal";
+import { modalErr } from "./modal";
 
 export const logoUpload = (file, token) => {
   return async (dispatch) => {
@@ -16,11 +16,7 @@ export const logoUpload = (file, token) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(
-        modalOpen(
-          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
-        )
-      );
+      dispatch(modalErr());
     }
   };
 };
@@ -35,11 +31,7 @@ export const bannerUpload = (file, token) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(
-        modalOpen(
-          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
-        )
-      );
+      dispatch(modalErr());
     }
   };
 };

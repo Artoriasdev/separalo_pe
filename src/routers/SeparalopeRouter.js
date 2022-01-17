@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import { checkAuth } from "../actions/auth";
 import { loadCategorys } from "../actions/category";
 import { CookiesBanner } from "../components/CookiesBanner";
+import { ErrorModal } from "../components/ErrorModal";
 import { Footer } from "../components/Footer";
 import FullPageLoader from "../components/FullPageLoader";
 import ScrollToTop from "../components/ScrollToTop";
@@ -27,6 +28,7 @@ export const SeparalopeRouter = () => {
   return (
     <Router>
       <FullPageLoader isLoading={check} />
+      <ErrorModal />
       <div style={{ minHeight: "80vh" }}>
         <ScrollToTop />
         <Switch>

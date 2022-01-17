@@ -1,6 +1,6 @@
 import { handleDeleteService } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalOpen } from "./modal";
+import { modalErr, modalOpen } from "./modal";
 
 export const serviceDelete = (id, token) => {
   return async (dispatch) => {
@@ -14,11 +14,7 @@ export const serviceDelete = (id, token) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(
-        modalOpen(
-          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
-        )
-      );
+      dispatch(modalErr());
     }
   };
 };

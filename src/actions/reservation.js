@@ -3,7 +3,7 @@ import {
   handleRegisterReservationInvited,
 } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalOpen, modalRedirect } from "./modal";
+import { modalErr, modalOpen, modalRedirect } from "./modal";
 
 export const reservation = (reserveModel) => {
   return async (dispatch) => {
@@ -20,11 +20,7 @@ export const reservation = (reserveModel) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(
-        modalOpen(
-          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
-        )
-      );
+      dispatch(modalErr());
     }
   };
 };
@@ -46,11 +42,7 @@ export const reservationClient = (reserveModel, token) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(
-        modalOpen(
-          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
-        )
-      );
+      dispatch(modalErr());
     }
   };
 };

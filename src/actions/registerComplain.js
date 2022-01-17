@@ -1,5 +1,5 @@
 import { handleRegisterComplaint } from "../helpers/handlers";
-import { modalOpen, modalRedirect } from "./modal";
+import { modalErr, modalOpen, modalRedirect } from "./modal";
 
 export const registerComplain = (complainModel) => {
   return async (dispatch) => {
@@ -14,6 +14,7 @@ export const registerComplain = (complainModel) => {
       }
     } catch (error) {
       console.log(error);
+      dispatch(modalErr());
     }
   };
 };

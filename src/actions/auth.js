@@ -5,7 +5,7 @@ import {
 } from "../helpers/handlers";
 import { types } from "../types/types";
 import { finishChecking, startChecking } from "./checking";
-import { modalOpen } from "./modal";
+import { modalErr, modalOpen } from "./modal";
 
 export const login = (infoLogin, workflow) => {
   return async (dispatch) => {
@@ -24,11 +24,7 @@ export const login = (infoLogin, workflow) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(
-        modalOpen(
-          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
-        )
-      );
+      dispatch(modalErr());
     }
   };
 };
@@ -64,11 +60,7 @@ export const checkAuth = () => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(
-        modalOpen(
-          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
-        )
-      );
+      dispatch(modalErr());
     }
   };
 };
@@ -92,6 +84,7 @@ export const logout = () => {
       } catch (error) {
         console.log(error);
         dispatch(finishChecking());
+        dispatch(modalErr());
       }
     }, 500);
   };

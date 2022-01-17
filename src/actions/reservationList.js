@@ -3,7 +3,7 @@ import {
   handleGetReservationHistoryByBusiness,
 } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalOpen } from "./modal";
+import { modalErr } from "./modal";
 
 export const reservationListConfirmed = (id, token) => {
   return async (dispatch) => {
@@ -12,11 +12,7 @@ export const reservationListConfirmed = (id, token) => {
       dispatch(listConfirmed(data.data));
     } catch (error) {
       console.log(error);
-      dispatch(
-        modalOpen(
-          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
-        )
-      );
+      dispatch(modalErr());
     }
   };
 };
@@ -27,11 +23,7 @@ export const reservationListHistory = (id, token) => {
       dispatch(listHistory(data.data));
     } catch (error) {
       console.log(error);
-      dispatch(
-        modalOpen(
-          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
-        )
-      );
+      dispatch(modalErr());
     }
   };
 };

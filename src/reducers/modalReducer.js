@@ -3,6 +3,7 @@ const initialState = {
   opened: false,
   message: "",
   redirect: false,
+  error: false,
 };
 
 export const modalReducer = (state = initialState, action) => {
@@ -29,7 +30,11 @@ export const modalReducer = (state = initialState, action) => {
         ...state,
         redirect: false,
       };
-
+    case types.modalError:
+      return {
+        ...state,
+        error: true,
+      };
     default:
       return state;
   }

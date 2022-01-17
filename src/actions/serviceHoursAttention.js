@@ -1,6 +1,6 @@
 import { handleGetHoursAttentionService } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalOpen } from "./modal";
+import { modalErr, modalOpen } from "./modal";
 
 export const serviceHoursAttention = () => {
   return async (dispatch) => {
@@ -13,11 +13,7 @@ export const serviceHoursAttention = () => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(
-        modalOpen(
-          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
-        )
-      );
+      dispatch(modalErr());
     }
   };
 };

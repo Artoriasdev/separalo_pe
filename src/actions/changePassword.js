@@ -1,5 +1,5 @@
 import { handleChangePassword } from "../helpers/handlers";
-import { modalOpen, modalRedirect } from "./modal";
+import { modalErr, modalOpen, modalRedirect } from "./modal";
 
 export const changePassword = (PasswordModel, tk) => {
   return async (dispatch) => {
@@ -14,11 +14,7 @@ export const changePassword = (PasswordModel, tk) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(
-        modalOpen(
-          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
-        )
-      );
+      dispatch(modalErr());
     }
   };
 };

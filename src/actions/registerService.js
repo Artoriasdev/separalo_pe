@@ -1,5 +1,5 @@
 import { handleRegisterService } from "../helpers/handlers";
-import { modalOpen, modalRedirect } from "./modal";
+import { modalErr, modalOpen, modalRedirect } from "./modal";
 
 export const registerService = (dataModel, token) => {
   return async (dispatch) => {
@@ -14,11 +14,7 @@ export const registerService = (dataModel, token) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(
-        modalOpen(
-          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
-        )
-      );
+      dispatch(modalErr());
     }
   };
 };

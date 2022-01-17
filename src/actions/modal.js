@@ -14,3 +14,6 @@ export const modalRedirect = () => ({
 export const modalRedirectFinished = () => ({
   type: types.modalRedirectDone,
 });
+export const modalErr = () => ({
+  type: types.modalError,
+});

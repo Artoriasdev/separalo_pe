@@ -1,6 +1,6 @@
 import { handleGetCategorys } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalOpen } from "./modal";
+import { modalErr } from "./modal";
 
 export const loadCategorys = () => {
   return async (dispatch) => {
@@ -9,11 +9,7 @@ export const loadCategorys = () => {
       dispatch(category(data));
     } catch (error) {
       console.log(error);
-      dispatch(
-        modalOpen(
-          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
-        )
-      );
+      dispatch(modalErr());
     }
   };
 };

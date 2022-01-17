@@ -3,7 +3,7 @@ import {
   handlePasswordRestore,
   handleValidatePasswordRecovery,
 } from "../helpers/handlers";
-import { modalOpen, modalRedirect } from "./modal";
+import { modalErr, modalOpen, modalRedirect } from "./modal";
 
 export const passwordRecovery = (recoveryModel) => {
   return async (dispatch) => {
@@ -18,11 +18,7 @@ export const passwordRecovery = (recoveryModel) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(
-        modalOpen(
-          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
-        )
-      );
+      dispatch(modalErr());
     }
   };
 };
@@ -39,11 +35,7 @@ export const passwordRecoveryOTP = (recoveryModel) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(
-        modalOpen(
-          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
-        )
-      );
+      dispatch(modalErr());
     }
   };
 };
@@ -59,11 +51,7 @@ export const passwordRestore = (recoveryModel) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(
-        modalOpen(
-          "Ha ocurrido un error porfavor refresque la pagina o vuelva a intentarlo luego"
-        )
-      );
+      dispatch(modalErr());
     }
   };
 };
