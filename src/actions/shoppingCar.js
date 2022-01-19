@@ -3,7 +3,8 @@ import {
   handleGetShoppingCart,
 } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalErr, modalOpen } from "./modal";
+import { modalOpen } from "./modal";
+import history from "../helpers/history";
 
 export const checkShoppingItems = (token) => {
   return async (dispatch) => {
@@ -17,7 +18,7 @@ export const checkShoppingItems = (token) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };
@@ -50,7 +51,7 @@ export const shoppingCarDelete = (item, token) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

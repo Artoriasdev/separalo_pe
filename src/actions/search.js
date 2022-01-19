@@ -1,6 +1,6 @@
 import { handleGetBusinessByFilter } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalErr } from "./modal";
+import history from "../helpers/history";
 
 export const loadSearch = (value) => {
   return async (dispatch) => {
@@ -13,7 +13,7 @@ export const loadSearch = (value) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

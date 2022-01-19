@@ -3,7 +3,8 @@ import {
   handlePasswordRestore,
   handleValidatePasswordRecovery,
 } from "../helpers/handlers";
-import { modalErr, modalOpen, modalRedirect } from "./modal";
+import { modalOpen, modalRedirect } from "./modal";
+import history from "../helpers/history";
 
 export const passwordRecovery = (recoveryModel) => {
   return async (dispatch) => {
@@ -18,7 +19,7 @@ export const passwordRecovery = (recoveryModel) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };
@@ -35,7 +36,7 @@ export const passwordRecoveryOTP = (recoveryModel) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };
@@ -51,7 +52,7 @@ export const passwordRestore = (recoveryModel) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

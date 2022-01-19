@@ -1,6 +1,6 @@
 import { handleGetServicesByBusiness } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalErr } from "./modal";
+import history from "../helpers/history";
 
 export const loadServicesCategorys = (id, cat) => {
   return async (dispatch) => {
@@ -10,7 +10,7 @@ export const loadServicesCategorys = (id, cat) => {
       dispatch(loadCategory(data));
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

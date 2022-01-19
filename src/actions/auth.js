@@ -5,7 +5,8 @@ import {
 } from "../helpers/handlers";
 import { types } from "../types/types";
 import { finishChecking, startChecking } from "./checking";
-import { modalErr, modalOpen } from "./modal";
+import { modalOpen } from "./modal";
+import history from "../helpers/history";
 
 export const login = (infoLogin, workflow) => {
   return async (dispatch) => {
@@ -24,7 +25,7 @@ export const login = (infoLogin, workflow) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };
@@ -60,7 +61,7 @@ export const checkAuth = () => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };
@@ -84,7 +85,7 @@ export const logout = () => {
       } catch (error) {
         console.log(error);
         dispatch(finishChecking());
-        dispatch(modalErr());
+        history.push("/error");
       }
     }, 500);
   };

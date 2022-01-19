@@ -1,6 +1,6 @@
 import { handleGetCategorys } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalErr } from "./modal";
+import history from "../helpers/history";
 
 export const loadCategorys = () => {
   return async (dispatch) => {
@@ -9,7 +9,7 @@ export const loadCategorys = () => {
       dispatch(category(data));
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

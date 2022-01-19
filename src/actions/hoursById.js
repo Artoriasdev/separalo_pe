@@ -1,6 +1,6 @@
 import { handleGetAvailableScheduleService } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalErr } from "./modal";
+import history from "../helpers/history";
 
 export const hoursId = (id, date) => {
   return async (dispatch) => {
@@ -9,7 +9,7 @@ export const hoursId = (id, date) => {
       dispatch(hours(data.data));
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

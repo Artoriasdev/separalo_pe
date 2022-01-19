@@ -1,5 +1,6 @@
 import { handleEditDataBusiness } from "../helpers/handlers";
-import { modalErr, modalOpen, modalRedirect } from "./modal";
+import { modalOpen, modalRedirect } from "./modal";
+import history from "../helpers/history";
 
 export const editBusiness = (dataModel, tk) => {
   return async (dispatch) => {
@@ -13,7 +14,7 @@ export const editBusiness = (dataModel, tk) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

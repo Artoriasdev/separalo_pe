@@ -1,6 +1,6 @@
 import { handleGetDataBusiness } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalErr } from "./modal";
+import history from "../helpers/history";
 
 export const businessData = (token) => {
   return async (dispatch) => {
@@ -10,7 +10,7 @@ export const businessData = (token) => {
       dispatch(business(...data.data));
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

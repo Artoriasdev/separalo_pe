@@ -1,6 +1,7 @@
 import { handleRegisterBusinessBankData } from "../helpers/handlers";
 import { bankUpdate } from "./editDataBank";
-import { modalErr, modalOpen } from "./modal";
+import { modalOpen } from "./modal";
+import history from "../helpers/history";
 
 export const registerDataBank = (dataModel, tk) => {
   return async (dispatch) => {
@@ -13,7 +14,7 @@ export const registerDataBank = (dataModel, tk) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

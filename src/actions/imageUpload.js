@@ -3,7 +3,7 @@ import {
   handleUploadLogoBusiness,
 } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalErr } from "./modal";
+import history from "../helpers/history";
 
 export const logoUpload = (file, token) => {
   return async (dispatch) => {
@@ -16,7 +16,7 @@ export const logoUpload = (file, token) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };
@@ -31,7 +31,7 @@ export const bannerUpload = (file, token) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

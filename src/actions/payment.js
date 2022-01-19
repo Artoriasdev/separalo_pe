@@ -1,6 +1,7 @@
 import { handleCreatePayment } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalErr, modalOpen } from "./modal";
+import { modalOpen } from "./modal";
+import history from "../helpers/history";
 
 export const payment = (token) => {
   return async (dispatch) => {
@@ -14,7 +15,7 @@ export const payment = (token) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

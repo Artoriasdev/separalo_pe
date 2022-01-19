@@ -2,16 +2,17 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Error from "../assets/images/error-icon.svg";
 
-export const ErrorModal = () => {
+export const ErrorPage = () => {
   const { error } = useSelector((state) => state.modal);
 
   return (
     <div
-      className="mdal"
       style={{
-        backgroundColor: "white",
-        zIndex: "10",
-        display: error ? "" : "none",
+        width: "100%",
+        minHeight: "90vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <div

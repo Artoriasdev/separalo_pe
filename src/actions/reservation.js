@@ -3,7 +3,8 @@ import {
   handleRegisterReservationInvited,
 } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalErr, modalOpen, modalRedirect } from "./modal";
+import { modalOpen, modalRedirect } from "./modal";
+import history from "../helpers/history";
 
 export const reservation = (reserveModel) => {
   return async (dispatch) => {
@@ -20,7 +21,7 @@ export const reservation = (reserveModel) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };
@@ -42,7 +43,7 @@ export const reservationClient = (reserveModel, token) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

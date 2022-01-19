@@ -2,7 +2,8 @@ import {
   handleRegisterBusiness,
   handleRegisterCustomer,
 } from "../helpers/handlers";
-import { modalErr, modalOpen, modalRedirect } from "./modal";
+import { modalOpen, modalRedirect } from "./modal";
+import history from "../helpers/history";
 
 export const registerCustomer = (CustomerModel) => {
   return async (dispatch) => {
@@ -16,7 +17,7 @@ export const registerCustomer = (CustomerModel) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };
@@ -33,7 +34,7 @@ export const registerBusiness = (BusinessModel) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

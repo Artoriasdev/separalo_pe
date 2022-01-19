@@ -1,6 +1,7 @@
 import { types } from "../types/types";
 import { handleUpdateBusinessBankData } from "../helpers/handlers";
-import { modalErr, modalOpen } from "./modal";
+import { modalOpen } from "./modal";
+import history from "../helpers/history";
 
 export const editBusinessBank = (dataModel, tk) => {
   return async (dispatch) => {
@@ -13,7 +14,7 @@ export const editBusinessBank = (dataModel, tk) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

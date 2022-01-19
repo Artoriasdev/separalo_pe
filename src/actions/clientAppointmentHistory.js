@@ -1,6 +1,7 @@
 import { handleGetReservationHistoryByCustomer } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalErr, modalOpen } from "./modal";
+import { modalOpen } from "./modal";
+import history from "../helpers/history";
 
 export const clientAppointmentHistory = (token) => {
   return async (dispatch) => {
@@ -13,7 +14,7 @@ export const clientAppointmentHistory = (token) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

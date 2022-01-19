@@ -3,7 +3,7 @@ import {
   handleGetReservationHistoryByBusiness,
 } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalErr } from "./modal";
+import history from "../helpers/history";
 
 export const reservationListConfirmed = (id, token) => {
   return async (dispatch) => {
@@ -12,7 +12,7 @@ export const reservationListConfirmed = (id, token) => {
       dispatch(listConfirmed(data.data));
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };
@@ -23,7 +23,7 @@ export const reservationListHistory = (id, token) => {
       dispatch(listHistory(data.data));
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

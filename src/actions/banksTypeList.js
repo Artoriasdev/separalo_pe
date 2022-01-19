@@ -1,6 +1,6 @@
 import { handleGetBanksAccountType } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalErr } from "./modal";
+import history from "../helpers/history";
 
 export const banksTypeList = (id) => {
   return async (dispatch) => {
@@ -9,7 +9,7 @@ export const banksTypeList = (id) => {
       dispatch(banksType(data.data));
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

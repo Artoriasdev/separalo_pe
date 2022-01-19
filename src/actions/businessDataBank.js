@@ -1,6 +1,6 @@
 import { handleGetBusinessBankData } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalErr } from "./modal";
+import history from "../helpers/history";
 
 export const businessDataBank = (token) => {
   return async (dispatch) => {
@@ -12,7 +12,7 @@ export const businessDataBank = (token) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

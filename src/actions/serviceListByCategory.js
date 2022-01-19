@@ -1,6 +1,6 @@
 import { handleGetListByCategory } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalErr } from "./modal";
+import history from "../helpers/history";
 
 export const serviceListByCategory = (id, cat, tk) => {
   return async (dispatch) => {
@@ -9,7 +9,7 @@ export const serviceListByCategory = (id, cat, tk) => {
       dispatch(list(data.data));
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };

@@ -1,6 +1,6 @@
 import { handleGetDocuments } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalErr } from "./modal";
+import history from "../helpers/history";
 
 export const documents = () => {
   return async (dispatch) => {
@@ -9,7 +9,7 @@ export const documents = () => {
       dispatch(loadDocuments(data.data));
     } catch (error) {
       console.log(error);
-      dispatch(modalErr());
+      history.push("/error");
     }
   };
 };
