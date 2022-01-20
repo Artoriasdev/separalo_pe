@@ -25,9 +25,10 @@ import {
   checkShoppingItems,
   cuponClear,
   shoppingCarDelete,
+  shoppingCarDeleteInvited,
   shoppingDiscount,
 } from "../actions/shoppingCar";
-import { payment } from "../actions/payment";
+import { payment, paymentInvited } from "../actions/payment";
 import { finishChecking, startChecking } from "../actions/checking";
 import Delete from "../assets/images/Delete.svg";
 import CustomizedTooltips from "../components/ToolTip";
@@ -63,6 +64,7 @@ export const ShoppingList = () => {
   const { logged } = useSelector((state) => state.auth);
   const { shoppingCarItems } = useSelector((state) => state.shoppingCar);
   const { show, valid, message } = useSelector((state) => state.cupon);
+  const { email } = useSelector((state) => state.reservationEmailInvited);
   const [opened, setOpened] = useState(false);
   const [selected, setSelected] = useState();
 
@@ -75,6 +77,8 @@ export const ShoppingList = () => {
   const handleReserveDelete = () => {
     if (logged) {
       dispatch(shoppingCarDelete(selected, token));
+    } else {
+      dispatch(shoppingCarDeleteInvited(email, selected));
     }
     setOpened(false);
   };
@@ -104,6 +108,9 @@ export const ShoppingList = () => {
     // dispatch(shoppingCarDone(shoppingCarItems));
     if (logged) {
       dispatch(payment(token));
+      dispatch(startChecking());
+    } else {
+      dispatch(paymentInvited(email));
       dispatch(startChecking());
     }
     setTimeout(() => {

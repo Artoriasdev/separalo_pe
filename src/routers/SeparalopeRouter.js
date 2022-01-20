@@ -15,7 +15,11 @@ import { RedirectPublicRoute } from "./RedirectPublicRoute";
 import history from "../helpers/history";
 import { ErrorRouter } from "./ErrorRouter";
 import { ErrorRoute } from "./ErrorRoute";
-import { checkShoppingItems } from "../actions/shoppingCar";
+import {
+  checkShoppingItems,
+  checkShoppingItemsInvited,
+} from "../actions/shoppingCar";
+import { checkEmailReservation } from "../actions/reservationEmailInvited";
 
 export const SeparalopeRouter = () => {
   const dispatch = useDispatch();
@@ -28,6 +32,7 @@ export const SeparalopeRouter = () => {
   useEffect(() => {
     dispatch(checkAuth());
     dispatch(loadCategorys());
+    dispatch(checkEmailReservation());
     if (logged) {
       dispatch(checkShoppingItems(token));
     }

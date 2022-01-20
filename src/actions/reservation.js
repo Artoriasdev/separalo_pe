@@ -5,13 +5,18 @@ import {
 import { types } from "../types/types";
 import { modalOpen, modalRedirect } from "./modal";
 import history from "../helpers/history";
+import { emailReservation } from "./reservationEmailInvited";
+import { checkShoppingItemsInvited } from "./shoppingCar";
 
 export const reservation = (reserveModel) => {
   return async (dispatch) => {
     try {
       const { data } = await handleRegisterReservationInvited(reserveModel);
       if (data.response === "true") {
+        JSON.stringify(localStorage.setItem("email", reserveModel.email));
+        dispatch(emailReservation(reserveModel.email));
         dispatch(reserve(data));
+        dispatch(checkShoppingItemsInvited(reserveModel.email));
         dispatch(
           modalOpen("¡Su reserva ha sido registrada de manera exitosa!")
         );

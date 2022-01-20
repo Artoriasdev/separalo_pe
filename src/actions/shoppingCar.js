@@ -1,6 +1,8 @@
 import {
   handleDeleteShoppingCartItem,
+  handleDeleteShoppingCartItemInvited,
   handleGetShoppingCart,
+  handleGetShoppingCartInvited,
 } from "../helpers/handlers";
 import { types } from "../types/types";
 import { modalOpen } from "./modal";
@@ -22,19 +24,18 @@ export const checkShoppingItems = (token) => {
     }
   };
 };
-
-export const addItemCar = (item) => {
+export const checkShoppingItemsInvited = (email) => {
   return async (dispatch) => {
     try {
-      const identifiers = {
-        time: new Date().getTime(),
-        discount: 0,
-      };
-
-      const itemsAdded = Object.assign(item[0], identifiers);
-      dispatch(shoppingCar([itemsAdded]));
+      const { data } = await handleGetShoppingCartInvited(email);
+      if (data.response === "true") {
+        dispatch(shoppingCarLoad(data.data));
+      } else if (data.response === "false") {
+        console.log(data);
+      }
     } catch (error) {
       console.log(error);
+      history.push("/error");
     }
   };
 };
@@ -46,6 +47,22 @@ export const shoppingCarDelete = (item, token) => {
       console.log(data);
       if (data.response === "true") {
         dispatch(shoppingCarDeleteItems(item));
+      } else if (data.response === "false") {
+        dispatch(modalOpen(data.message));
+      }
+    } catch (error) {
+      console.log(error);
+      history.push("/error");
+    }
+  };
+};
+
+export const shoppingCarDeleteInvited = (email, code) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await handleDeleteShoppingCartItemInvited(email, code);
+      if (data.response === "true") {
+        dispatch(shoppingCarDeleteItems(code));
       } else if (data.response === "false") {
         dispatch(modalOpen(data.message));
       }

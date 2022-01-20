@@ -7,7 +7,10 @@ import KRGlue from "@lyracom/embedded-form-glue";
 import postscribe from "postscribe";
 
 import Shopping from "../../assets/images/ShoppingPage.svg";
-import { shoppingCarCompleted } from "../../actions/shoppingCarDone";
+import {
+  shoppingCarCompleted,
+  shoppingCarInvitedCompleted,
+} from "../../actions/shoppingCarDone";
 import { paymentDone } from "../../actions/payment";
 
 export const PaymentPage = () => {
@@ -26,6 +29,7 @@ export const PaymentPage = () => {
     (state) => state.payment.data
   );
   const { token: tk } = useSelector((state) => state.auth.data);
+  const { logged } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const endpoint =
@@ -44,7 +48,11 @@ export const PaymentPage = () => {
           console.log(paymentData, "payment");
           if (paymentData.clientAnswer.orderStatus === "PAID") {
             setError(false);
-            dispatch(shoppingCarCompleted(orderId, tk));
+            if (logged) {
+              dispatch(shoppingCarCompleted(orderId, tk));
+            } else {
+              dispatch(shoppingCarInvitedCompleted(orderId));
+            }
             setTimeout(() => {
               history.push("/reservations-completed");
               dispatch(paymentDone());

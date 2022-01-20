@@ -86,4 +86,7 @@ export const types = {
 
   clientPayment: "[Payment] Client Payment",
   clientPaymentCompleted: "[Payment] Client Payment Completed",
+
+  saveEmail: "[Reservation] Reservation invited email saved",
+  deleteEmail: "[Reservation] Reservation invited email deleted",
 };

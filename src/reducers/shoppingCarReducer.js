@@ -24,6 +24,8 @@ export const shoppingCarReducer = (state = initialState, action) => {
       const items = state.shoppingCarItems.filter(
         (item) => item.preCodeReservation !== action.payload
       );
+      console.log(action.payload);
+      console.log("lista nueva reducer", items);
       return {
         ...state,
         shoppingCarItems: items,

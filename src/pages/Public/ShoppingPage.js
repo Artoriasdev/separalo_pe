@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { Button } from "@mui/material";
 
 import Shopping from "../../assets/images/ShoppingPage.svg";
-import { checkShoppingItems } from "../../actions/shoppingCar";
 import { ShoppingList } from "../../components/ShoppingList";
 import { MyModal } from "../../components/Modal";
 // import { shoppingCarDone } from "../../actions/shoppingCarDone";
@@ -13,16 +12,7 @@ import { MyModal } from "../../components/Modal";
 export const ShoppingPage = () => {
   const { shoppingCarItems } = useSelector((state) => state.shoppingCar);
 
-  const { token } = useSelector((state) => state.auth.data);
-  const { logged } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
   const history = useHistory();
-
-  useEffect(() => {
-    if (logged) {
-      dispatch(checkShoppingItems(token));
-    }
-  }, [dispatch, logged, token]);
 
   const handleFirstReserve = () => {
     history.push("/");

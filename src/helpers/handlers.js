@@ -1183,6 +1183,28 @@ export const handleCreatePayment = (tk) => {
   return rspApi;
 };
 
+export const handleCreatePaymentInvited = (email) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: ``,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/payment/createPaymentInvited/${email}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
 export const handleDeleteShoppingCartItem = (item, tk) => {
   var headers = {
     "Content-Type": "application/json",
@@ -1205,6 +1227,28 @@ export const handleDeleteShoppingCartItem = (item, tk) => {
   return rspApi;
 };
 
+export const handleDeleteShoppingCartItemInvited = (email, code) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: ``,
+  };
+  let linkRegisterApi = `${process.env.REACT_APP_PATH_SERVICE}/shopping/deleteShoppingCartItemInvited/${code}/${email}`;
+
+  const rspApi = axios
+    .post(linkRegisterApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+
+  return rspApi;
+};
+
 export const handleGetReservationByOrderId = (code, tk) => {
   var headers = {
     "Content-Type": "application/json",
@@ -1213,6 +1257,50 @@ export const handleGetReservationByOrderId = (code, tk) => {
   };
 
   let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/reservation/getReservationByOrderId/${code}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleGetReservationByOrderIdInvited = (code) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: ``,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/reservation/getReservationByOrderIdInvited/${code}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleGetShoppingCartInvited = (email) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: ``,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/shopping/getShoppingCartInvited/${email}`;
 
   const rspApi = axios
     .get(linkDocumentsApi, {

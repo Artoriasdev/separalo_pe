@@ -36,6 +36,7 @@ import { shoppingCarCompletedReducer } from "../reducers/shoppingCarCompletedRed
 import { cuponMessage } from "../reducers/cuponMessage";
 import { paymentReducer } from "../reducers/paymentReducer";
 import { banksUpdateReducer } from "../reducers/banksUpdateReducer";
+import { reservationEmailInvitedReducer } from "../reducers/reservationEmailInvitedReducer";
 
 const composeEnhancers =
   (typeof window !== "undefined" &&
@@ -79,6 +80,7 @@ const reducers = combineReducers({
   shoppingDone: shoppingCarCompletedReducer,
   cupon: cuponMessage,
   payment: paymentReducer,
+  reservationEmailInvited: reservationEmailInvitedReducer,
 });
 
 export const store = createStore(
