@@ -68,10 +68,6 @@ export const ShoppingList = () => {
 
   var values;
 
-  useEffect(() => {
-    dispatch(checkShoppingItems(token));
-  }, [dispatch, token]);
-
   const handleClose = () => {
     setOpened(false);
   };

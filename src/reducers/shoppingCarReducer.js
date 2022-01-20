@@ -20,11 +20,6 @@ export const shoppingCarReducer = (state = initialState, action) => {
         ...state,
         shoppingCarItems: [],
       };
-    case types.clientLogout:
-      return {
-        ...state,
-        shoppingCarItems: [],
-      };
     case types.shoppingCarRemoveItems:
       const items = state.shoppingCarItems.filter(
         (item) => item.preCodeReservation !== action.payload
@@ -42,6 +37,10 @@ export const shoppingCarReducer = (state = initialState, action) => {
             ? { ...item, discount: action.payload }
             : item
         ),
+      };
+    case types.clientLogout:
+      return {
+        shoppingCarItems: [],
       };
 
     default:

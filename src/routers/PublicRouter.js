@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Redirect, Route, Switch } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import Navbar from "../components/Navbar";
 import { HomePage } from "../pages/Public/HomePage";
@@ -29,19 +29,9 @@ import { ReserveDetail } from "../pages/Public/ReserveDetail";
 import { ShoppingPage } from "../pages/Public/ShoppingPage";
 import { ReserveCompleteShopping } from "../pages/Public/ReserveCompleteShopping";
 import { PaymentPage } from "../pages/Public/PaymentPage";
-import { checkShoppingItems } from "../actions/shoppingCar";
 
 export const PublicRouter = () => {
-  const dispatch = useDispatch();
   const { workflow } = useSelector((state) => state.auth);
-  const { logged } = useSelector((state) => state.auth);
-  const { token } = useSelector((state) => state.auth.data);
-
-  useEffect(() => {
-    if (logged) {
-      dispatch(checkShoppingItems(token));
-    }
-  }, [logged, token, dispatch]);
 
   return (
     <>
