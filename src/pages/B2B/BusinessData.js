@@ -79,16 +79,20 @@ const FormHandler = () => {
         setFieldValue("descripcion", data[0].businessDescription, true);
       }
 
-      setFieldValue("nombres", data[0].legalRepresentativeName, true);
-      setFieldValue("apellidos", data[0].legalRepresentativeLastName, true);
+      setFieldValue("nombres", data[0].legalRepresentativeName || "", true);
+      setFieldValue(
+        "apellidos",
+        data[0].legalRepresentativeLastName || "",
+        true
+      );
       setFieldValue(
         "documentos",
-        data[0].legalRepresentativeDocumentType,
+        data[0].legalRepresentativeDocumentType || "",
         true
       );
       setFieldValue(
         "numDocumento",
-        data[0].legalRepresentativeDocumentNumber,
+        data[0].legalRepresentativeDocumentNumber || "",
         true
       );
     }
@@ -508,62 +512,40 @@ export const BusinessData = () => {
         validate={(values) => {
           const errors = {};
 
-          if (values.nombreComercial.length < 1) {
-            errors.nombreComercial = REQUIRED;
-          } else if (values.nombreComercial.trim().length < 1) {
+          if (values.nombreComercial.trim().length < 1) {
             errors.nombreComercial = REQUIRED;
           }
 
-          if (values.direccion.length < 1) {
-            errors.direccion = REQUIRED;
-          } else if (values.direccion.trim().length < 1) {
+          if (values.direccion.trim().length < 1) {
             errors.direccion = REQUIRED;
           }
 
-          if (values.distrito === "") {
-            errors.distrito = REQUIRED;
-          } else if (values.distrito.trim().length < 1) {
+          if (values.distrito.trim().length < 1) {
             errors.distrito = REQUIRED;
           }
 
-          if (values.provincia === "") {
-            errors.provincia = REQUIRED;
-          } else if (values.provincia.trim().length < 1) {
+          if (values.provincia.trim().length < 1) {
             errors.provincia = REQUIRED;
           }
 
-          if (values.nombres.length < 1) {
-            errors.nombres = REQUIRED;
-          } else if (values.nombres.trim().length < 1) {
+          if (values.nombres.trim().length < 1) {
             errors.nombres = REQUIRED;
           }
 
-          if (values.apellidos.length < 1) {
-            errors.apellidos = REQUIRED;
-          } else if (values.apellidos.trim().length < 1) {
+          if (values.apellidos.trim().length < 1) {
             errors.apellidos = REQUIRED;
           }
 
-          if (values.documentos === "") {
-            errors.documentos = REQUIRED;
-          } else if (values.documentos.trim().length < 1) {
+          if (values.documentos.trim().length < 1) {
             errors.documentos = REQUIRED;
           }
 
-          if (values.tarjeta.length === 0) {
-            errors.tarjeta = "*Este campo es requerido";
-          } else if (values.tarjeta.trim().length <= 1) {
-            errors.tarjeta = "*Este campo es requerido";
-          }
-          if (values.descripcion.length === 0) {
-            errors.descripcion = "*Este campo es requerido";
-          } else if (values.descripcion.trim().length <= 1) {
-            errors.descripcion = "*Este campo es requerido";
+          if (values.tarjeta.trim().length <= 1) {
+            errors.tarjeta = REQUIRED;
           }
 
-          if (values.numeroDocumento.length < 11) {
-            errors.numeroDocumento =
-              "*El número de documento debe ser de 11 dígitos.";
+          if (values.descripcion.trim().length <= 1) {
+            errors.descripcion = REQUIRED;
           }
 
           if (values.numDocumento === "") {
@@ -620,7 +602,6 @@ export const BusinessData = () => {
           dataModel.legalRepresentativeDocumentNumber = values.numDocumento;
 
           (async () => {
-            // console.log(dataModel);
             dispatch(editBusiness(dataModel, token));
           })();
         }}
