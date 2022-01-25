@@ -15,10 +15,7 @@ import { RedirectPublicRoute } from "./RedirectPublicRoute";
 import history from "../helpers/history";
 import { ErrorRouter } from "./ErrorRouter";
 import { ErrorRoute } from "./ErrorRoute";
-import {
-  checkShoppingItems,
-  checkShoppingItemsInvited,
-} from "../actions/shoppingCar";
+import { checkShoppingItems } from "../actions/shoppingCar";
 import { checkEmailReservation } from "../actions/reservationEmailInvited";
 
 export const SeparalopeRouter = () => {

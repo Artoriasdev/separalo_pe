@@ -1,11 +1,16 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { Button } from "@mui/material";
 
+import { checkShoppingItems } from "../../actions/shoppingCar";
+
 export const ReserveDetail = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const { logged } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth.data);
   const { reservationUser } = useSelector((state) => state.reservation);
 
   const handleReserveMore = () => {
@@ -15,6 +20,12 @@ export const ReserveDetail = () => {
   const handleReservePayment = () => {
     history.push("/shopping");
   };
+
+  useEffect(() => {
+    if (logged) {
+      dispatch(checkShoppingItems(token));
+    }
+  }, [dispatch, logged, token]);
 
   useEffect(() => {
     if (reservationUser.length < 1) history.push("/");
