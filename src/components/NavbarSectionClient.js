@@ -121,11 +121,11 @@ export const NavbarSectionClient = () => {
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
       className="list"
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      transformOrigin={{ vertical: "top", horizontal: "center" }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
       style={{
@@ -280,16 +280,11 @@ export const NavbarSectionClient = () => {
           aria-haspopup="true"
           onClick={handleMobileMenuOpen}
           style={{
-            marginLeft: "20px",
-            marginRight: "-20px",
             paddingLeft: "0",
             paddingRight: "0",
             color: "black",
           }}
         >
-          <p style={{ fontSize: "16px", color: "black" }}>
-            {data && data.firstName}
-          </p>
           <MoreVert style={{ marginTop: "-3px" }} />
         </IconButton>
       </Box>
