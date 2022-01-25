@@ -7,7 +7,6 @@ import { Button } from "@mui/material";
 import Shopping from "../../assets/images/ShoppingPage.svg";
 import { ShoppingList } from "../../components/ShoppingList";
 import { MyModal } from "../../components/Modal";
-// import { shoppingCarDone } from "../../actions/shoppingCarDone";
 
 export const ShoppingPage = () => {
   const { shoppingCarItems } = useSelector((state) => state.shoppingCar);
@@ -31,7 +30,7 @@ export const ShoppingPage = () => {
           <div className="empty-container">
             <div className="empty-text">
               <p style={{ fontSize: "15px", color: "#23232399" }}>
-                Tu carrito de reservas esta vacio
+                Tu carrito de reservas esta vacío
               </p>
             </div>
             <div className="empty-accion">
