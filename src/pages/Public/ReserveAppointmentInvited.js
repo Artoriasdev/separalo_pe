@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 
-import * as Yup from "yup";
 import { Formik, Form } from "formik";
 
 import { MyFormikDialog, MyModal } from "../../components/Modal";
@@ -18,6 +17,13 @@ import { serviceById } from "../../actions/serviceById";
 import { hoursId } from "../../actions/hoursById";
 import { reservation } from "../../actions/reservation";
 import { termsLoad } from "../../actions/termsLoad";
+import {
+  EMAIL_INVALID,
+  EMAIL_MINLENGTH,
+  E_MINLENGTH,
+  REQUIRED,
+} from "../../utils/constants";
+import { EMAIL_REGEXP } from "../../utils/regexp";
 
 export const ReserveAppointmentInvited = () => {
   const params = useParams();
@@ -58,35 +64,48 @@ export const ReserveAppointmentInvited = () => {
               apellido: "",
               checkbox: false,
             }}
-            validationSchema={Yup.object({
-              correo: Yup.string()
-                .email("Correo invalido")
-                .required("Requerido"),
-              celular: Yup.string()
-                .test(
-                  "Check celular",
-                  "*El número de celular debe iniciar con el dígito 9 y debe ser de 9 dígitos .",
-                  function () {
-                    let cel = this.parent["celular"];
-                    if (cel) {
-                      return cel.startsWith("9") && cel.length === 9
-                        ? true
-                        : false;
-                    }
-                  }
-                )
-                .required("Requerido"),
-              servicio: Yup.string().required("Requerido"),
-              duracion: Yup.string().required("Requerido"),
-              precio: Yup.string().required("Requerido"),
-              fechaDisponible: Yup.string().required("Requerido"),
-              horarioDisponible: Yup.string().required("Requerido"),
-              nombre: Yup.string().required("Requerido"),
-              apellido: Yup.string().required("Requerido"),
-              checkbox: Yup.boolean().required(
-                "Debes aceptar los términos y condiciones"
-              ),
-            })}
+            validate={(values) => {
+              const errors = {};
+
+              if (values.nombre.trim().length < 1) {
+                errors.nombre = REQUIRED;
+              }
+              if (values.apellido.trim().length < 1) {
+                errors.apellido = REQUIRED;
+              }
+
+              if (values.celular.length < 1) {
+                errors.celular = REQUIRED;
+              } else if (
+                values.celular.length < 9 ||
+                !values.celular.startsWith("9")
+              ) {
+                errors.celular =
+                  "*El número de celular debe iniciar con el dígito 9 y debe ser de 9 dígitos .";
+              }
+
+              if (values.correo.trim().length < 1) {
+                errors.correo = REQUIRED;
+              } else if (!EMAIL_REGEXP.test(values.correo)) {
+                errors.correo = EMAIL_INVALID;
+              } else if (values.correo.length < E_MINLENGTH) {
+                errors.correo = EMAIL_MINLENGTH;
+              }
+
+              if (values.fechaDisponible === "") {
+                errors.fechaDisponible = REQUIRED;
+              }
+
+              if (values.horarioDisponible === "") {
+                errors.horarioDisponible = REQUIRED;
+              }
+
+              if (values.checkbox === false) {
+                errors.checkbox = "Debes aceptar los términos y condiciones";
+              }
+
+              return errors;
+            }}
             onSubmit={(values, { setSubmitting }) => {
               setSubmitting(false);
               const reserveModel = {
