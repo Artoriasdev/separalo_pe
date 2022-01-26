@@ -47,6 +47,7 @@ export const shoppingCarDelete = (item, token) => {
       console.log(data);
       if (data.response === "true") {
         dispatch(shoppingCarDeleteItems(item));
+        dispatch(checkShoppingItems(token));
       } else if (data.response === "false") {
         dispatch(modalOpen(data.message));
       }
@@ -63,6 +64,7 @@ export const shoppingCarDeleteInvited = (email, code) => {
       const { data } = await handleDeleteShoppingCartItemInvited(email, code);
       if (data.response === "true") {
         dispatch(shoppingCarDeleteItems(code));
+        dispatch(checkShoppingItemsInvited(email));
       } else if (data.response === "false") {
         dispatch(modalOpen(data.message));
       }
