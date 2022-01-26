@@ -81,7 +81,7 @@ export const ReserveAppointmentInvited = () => {
                 !values.celular.startsWith("9")
               ) {
                 errors.celular =
-                  "*El número de celular debe iniciar con el dígito 9 y debe ser de 9 dígitos .";
+                  "*El número de celular debe iniciar con 9 y tener 9 dígitos.";
               }
 
               if (values.correo.trim().length < 1) {
