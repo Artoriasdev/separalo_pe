@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { AppBar, Button, Tab, Toolbar, Tabs, Box } from "@mui/material";
 
 import LogoSVG from "../assets/images/Separalo_Logo_navbar.svg";
+import LogoSVGMOBILE from "../assets/images/icono_separalo_mobile.svg";
 import Shopping from "../assets/images/Carrito_compras.svg";
 import ShoppingItems from "../assets/images/Carrito_compras_1.svg";
 import { NavbarSectionPublic } from "./NavbarSectionPublic";
@@ -39,21 +40,43 @@ const Navbar = () => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar className="header" position="static">
           <Toolbar className="bar" variant="dense">
-            <Button
-              className="font buttonHeader__figure"
-              onClick={handleRedirectHome}
-              style={{
-                textTransform: "none",
-                marginTop: "-5px",
-                borderRadius: "0",
-              }}
-            >
-              <img
-                src={LogoSVG}
-                alt="logo"
-                style={{ width: "190px", height: "55px" }}
-              />
-            </Button>
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <Button
+                className="font buttonHeader__figure"
+                onClick={handleRedirectHome}
+                style={{
+                  textTransform: "none",
+                  marginTop: "-5px",
+                  borderRadius: "0",
+                }}
+              >
+                <img
+                  src={LogoSVG}
+                  alt="logo"
+                  style={{ width: "190px", height: "55px" }}
+                />
+              </Button>
+            </Box>
+
+            <Box sx={{ display: { xs: "flex", md: "none" } }}>
+              <Button
+                className="font buttonHeader"
+                onClick={handleRedirectHome}
+                style={{
+                  textTransform: "none",
+                  marginTop: "-5px",
+                  borderRadius: "0",
+                  width: "50px",
+                }}
+              >
+                <img
+                  src={LogoSVGMOBILE}
+                  alt="logo"
+                  style={{ height: "40px" }}
+                />
+              </Button>
+            </Box>
+
             <Box sx={{ flexGrow: 1 }} />
             {logged && workflow === "C" ? (
               <NavbarSectionClient />
