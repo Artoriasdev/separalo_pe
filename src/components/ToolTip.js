@@ -1,7 +1,9 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Question from "../assets/images/Question.svg";
 import "../sass/styles.scss";
 
@@ -19,7 +21,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-export default function CustomizedTooltips() {
+export const CustomizedTooltips = () => {
   return (
     <div>
       <HtmlTooltip
@@ -30,7 +32,7 @@ export default function CustomizedTooltips() {
               <b style={{ fontWeight: "24px" }}>{" caducado"}</b>, puedes
               generar una nueva reserva, recuerda que tu reserva se mantiene
               activa solo por
-              <b style={{ fontWeight: "24px" }}>{" 120 minutos."}</b>
+              <b style={{ fontWeight: "24px" }}>{" 2 horas."}</b>
             </p>
           </React.Fragment>
         }
@@ -42,4 +44,48 @@ export default function CustomizedTooltips() {
       </HtmlTooltip>
     </div>
   );
-}
+};
+
+export const TriggersTooltips = () => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
+
+  const handleTooltipOpen = () => {
+    setOpen(true);
+  };
+
+  return (
+    <div>
+      <ClickAwayListener onClickAway={handleTooltipClose}>
+        <div>
+          <HtmlTooltip
+            onClose={handleTooltipClose}
+            open={open}
+            disableFocusListener
+            disableHoverListener
+            disableTouchListener
+            placement="bottom-end"
+            title={
+              <React.Fragment>
+                <p style={{ lineHeight: "12px" }}>
+                  Si tu estado está
+                  <b style={{ fontWeight: "24px" }}>{" caducado"}</b>, puedes
+                  generar una nueva reserva, recuerda que tu reserva se mantiene
+                  activa solo por
+                  <b style={{ fontWeight: "24px" }}>{" 2 horas."}</b>
+                </p>
+              </React.Fragment>
+            }
+          >
+            <IconButton onClick={handleTooltipOpen} style={{ margin: "0" }}>
+              <img src={Question} alt="logo" style={{ width: "24px" }} />
+            </IconButton>
+          </HtmlTooltip>
+        </div>
+      </ClickAwayListener>
+    </div>
+  );
+};

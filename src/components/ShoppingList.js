@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -22,7 +22,6 @@ import {
 } from "@mui/material";
 
 import {
-  checkShoppingItems,
   cuponClear,
   shoppingCarDelete,
   shoppingCarDeleteInvited,
@@ -31,7 +30,7 @@ import {
 import { payment, paymentInvited } from "../actions/payment";
 import { finishChecking, startChecking } from "../actions/checking";
 import Delete from "../assets/images/Delete.svg";
-import CustomizedTooltips from "../components/ToolTip";
+import { CustomizedTooltips, TriggersTooltips } from "../components/ToolTip";
 
 const theme = createTheme({
   breakpoints: {
@@ -275,24 +274,24 @@ export const ShoppingList = () => {
             <div className="shop-card-container">
               {shoppingCarItems &&
                 shoppingCarItems.map(
-                  (
-                    {
-                      titleService,
-                      tradeNameBusiness,
-                      state,
-                      dateReservation,
-                      price,
-                      nameCategory,
-                      timeReservation,
-                    },
-                    index
-                  ) => {
+                  ({
+                    titleService,
+                    tradeNameBusiness,
+                    state,
+                    dateReservation,
+                    price,
+                    nameCategory,
+                    timeReservation,
+                    preCodeReservation,
+                  }) => {
                     return (
-                      <div className="shop-card" key={index}>
+                      <div className="shop-card" key={preCodeReservation}>
                         <div className="shop-card-title">
                           <p>{tradeNameBusiness} </p>
                           <IconButton
-                            onClick={() => handleDeleteModal(index)}
+                            onClick={() =>
+                              handleDeleteModal(preCodeReservation)
+                            }
                             style={{
                               fontSize: "1.5rem",
                               lineHeight: "normal",
@@ -329,7 +328,21 @@ export const ShoppingList = () => {
                           </div>
                           <div className="shop-card-text">
                             <p className="shop-card-bold">Estado*:</p>
-                            <p>{state} </p>
+                            <p>
+                              {state === "Caducado" ? (
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  {state} <TriggersTooltips />
+                                </div>
+                              ) : (
+                                state
+                              )}
+                            </p>
                           </div>
                         </div>
                       </div>
