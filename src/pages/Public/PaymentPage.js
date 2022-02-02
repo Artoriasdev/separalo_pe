@@ -16,13 +16,6 @@ import { paymentDone } from "../../actions/payment";
 export const PaymentPage = () => {
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    postscribe(
-      "#script",
-      '<script language="javascript" src="https://static.micuentaweb.pe/static/js/krypton-client/V4.0/stable/kr-payment-form.min.js" kr-public-key="71537712:testpublickey_nfUiwwMyZVJPxmOAHROfrZe2smhKfOY3ltdHjSqSqvB7R"></script>'
-    );
-  }, []);
-
   const history = useHistory();
   const dispatch = useDispatch();
   const { formToken: token, orderId } = useSelector(
@@ -30,6 +23,12 @@ export const PaymentPage = () => {
   );
   const { token: tk } = useSelector((state) => state.auth.data);
   const { logged } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (token === undefined || token === null) {
+      history.push("/");
+    }
+  }, [token]);
 
   useEffect(() => {
     const endpoint =
@@ -63,7 +62,7 @@ export const PaymentPage = () => {
           return false;
         });
         KR.onError((event) => {
-          var code = event.detailedErrorCode;
+          var code = event.errorCode;
           var message = event.errorMessage;
           var myMessage = code + ": " + message;
 
