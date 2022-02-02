@@ -21,6 +21,8 @@ import { checkEmailReservation } from "../actions/reservationEmailInvited";
 export const SeparalopeRouter = () => {
   const dispatch = useDispatch();
 
+  const data = localStorage.getItem("data");
+
   const { workflow } = useSelector((state) => state.auth);
   const { check } = useSelector((state) => state.checking);
   const { logged } = useSelector((state) => state.auth);
@@ -29,9 +31,10 @@ export const SeparalopeRouter = () => {
   useEffect(() => {
     dispatch(checkAuth());
     dispatch(loadCategorys());
-    dispatch(checkEmailReservation());
     if (logged) {
       dispatch(checkShoppingItems(token));
+    } else if (data === null) {
+      dispatch(checkEmailReservation());
     }
   }, [dispatch, logged, token]);
 
