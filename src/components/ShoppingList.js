@@ -138,12 +138,27 @@ export const ShoppingList = () => {
               id="transition-modal-title"
               variant="h8"
               component="p"
-              style={{ fontWeight: "unset", marginBottom: "10px" }}
+              style={{
+                fontWeight: "500",
+                marginBottom: "20px",
+                fontSize: "18",
+                lineHeight: "21px",
+              }}
             >
-              {"¿Desea borrar los servicios seleccionados?"}
+              {"¿Estás seguro que deseas eliminar esta reserva?"}
             </Typography>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Button
+                size="large"
+                color="primary"
+                variant="contained"
+                className="btn-primary_reserva"
+                onClick={handleClose}
+                style={{ width: "45%" }}
+              >
+                Cancelar
+              </Button>
               <Button
                 size="large"
                 color="primary"
@@ -153,17 +168,6 @@ export const ShoppingList = () => {
                 style={{ width: "45%" }}
               >
                 Aceptar
-              </Button>
-
-              <Button
-                size="large"
-                color="primary"
-                variant="contained"
-                className="btn-primary"
-                onClick={handleClose}
-                style={{ width: "45%" }}
-              >
-                Rechazar
               </Button>
             </div>
           </Box>
@@ -191,7 +195,7 @@ export const ShoppingList = () => {
                     Dsctos.
                   </TableCell>
                   <TableCell className="font-tittle" align="left">
-                    Estado
+                    Estado*
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -354,7 +358,7 @@ export const ShoppingList = () => {
         </ThemeProvider>
         <div className="inputs-shopping-container">
           <div className="discount-container">
-            <p style={{ marginRight: "10px" }}>Agregar cupón de dcto.</p>
+            <p style={{ marginRight: "10px" }}>Agregar cupón de dscto.</p>
             <div className="cupon-field">
               <TextField
                 value={values}
@@ -429,9 +433,10 @@ export const ShoppingList = () => {
         </div>
         <div className="disclaimer-container">
           <p>
-            *Si tu estado está caducado, puedes generar una nueva reserva,
-            recuerda que tu reserva se mantiene activa solo por{" "}
-            <span style={{ fontWeight: "bold" }}>120 minutos</span>.
+            *La reserva tiene una vigencia de{" "}
+            <span style={{ fontWeight: "bold" }}>120 minutos (2hs) </span>.
+            asegúrate de realizar el pago antes que venza este plazo, de lo
+            contrario tendrás que realizar la reserva nuevamente{" "}
           </p>
         </div>
       </div>
