@@ -63,8 +63,44 @@ export const PaymentPage = () => {
         });
         KR.onError((event) => {
           var code = event.errorCode;
-          var message = event.errorMessage;
-          var myMessage = code + ": " + message;
+          var myMessage = "";
+
+          switch (code) {
+            case "CLIENT_300":
+              myMessage =
+                "Más de uno de los campos registrados son incorrectos. Regístralo nuevamente";
+              break;
+
+            case "CLIENT_301":
+              myMessage =
+                "El número de tarjeta ingresado es incorrecto. Regístralo nuevamente";
+              break;
+
+            case "CLIENT_302":
+              myMessage =
+                "La fecha de vencimiento ingresada es incorrecta. Regístralo nuevamente";
+              break;
+
+            case "CLIENT_303":
+              myMessage =
+                "El código de seguridad registrado es incorrecto. Regístralo nuevamente";
+              break;
+
+            case "CLIENT_304":
+              myMessage =
+                "No has registrado todos los campos requeridos. Regístralo nuevamente";
+              break;
+
+            case "CLIENT_998":
+              myMessage =
+                "Estamos teniendo problemas con la pasarela de pagos. Intenta nuevamente en unos minutos";
+              break;
+
+            default:
+              myMessage =
+                "Ha ocurrido un error con la pasarela de pagos. Intenta nuevamente en unos minutos";
+              break;
+          }
 
           setError(true);
 

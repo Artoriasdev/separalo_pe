@@ -2441,10 +2441,19 @@ button {
 }
 
 .customerror {
-  color: white;
-  background-color: red;
-  height: 46px;
-  width: 266px;
-  justify-content: center;
+  margin-top: 10px;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  height: 46px;
+  width: 100%;
+  color: red;
+  background: #ffffff;
+  border: 0.881423px solid #ee3224;
+  box-sizing: border-box;
+  border-radius: 4.40711px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 12px;
+  padding: 15px 40px;
 }
