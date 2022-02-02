@@ -161,6 +161,7 @@ export const NavbarSectionPublic = () => {
             backgroundColor: anchorEl ? "#5829dd" : "transparent",
             color: anchorEl ? "white" : "black",
             textTransform: "capitalize",
+            marginTop: "-3px",
           }}
         >
           Iniciar sesión
@@ -189,6 +190,7 @@ export const NavbarSectionPublic = () => {
             backgroundColor: anchorEl2 ? "#5829dd" : "transparent",
             color: anchorEl2 ? "white" : "black",
             textTransform: "capitalize",
+            marginTop: "-3px",
           }}
         >
           Regístrate

@@ -21,15 +21,14 @@ function StyledMenu(props) {
       getcontentanchorel={null}
       anchorOrigin={{
         vertical: "bottom",
-        horizontal: "right",
+        horizontal: "center",
       }}
       transformOrigin={{
         vertical: "top",
-        horizontal: "right",
+        horizontal: "center",
       }}
       style={{
         maxWidth: window.innerWidth < 960 ? "210px" : "250px",
-        marginLeft: window.innerWidth < 960 ? "12px" : "0",
       }}
       {...props}
     />
@@ -42,13 +41,13 @@ function StyledMenuSettings(props) {
       getcontentanchorel={null}
       anchorOrigin={{
         vertical: "bottom",
-        horizontal: "right",
+        horizontal: "center",
       }}
       transformOrigin={{
         vertical: "top",
-        horizontal: "right",
+        horizontal: "center",
       }}
-      style={{ marginLeft: "12px", maxWidth: "210px" }}
+      style={{ maxWidth: "210px" }}
       {...props}
     />
   );
@@ -221,6 +220,7 @@ export const NavbarSectionClient = () => {
             color: anchorEl ? "white" : "black",
             textTransform: "capitalize",
             width: "200px",
+            marginTop: "-4px",
           }}
         >
           {data && data.firstName}
@@ -251,6 +251,7 @@ export const NavbarSectionClient = () => {
             color: anchorEl2 ? "white" : "black",
             textTransform: "capitalize",
             width: "0",
+            marginTop: "-4px",
           }}
         >
           <Settings />
