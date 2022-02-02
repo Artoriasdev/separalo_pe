@@ -16,6 +16,10 @@ import { Event } from "@mui/icons-material";
 
 import { MyModal } from "../../components/Modal";
 import { clientAppointment } from "../../actions/clientAppointment";
+import {
+  AppointmentTooltip,
+  AppointmentTriggersTooltips,
+} from "../../components/ToolTip";
 // import FullPageLoader from "./FullPageLoader";
 
 const theme = createTheme({
@@ -55,9 +59,9 @@ export const CustomerAppointment = () => {
             <Table sx={{ minWidth: 650 }}>
               <TableHead className="table-head">
                 <TableRow>
+                  <TableCell className="font-tittle">Negocio</TableCell>
                   <TableCell className="font-tittle">Servicio</TableCell>
                   <TableCell className="font-tittle">Categoria</TableCell>
-                  <TableCell className="font-tittle">Negocio</TableCell>
                   <TableCell className="font-tittle">Precio</TableCell>
                   <TableCell className="font-tittle">Fecha</TableCell>
                   <TableCell className="font-tittle">Hora</TableCell>
@@ -73,6 +77,7 @@ export const CustomerAppointment = () => {
                       titleService,
                       nameCategory,
                       tradeName,
+                      addressBusiness,
                       price,
                       dateReservation,
                       timeReservation,
@@ -81,9 +86,23 @@ export const CustomerAppointment = () => {
                       codeReservation,
                     }) => (
                       <TableRow key={codeReservation}>
+                        <TableCell className="font">
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              alignItems: "center",
+                            }}
+                          >
+                            <AppointmentTooltip
+                              business={tradeName}
+                              address={addressBusiness}
+                            />
+                            {tradeName}
+                          </div>
+                        </TableCell>
                         <TableCell className="font">{titleService}</TableCell>
                         <TableCell className="font">{nameCategory}</TableCell>
-                        <TableCell className="font">{tradeName}</TableCell>
                         <TableCell className="font">{price}</TableCell>
                         <TableCell className="font">
                           {dateReservation}
@@ -112,6 +131,7 @@ export const CustomerAppointment = () => {
                     titleService,
                     nameCategory,
                     tradeName,
+                    addressBusiness,
                     price,
                     dateReservation,
                     timeReservation,
@@ -122,7 +142,20 @@ export const CustomerAppointment = () => {
                     <div className="shop-card" key={codeReservation}>
                       <div className="shop-card-title">
                         <p>Negocio</p>
-                        <p>{tradeName} </p>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-end",
+                            justifyContent: "center",
+                          }}
+                        >
+                          {tradeName}
+                          <AppointmentTriggersTooltips
+                            business={tradeName}
+                            address={addressBusiness}
+                          />
+                        </div>
                       </div>
                       <div className="shop-card-content">
                         <div className="shop-card-text">

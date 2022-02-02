@@ -16,6 +16,10 @@ import { Event } from "@mui/icons-material";
 import { MyModal } from "../../components/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { clientAppointmentHistory } from "../../actions/clientAppointmentHistory";
+import {
+  AppointmentTooltip,
+  AppointmentTriggersTooltips,
+} from "../../components/ToolTip";
 
 // import FullPageLoader from "./FullPageLoader";
 
@@ -56,9 +60,9 @@ export const CustomerHistory = () => {
             <Table sx={{ minWidth: 650 }}>
               <TableHead className="table-head">
                 <TableRow>
+                  <TableCell className="font-tittle">Negocio</TableCell>
                   <TableCell className="font-tittle">Servicio</TableCell>
                   <TableCell className="font-tittle">Categoria</TableCell>
-                  <TableCell className="font-tittle">Negocio</TableCell>
                   <TableCell className="font-tittle">Precio</TableCell>
                   <TableCell className="font-tittle">Fecha</TableCell>
                   <TableCell className="font-tittle">Hora</TableCell>
@@ -74,6 +78,7 @@ export const CustomerHistory = () => {
                       titleService,
                       nameCategory,
                       tradeName,
+                      addressBusiness,
                       price,
                       dateReservation,
                       timeReservation,
@@ -82,9 +87,23 @@ export const CustomerHistory = () => {
                       codeReservation,
                     }) => (
                       <TableRow key={codeReservation}>
+                        <TableCell className="font">
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              alignItems: "center",
+                            }}
+                          >
+                            <AppointmentTooltip
+                              business={tradeName}
+                              address={addressBusiness}
+                            />
+                            {tradeName}
+                          </div>
+                        </TableCell>
                         <TableCell className="font">{titleService}</TableCell>
                         <TableCell className="font">{nameCategory}</TableCell>
-                        <TableCell className="font">{tradeName}</TableCell>
                         <TableCell className="font">{price}</TableCell>
                         <TableCell className="font">
                           {dateReservation}
@@ -113,6 +132,7 @@ export const CustomerHistory = () => {
                     titleService,
                     nameCategory,
                     tradeName,
+                    addressBusiness,
                     price,
                     dateReservation,
                     timeReservation,
@@ -122,8 +142,21 @@ export const CustomerHistory = () => {
                   }) => (
                     <div className="shop-card" key={codeReservation}>
                       <div className="shop-card-title">
-                        <p style={{ width: "50%" }}>Negocio</p>
-                        <p>{tradeName} </p>
+                        <p style={{ width: "35%" }}>Negocio</p>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-end",
+                            justifyContent: "center",
+                          }}
+                        >
+                          {tradeName}
+                          <AppointmentTriggersTooltips
+                            business={tradeName}
+                            address={addressBusiness}
+                          />
+                        </div>
                       </div>
                       <div className="shop-card-content">
                         <div className="shop-card-text">
