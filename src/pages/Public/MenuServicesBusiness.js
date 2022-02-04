@@ -70,7 +70,11 @@ export const MenuServicesBusiness = () => {
         </div>
         <div className="flip-container">
           {windowWith > 768 ? (
-            <FlipServices typeCategorys={categorysByServices} />
+            <FlipServices
+              typeCategorys={categorysByServices}
+              businessId={params.id}
+              categoryId={params.category}
+            />
           ) : (
             <FlipServicesMobile typeCategorys={categorysByServices} />
           )}

@@ -48,15 +48,20 @@ const CustomRightArrow = ({ onClick }) => {
   );
 };
 
-export const FlipServices = ({ typeCategorys, ...props }) => {
+export const FlipServices = ({
+  typeCategorys,
+  businessId,
+  categoryId,
+  ...props
+}) => {
   const history = useHistory();
   const { logged } = useSelector((state) => state.auth);
 
   const handleRedirect = (title, id) => {
     if (!logged) {
-      history.push(`/confirm/${title}/${id}`);
+      history.push(`/confirm/${title}/${id}/${businessId}/${categoryId}`);
     } else {
-      history.push(`/customer/reserve/${id}`);
+      history.push(`/customer/reserve/${id}/${businessId}/${categoryId}`);
     }
   };
   return (

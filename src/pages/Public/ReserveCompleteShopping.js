@@ -113,7 +113,7 @@ export const ReserveCompleteShopping = () => {
           </div>
           <span className="mensaje">
             Notificaremos al negocio el pago de tu reserva, recibirás un
-            recordatorio por correo electrónico 24 horas antes de tu cita.
+            recordatorio por correo electrónico 1 hora antes de tu cita.
           </span>
           <Button
             size="large"

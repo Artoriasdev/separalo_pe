@@ -6,7 +6,11 @@ export const ConfirmLoginRedirectRoute = () => {
   return (
     <div>
       <Switch>
-        <Route exact path="/confirm/:title/:id" component={ConfirmLogin} />
+        <Route
+          exact
+          path="/confirm/:title/:id/:businessId/:categoryId"
+          component={ConfirmLogin}
+        />
 
         <Redirect to="/" />
       </Switch>

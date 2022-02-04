@@ -28,7 +28,9 @@ export const ConfirmLogin = () => {
           Iniciar sesión
         </Button>
         <div style={{ marginTop: "10px" }}>
-          <Link to={`/reserve/invited/${params.id}`}>
+          <Link
+            to={`/reserve/invited/${params.id}/${params.businessId}/${params.categoryId}`}
+          >
             Continuar como invitado
           </Link>
         </div>

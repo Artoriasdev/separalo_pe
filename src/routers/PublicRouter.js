@@ -55,7 +55,7 @@ export const PublicRouter = () => {
           />
           <Route
             exact
-            path="/reserve/invited/:id"
+            path="/reserve/invited/:id/:businessId/:categoryId"
             component={ReserveAppointmentInvited}
           />
           <Route exact path="/reserve-complete" component={ReserveComplete} />
@@ -73,7 +73,7 @@ export const PublicRouter = () => {
           />
           <ConfirmLoginRedirectRouter
             exact
-            path="/confirm/:title/:id"
+            path="/confirm/:title/:id/:businessId/:categoryId"
             workflow={workflow}
             component={ConfirmLoginRedirectRoute}
           />
@@ -102,7 +102,11 @@ export const PublicRouter = () => {
           <Route exact path="/register/business" component={RegisterBusiness} />
 
           <Route exact path="/password_change" component={Password} />
-          <Route exact path="/reserve-detail" component={ReserveDetail} />
+          <Route
+            exact
+            path="/reserve-detail/:businessId/:categoryId"
+            component={ReserveDetail}
+          />
           <Route exact path="/shopping" component={ShoppingPage} />
           <Route
             exact

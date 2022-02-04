@@ -46,7 +46,9 @@ export const ReserveAppointmentInvited = () => {
 
   return (
     <div>
-      <MyModal link="/reserve-detail" />
+      <MyModal
+        link={`/reserve-detail/${params.businessId}/${params.categoryId}`}
+      />
 
       <div className="page-container">
         <div className="login">

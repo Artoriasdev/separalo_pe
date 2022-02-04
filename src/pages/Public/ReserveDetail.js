@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import { Button } from "@mui/material";
 
 import { checkShoppingItems } from "../../actions/shoppingCar";
 
 export const ReserveDetail = () => {
+  const params = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
   const { logged } = useSelector((state) => state.auth);
@@ -14,7 +15,9 @@ export const ReserveDetail = () => {
   const { reservationUser } = useSelector((state) => state.reservation);
 
   const handleReserveMore = () => {
-    history.push("/");
+    history.push(
+      `/services-menu-category/${params.businessId}/${params.categoryId}`
+    );
   };
 
   const handleReservePayment = () => {

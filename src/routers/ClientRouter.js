@@ -21,7 +21,7 @@ export const ClientRoute = () => {
 
         <Route
           exact
-          path="/customer/reserve/:id"
+          path="/customer/reserve/:id/:businessId/:categoryId"
           component={ReserveAppointment}
         />
 

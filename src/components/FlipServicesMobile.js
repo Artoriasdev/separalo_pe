@@ -6,15 +6,19 @@ import { BackSide, Flippy, FrontSide } from "react-flippy";
 import { Button } from "@mui/material";
 import { RatingService } from "../helpers/RatingService";
 
-export const FlipServicesMobile = ({ typeCategorys, ...props }) => {
+export const FlipServicesMobile = ({
+  typeCategorys,
+  businessId,
+  categoryId,
+}) => {
   const history = useHistory();
   const { logged } = useSelector((state) => state.auth);
 
   const handleRedirect = (title, id) => {
     if (!logged) {
-      history.push(`/confirm/${title}/${id}`);
+      history.push(`/confirm/${title}/${id}/${businessId}/${categoryId}`);
     } else {
-      history.push(`/customer/reserve/${id}`);
+      history.push(`/customer/reserve/${id}/${businessId}/${categoryId}`);
     }
   };
   return (
