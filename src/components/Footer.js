@@ -170,21 +170,8 @@ export const Footer = () => {
             />
           </IconButton>
           <IconButton
-            aria-label="twitter"
-            color="inherit"
-            style={{ marginRight: "10px" }}
-            href="https://www.instagram.com/separalope/"
-            target="_blank"
-          >
-            <img
-              src={Twitter}
-              alt="Twitter"
-              style={{ width: "20px", height: "20px" }}
-            />
-          </IconButton>
-          <IconButton
             size="small"
-            aria-label="twitter"
+            aria-label="LinkedIn"
             color="inherit"
             href="https://www.linkedin.com/company/separalo-pe/?viewAsMember=true"
             target="_blank"
@@ -280,20 +267,6 @@ export const Footer = () => {
                     <img
                       src={Instagram}
                       alt="Instagram"
-                      style={{ width: "20px", height: "20px" }}
-                    />
-                  </IconButton>
-                  <IconButton
-                    size="small"
-                    aria-label="twitter"
-                    color="inherit"
-                    style={{ marginRight: "15px" }}
-                    href="https://twitter.com/SeparaloPe"
-                    target="_blank"
-                  >
-                    <img
-                      src={Twitter}
-                      alt="Twitter"
                       style={{ width: "20px", height: "20px" }}
                     />
                   </IconButton>
