@@ -35,12 +35,12 @@ export const ReserveAppointmentInvited = () => {
   const { serviceId, serviceDate } = useSelector((state) => state.serviceById);
   const { hoursById } = useSelector((state) => state.hoursById);
 
-  if (termsModal) {
-    dispatch(termsLoad(2));
-  }
+  // if (termsModal) {
+  // }
 
   useEffect(() => {
     if (logged) history.push("/");
+    dispatch(termsLoad(2));
     dispatch(serviceById(params.id));
   }, [logged, history, dispatch, params.id]);
 

@@ -232,11 +232,8 @@ export const ReserveAppointment = () => {
   const [termsModal, setTermsModal] = useState(false);
   const { token } = useSelector((state) => state.auth.data);
 
-  if (termsModal) {
-    dispatch(termsLoad(2));
-  }
-
   useEffect(() => {
+    dispatch(termsLoad(2));
     dispatch(clientData(token));
     dispatch(serviceById(params.id));
   }, [dispatch, params.id, token]);
