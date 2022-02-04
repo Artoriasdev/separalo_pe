@@ -419,6 +419,13 @@ export const ShoppingList = () => {
                 variant="contained"
                 className="btn-primary"
                 onClick={handleReservePayment}
+                style={{
+                  display:
+                    shoppingCarItems[0] &&
+                    shoppingCarItems[0].sumPrice === "S/ 0.00"
+                      ? "none"
+                      : "",
+                }}
                 disabled={
                   shoppingCarItems[0] &&
                   shoppingCarItems[0].sumPrice === "S/ 0.00"
