@@ -98,7 +98,8 @@ export const PaymentPage = () => {
 
             default:
               myMessage =
-                "Ha ocurrido un error con la pasarela de pagos. Intenta nuevamente en unos minutos";
+                event.detailedErrorMessage ||
+                "Ha ocurrido un error. Intenta nuevamente en unos minutos";
               break;
           }
 
