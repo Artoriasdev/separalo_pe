@@ -13,6 +13,7 @@ import {
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 /*eslint no-extend-native: ["off", { "exceptions": ["Object"] }]*/
 Date.prototype.addDays = function (days) {
@@ -37,6 +38,7 @@ Date.prototype.restYear = function (year) {
 };
 
 const VerticalBar = (props) => {
+  const { token } = useSelector((state) => state.auth.data);
   // const semanas = ["Semana 1", "Semana 2", "Semana 3", "Semana 4"];
   const dias = [
     "Lunes",
@@ -99,7 +101,7 @@ const VerticalBar = (props) => {
     var headers = {
       "Content-Type": "application/json",
       Accept: "application/json",
-      Authorization: `Bearer ${sessionStorage.getItem("tk")}`,
+      Authorization: `Bearer ${token}`,
     };
 
     let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/report/sales/${date}/${props.fecha}`;
@@ -188,7 +190,7 @@ const VerticalBar = (props) => {
     var headers = {
       "Content-Type": "application/json",
       Accept: "application/json",
-      Authorization: `Bearer ${sessionStorage.getItem("tk")}`,
+      Authorization: `Bearer ${token}`,
     };
 
     let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/report/salesConsolidate/${date}/${props.fecha}`;
