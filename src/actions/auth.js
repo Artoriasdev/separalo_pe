@@ -87,6 +87,6 @@ export const logout = () => {
         dispatch(finishChecking());
         history.push("/error");
       }
-    }, 500);
+    }, 1000);
   };
 };
