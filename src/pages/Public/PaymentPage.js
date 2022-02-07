@@ -4,8 +4,6 @@ import { useHistory } from "react-router-dom";
 
 import KRGlue from "@lyracom/embedded-form-glue";
 
-import postscribe from "postscribe";
-
 import Shopping from "../../assets/images/ShoppingPage.svg";
 import {
   shoppingCarCompleted,
@@ -28,7 +26,7 @@ export const PaymentPage = () => {
     if (token === undefined || token === null) {
       history.push("/");
     }
-  }, [token]);
+  }, [token, history]);
 
   useEffect(() => {
     const endpoint =
@@ -113,7 +111,7 @@ export const PaymentPage = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [token, history]);
+  }, [token, history, dispatch, logged, orderId, tk]);
 
   return (
     <section>

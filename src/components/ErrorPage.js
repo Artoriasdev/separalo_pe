@@ -1,10 +1,7 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import Error from "../assets/images/error-icon.svg";
 
 export const ErrorPage = () => {
-  const { error } = useSelector((state) => state.modal);
-
   return (
     <div
       style={{

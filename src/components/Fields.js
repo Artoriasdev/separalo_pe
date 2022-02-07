@@ -127,7 +127,7 @@ export const MyCheckbox = ({
         label={children}
       />
       {!values.checkbox && touched.checkbox ? (
-        <div className="error">Requerido</div>
+        <div className="error">*Este campo es obligatorio</div>
       ) : null}
     </div>
   );

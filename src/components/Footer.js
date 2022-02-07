@@ -23,7 +23,7 @@ import { makeStyles } from "@mui/styles";
 
 import Facebook from "../assets/images/facebook.svg";
 import Instagram from "../assets/images/instagram.svg";
-import Twitter from "../assets/images/Twitter.svg";
+// import Twitter from "../assets/images/Twitter.svg";
 import LinkedIn from "../assets/images/LikedIn.svg";
 import { termsLoad } from "../actions/termsLoad";
 

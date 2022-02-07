@@ -62,7 +62,7 @@ export const BusinessProfile = () => {
       setOpened(true);
       setMessage(response);
     }
-  }, [uploaded]);
+  }, [uploaded, response]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

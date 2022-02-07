@@ -36,7 +36,7 @@ export const SeparalopeRouter = () => {
     } else if (data === null) {
       dispatch(checkEmailReservation());
     }
-  }, [dispatch, logged, token]);
+  }, [dispatch, logged, token, data]);
 
   return (
     <Router history={history}>

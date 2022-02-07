@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import { AppBar, Button, Tab, Toolbar, Tabs, Box } from "@mui/material";
+import { AppBar, Button, Toolbar, Box } from "@mui/material";
 
 import LogoSVG from "../assets/images/Separalo_Logo_navbar.svg";
 
