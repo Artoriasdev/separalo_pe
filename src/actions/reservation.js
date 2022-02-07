@@ -1,5 +1,6 @@
 import {
   handleRegisterReservation,
+  handleRegisterReservationBusiness,
   handleRegisterReservationInvited,
 } from "../helpers/handlers";
 import { types } from "../types/types";
@@ -17,6 +18,28 @@ export const reservation = (reserveModel) => {
         dispatch(emailReservation(reserveModel.email));
         dispatch(reserve(data));
         dispatch(checkShoppingItemsInvited(reserveModel.email));
+        dispatch(
+          modalOpen("¡Su reserva ha sido registrada de manera exitosa!")
+        );
+        dispatch(modalRedirect());
+      } else if (data.response === "false") {
+        dispatch(modalOpen(data.message));
+      }
+    } catch (error) {
+      console.log(error);
+      history.push("/error");
+    }
+  };
+};
+export const reservationBusiness = (reserveModel, token) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await handleRegisterReservationBusiness(
+        reserveModel,
+        token
+      );
+      if (data.response === "true") {
+        dispatch(reserve(data));
         dispatch(
           modalOpen("¡Su reserva ha sido registrada de manera exitosa!")
         );

@@ -6,6 +6,7 @@ import { BusinessCategory } from "../pages/B2B/BusinessCategory";
 import { BusinessProfile } from "../pages/B2B/BusinessProfile";
 import { BusinessReports } from "../pages/B2B/BusinessReports";
 import { BusinessReserveAppointment } from "../pages/B2B/BusinessReserveAppointment";
+import { BusinessReserveDetail } from "../pages/B2B/BusinessReserveDetail";
 import { BusinessServices } from "../pages/B2B/BusinessServices";
 import { BusinessServicesCategory } from "../pages/B2B/BusinessServicesCategory";
 import { ServiceAppointment } from "../pages/B2B/ServiceAppointments";
@@ -50,8 +51,13 @@ export const BusinessRoute = () => {
           <Route exact path="/business/complains" component={Complains} />
           <Route
             exact
-            path="/business/reservation/:id"
+            path="/business/reservation/:id/:value/:category"
             component={BusinessReserveAppointment}
+          />
+          <Route
+            exact
+            path="/business/reserve-detail/:id/:value/:category"
+            component={BusinessReserveDetail}
           />
 
           <Redirect to="/business/category" />

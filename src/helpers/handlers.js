@@ -303,25 +303,6 @@ export const handleRegisterReservationInvited = (reserveModel) => {
       headers: headers,
     })
     .then((response) => {
-      // localStorage.setItem("data", JSON.stringify(data));
-      // this.setState({ isLoading: true });
-
-      // if (data.response === "true") {
-      //   setTimeout(() => {
-      //     this.setState({
-      //       isLoading: false,
-      //       modal: true,
-      //       message: "¡Registro grabado satisfactoriamente!",
-      //       response: true,
-      //     });
-      //   }, 500);
-      // } else if (data.response === "false") {
-      //   this.setState({
-      //     modal: true,
-      //     message: data.message,
-      //     isLoading: false,
-      //   });
-      // }
       return response;
     })
     .catch(({ response }) => {
@@ -330,80 +311,28 @@ export const handleRegisterReservationInvited = (reserveModel) => {
 
   return rspApi;
 };
+export const handleRegisterReservationBusiness = (reserveModel, token) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${token}`,
+  };
 
-// handleLogin = async (LoginModel) => {
-//   var headers = {
-//     "Content-Type": "application/json",
-//     Accept: "application/json",
-//     Authorization: "",
-//   };
-//   let linkLoginApi = `${process.env.REACT_APP_PATH_SERVICE}/user/authenticate`;
+  let linkRegisterApi = `${process.env.REACT_APP_PATH_SERVICE}/reservation/registerReservationBusiness`;
 
-//   const rspApi = axios
-//     .post(linkLoginApi, LoginModel, {
-//       headers: headers,
-//     })
-//     .then((response) => {
-//       this.setState({
-//         isLoading: true,
-//       });
-//       if (response.data.response === "true") {
-//         sessionStorage.setItem("tk", response.data.data.token);
-//         sessionStorage.setItem("logged", response.data.response);
-//         sessionStorage.setItem(
-//           "info",
-//           JSON.stringify(response.data.data.listMenu)
-//         );
-//         sessionStorage.setItem("workflow", LoginModel.workflow);
+  const rspApi = axios
+    .post(linkRegisterApi, reserveModel, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
 
-//         if (LoginModel.workflow === "B") {
-//           setTimeout(() => {
-//             this.setState({
-//               isLoading: false,
-//             });
-//             this.props.history.push("/business/category");
-//             this.props.history.go();
-//           }, 500);
-//         }
-
-//         if (LoginModel.workflow === "C") {
-//           this.handleGetDataCustomer();
-//           if (localStorage.getItem("reserve") === "true") {
-//             this.props.history.push(`/reserve/${localStorage.getItem("id")}`);
-//             localStorage.removeItem("reserve");
-//             localStorage.removeItem("id");
-//             this.props.history.go();
-//           } else {
-//             setTimeout(() => {
-//               this.setState({
-//                 isLoading: false,
-//               });
-//               this.props.history.go();
-//               this.props.history.push("/");
-//             }, 500);
-//           }
-//         }
-//       }
-//       console.log(response);
-//       return response;
-//     })
-//     .catch(({ response }) => {
-//       console.log(response);
-//       if (response.data.response === "false") {
-//         this.setState({
-//           modal: true,
-//           message: response.data.message,
-//         });
-//       } else {
-//         this.setState({
-//           modal: true,
-//           message:
-//             "Ha ocurrido un error, porfavor refresque la página o intentelo más tarde",
-//         });
-//       }
-//     });
-//   return rspApi;
-// };
+  return rspApi;
+};
 
 export const handleGetList = (id) => {
   var headers = {
