@@ -46,7 +46,9 @@ export const MyTextInput = ({ label, ...props }) => {
         {...props}
       />
       {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
+        <div className="error" style={{ marginBottom: "0.5rem" }}>
+          {meta.error}
+        </div>
       ) : null}
     </div>
   );

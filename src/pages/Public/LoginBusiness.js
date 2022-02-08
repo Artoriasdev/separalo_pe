@@ -14,6 +14,7 @@ import {
   MyTextInput,
 } from "../../components/Fields";
 import { login } from "../../actions/auth";
+import { EMAIL_INVALID, REQUIRED } from "../../utils/constants";
 
 export const LoginBusiness = () => {
   const history = useHistory();
@@ -44,8 +45,8 @@ export const LoginBusiness = () => {
               validationSchema={Yup.object({
                 username: Yup.string()
                   .email("Correo invalido")
-                  .required("Requerido"),
-                password: Yup.string().required("Requerido"),
+                  .required(EMAIL_INVALID),
+                password: Yup.string().required(REQUIRED),
               })}
               onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(false);
