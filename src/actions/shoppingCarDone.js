@@ -4,6 +4,7 @@ import {
 } from "../helpers/handlers";
 import { types } from "../types/types";
 import history from "../helpers/history";
+import { paymentDone } from "./payment";
 
 export const shoppingCarCompleted = (cod, token) => {
   return async (dispatch) => {
@@ -11,6 +12,8 @@ export const shoppingCarCompleted = (cod, token) => {
       const { data } = await handleGetReservationByOrderId(cod, token);
       if (data.response === "true") {
         dispatch(shoppingCarDone(data.data));
+        history.push("/reservations-completed");
+        dispatch(paymentDone());
       }
     } catch (error) {
       console.log(error);
@@ -25,6 +28,8 @@ export const shoppingCarInvitedCompleted = (cod) => {
       const { data } = await handleGetReservationByOrderIdInvited(cod);
       if (data.response === "true") {
         dispatch(shoppingCarDone(data.data));
+        history.push("/reservations-completed");
+        dispatch(paymentDone());
       }
     } catch (error) {
       console.log(error);

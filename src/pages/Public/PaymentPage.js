@@ -50,10 +50,9 @@ export const PaymentPage = () => {
             } else {
               dispatch(shoppingCarInvitedCompleted(orderId));
             }
-            setTimeout(() => {
-              history.push("/reservations-completed");
-              dispatch(paymentDone());
-            }, 1000);
+            // setTimeout(() => {
+
+            // }, 1000);
 
             // history.go();
           }
