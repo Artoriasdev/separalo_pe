@@ -1,38 +1,20 @@
-import { Button, Paper } from "@mui/material";
+import { Paper } from "@mui/material";
 import React from "react";
 import Carousel from "react-material-ui-carousel";
 
 function Project(props) {
   return (
-    <Paper
-      className="Project"
-      style={{ backgroundColor: props.item.color }}
-      elevation={10}
-    >
+    <Paper className="Project" elevation={0}>
       <div
+        className="image-container"
         style={{
           //   position: "relative",
           height: "100%",
-          width: "50%",
+          width: "100%",
           //   textAlign: "center",
         }}
       >
-        <h1>{props.item.name}</h1>
-        <p>{props.item.subtittle}</p>
-        <h2>{props.item.service}</h2>
-      </div>
-      <div
-        style={{
-          //   position: "relative",
-          width: "30%",
-          height: "100%",
-          marginTop: "5vw",
-          //   textAlign: "center",
-        }}
-      >
-        <p>{props.item.description1}</p>
-        <p style={{ marginTop: "50px" }}>{props.item.description2}</p>
-        <Button className="CheckButton">Click aquí</Button>
+        <img src={props.item.link} alt="¡logo separalo.pe!" />
       </div>
     </Paper>
   );
@@ -40,31 +22,10 @@ function Project(props) {
 
 const items = [
   {
-    name: "30%",
-    subtittle: "en tu primera clase de",
-    service: "entrenamiento",
-    description1:
-      "Por la compra de 10 clases de entrenamiento vía Zoom de yoga o entrenamientos.",
-    description2: "Si quieres mas información",
-    color: "#000000",
-  },
-  {
-    name: "40%",
-    subtittle: "en tu primera clase de",
-    service: "yoga",
-    description1:
-      "Por la compra de 10 clases de entrenamiento vía Zoom de yoga o entrenamientos.",
-    description2: "Si quieres mas información",
-    color: "#000000",
-  },
-  {
-    name: "80%",
-    subtittle: "en tu primera clase de",
-    service: "alpinismo",
-    description1:
-      "Por la compra de 10 clases de entrenamiento vía Zoom de yoga o entrenamientos.",
-    description2: "Si quieres mas información",
-    color: "#000000",
+    id: "30%",
+    link: "https://scontent.flim29-1.fna.fbcdn.net/v/t39.30808-6/256250205_127605489691435_2216501464502058653_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=e3f864&_nc_eui2=AeGUoUTejDJEMS3yJcQIyffOtEqQvFXJami0SpC8VclqaH0LRE_XKsoODPFJelqIFrKAJL7_6_EUdLQQEULdtw3_&_nc_ohc=lR1VWaELzlwAX_ctvn-&_nc_ht=scontent.flim29-1.fna&oh=00_AT8NWcz9LMYWX5mnZggfz0rK8NBLm3IX94F3cdF3Gq_auQ&oe=620C0A99",
+    category: "4",
+    service: "3",
   },
 ];
 

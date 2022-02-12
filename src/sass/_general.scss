@@ -1211,44 +1211,34 @@ button {
 }
 .Home-carousel {
   width: 100%;
+  min-height: 315px;
+  @include mobile {
+    min-height: 240px;
+  }
 
   .Project {
     // position: relative;
     height: 100%;
     width: 100%;
-    overflow: auto;
-    padding: 20px;
-    display: flex;
-    flex-shrink: 0;
+    overflow: hidden;
     text-align: center;
+    border-radius: 0 !important;
 
-    h1 {
-      font-size: calc(16px + (300 - 16) * (100vw - 200px) / (2400 - 200));
-      margin: 0;
-      padding: 0;
+    .image-container {
+      width: 100%;
+      height: 100%;
+      @include mobile {
+        display: flex;
+        justify-content: center;
+      }
     }
-
-    p {
-      font-size: calc(12px + (24 - 12) * (100vw - 200px) / (2400 - 200));
-    }
-
-    h2 {
-      font-size: calc(12px + (60 - 16) * (100vw - 200px) / (2400 - 200));
-      color: #ffdd00;
-    }
-
-    * {
-      color: white;
-    }
-
-    .CheckButton {
-      color: white;
-
-      font-size: 25px;
-      border: 3px solid #ffdd00;
-      text-transform: capitalize;
-
-      // transition: 200ms;
+    img {
+      width: auto;
+      height: auto;
+      @include mobile {
+        width: 155%;
+        height: 100%;
+      }
     }
   }
 }
