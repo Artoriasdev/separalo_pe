@@ -142,12 +142,12 @@ export const CustomerHistory = () => {
                   }) => (
                     <div className="shop-card" key={codeReservation}>
                       <div className="shop-card-title">
-                        <p style={{ width: "35%" }}>Negocio</p>
+                        <p style={{ width: "38%" }}>Negocio</p>
                         <div
                           style={{
                             display: "flex",
-                            flexDirection: "column",
-                            alignItems: "flex-end",
+                            flexDirection: "row",
+                            alignItems: "center",
                             justifyContent: "center",
                           }}
                         >

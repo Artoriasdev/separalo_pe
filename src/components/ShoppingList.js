@@ -248,7 +248,7 @@ export const ShoppingList = () => {
                           <TableCell
                             className="font"
                             align="left"
-                            style={{ color: "#5950A2" }}
+                            style={{ color: "#5950A2", fontWeight: "bold" }}
                           >
                             -S/ {"0.00"}
                           </TableCell>
@@ -316,11 +316,20 @@ export const ShoppingList = () => {
                           </div>
                           <div className="shop-card-text">
                             <p className="shop-card-bold">Precio:</p>
-                            <p> {price} </p>
+                            <p
+                              style={{
+                                textDecoration:
+                                  state === "Caducado" ? "line-through" : "",
+                              }}
+                            >
+                              {price}
+                            </p>
                           </div>
                           <div className="shop-card-text">
-                            <p className="shop-card-bold">Dscto.</p>
-                            <p>{"-S/ 0.00"} </p>
+                            <p className="shop-card-bold">Dsctos.</p>
+                            <p style={{ color: "#5950A2", fontWeight: "bold" }}>
+                              {"-S/ 0.00"}{" "}
+                            </p>
                           </div>
                           <div className="shop-card-text">
                             <p className="shop-card-bold">Fecha:</p>
@@ -441,9 +450,8 @@ export const ShoppingList = () => {
         <div className="disclaimer-container">
           <p>
             *La reserva tiene una vigencia de{" "}
-            <span style={{ fontWeight: "bold" }}>120 minutos (2hs) </span>.
-            asegúrate de realizar el pago antes que venza este plazo, de lo
-            contrario tendrás que realizar la reserva nuevamente{" "}
+            <span style={{ fontWeight: "bold" }}>2hs </span>, realiza el pago en
+            este plazo, de lo contrario tendrás que reservar nuevamente.
           </p>
         </div>
       </div>

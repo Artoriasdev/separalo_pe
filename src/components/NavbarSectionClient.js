@@ -212,7 +212,9 @@ export const NavbarSectionClient = () => {
     <>
       <Box sx={{ display: { xs: "none", md: "flex" } }}>
         <Button
-          endIcon={<ArrowDropDown style={{ fontSize: "25px" }} />}
+          endIcon={
+            <ArrowDropDown style={{ fontSize: "25px", marginTop: "-5px" }} />
+          }
           className="font buttonHeader "
           onClick={handleClick}
           style={{
