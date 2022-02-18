@@ -450,8 +450,8 @@ export const ShoppingList = () => {
         <div className="disclaimer-container">
           <p>
             *La reserva tiene una vigencia de{" "}
-            <span style={{ fontWeight: "bold" }}>2hs </span>, realiza el pago en
-            este plazo, de lo contrario tendrás que reservar nuevamente.
+            <span style={{ fontWeight: "bold" }}>1 hora</span>, realiza el pago
+            en este plazo, de lo contrario tendrás que reservar nuevamente.
           </p>
         </div>
       </div>
