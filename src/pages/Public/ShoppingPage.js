@@ -30,7 +30,7 @@ export const ShoppingPage = () => {
           <div className="empty-container">
             <div className="empty-text">
               <p style={{ fontSize: "15px", color: "#23232399" }}>
-                Tu carrito de reservas esta vacío
+                Tu carrito de reservas está vacío
               </p>
             </div>
             <div className="empty-accion">

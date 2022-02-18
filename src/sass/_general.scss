@@ -1615,7 +1615,6 @@ button {
             .reserve-row-element {
               @include mobile {
                 display: flex;
-                justify-content: space-between;
               }
             }
           }
