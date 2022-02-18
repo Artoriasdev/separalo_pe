@@ -49,7 +49,7 @@ export const CustomizedTooltips = () => {
               <b style={{ fontWeight: "24px" }}>{" caducado"}</b>, puedes
               generar una nueva reserva, recuerda que tu reserva se mantiene
               activa solo por
-              <b style={{ fontWeight: "24px" }}>{" 2 horas."}</b>
+              <b style={{ fontWeight: "24px" }}>{" 1 hora."}</b>
             </p>
           </React.Fragment>
         }
@@ -92,7 +92,7 @@ export const TriggersTooltips = () => {
                   <b style={{ fontWeight: "24px" }}>{" caducado"}</b>, puedes
                   generar una nueva reserva, recuerda que tu reserva se mantiene
                   activa solo por
-                  <b style={{ fontWeight: "24px" }}>{" 2 horas."}</b>
+                  <b style={{ fontWeight: "24px" }}>{" 1 hora."}</b>
                 </p>
               </React.Fragment>
             }
@@ -151,7 +151,9 @@ export const AppointmentTriggersTooltips = ({ business, address }) => {
             placement="bottom"
             title={
               <React.Fragment>
-                <h2 style={{ marginBottom: "0" }}>{business}</h2>
+                <h2 style={{ marginBottom: "10px", lineHeight: "1.2" }}>
+                  {business}
+                </h2>
                 <p style={{ lineHeight: "12px" }}>{address}</p>
               </React.Fragment>
             }
