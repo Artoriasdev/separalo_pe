@@ -59,7 +59,7 @@ export const BusinessReserveDetail = () => {
           <div className="reserve-disclaimer">
             <p>
               Para confirmar la reserva es necesario continuar con el pago,
-              recuerda que tienes 120 minutos para realizar tu pago.
+              recuerda que tienes 1 hora para realizar tu pago.
             </p>
           </div>
         </div>
