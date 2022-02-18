@@ -15,11 +15,11 @@ export const shoppingCarReducer = (state = initialState, action) => {
         ...state,
         shoppingCarItems: action.payload,
       };
-    case types.shoppingCarItemsPayed:
-      return {
-        ...state,
-        shoppingCarItems: [],
-      };
+    // case types.shoppingCarItemsPayed:
+    //   return {
+    //     ...state,
+    //     shoppingCarItems: [],
+    //   };
     case types.shoppingCarRemoveItems:
       const items = state.shoppingCarItems.filter(
         (item) => item.preCodeReservation !== action.payload

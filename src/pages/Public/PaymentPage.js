@@ -9,13 +9,13 @@ import {
   shoppingCarCompleted,
   shoppingCarInvitedCompleted,
 } from "../../actions/shoppingCarDone";
-import { paymentDone } from "../../actions/payment";
 
 export const PaymentPage = () => {
   const [error, setError] = useState(false);
 
   const history = useHistory();
   const dispatch = useDispatch();
+  const { email } = useSelector((state) => state.reservationEmailInvited);
   const { formToken: token, orderId } = useSelector(
     (state) => state.payment.data
   );
@@ -48,7 +48,7 @@ export const PaymentPage = () => {
             if (logged) {
               dispatch(shoppingCarCompleted(orderId, tk));
             } else {
-              dispatch(shoppingCarInvitedCompleted(orderId));
+              dispatch(shoppingCarInvitedCompleted(orderId, email));
             }
             // setTimeout(() => {
 

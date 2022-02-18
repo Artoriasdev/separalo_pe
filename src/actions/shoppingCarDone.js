@@ -5,6 +5,7 @@ import {
 import { types } from "../types/types";
 import history from "../helpers/history";
 import { paymentDone } from "./payment";
+import { checkShoppingItems, checkShoppingItemsInvited } from "./shoppingCar";
 
 export const shoppingCarCompleted = (cod, token) => {
   return async (dispatch) => {
@@ -12,6 +13,7 @@ export const shoppingCarCompleted = (cod, token) => {
       const { data } = await handleGetReservationByOrderId(cod, token);
       if (data.response === "true") {
         dispatch(shoppingCarDone(data.data));
+        dispatch(checkShoppingItems(token));
         history.push("/reservations-completed");
         dispatch(paymentDone());
       }
@@ -22,12 +24,13 @@ export const shoppingCarCompleted = (cod, token) => {
   };
 };
 
-export const shoppingCarInvitedCompleted = (cod) => {
+export const shoppingCarInvitedCompleted = (cod, email) => {
   return async (dispatch) => {
     try {
       const { data } = await handleGetReservationByOrderIdInvited(cod);
       if (data.response === "true") {
         dispatch(shoppingCarDone(data.data));
+        dispatch(checkShoppingItemsInvited(email));
         history.push("/reservations-completed");
         dispatch(paymentDone());
       }
