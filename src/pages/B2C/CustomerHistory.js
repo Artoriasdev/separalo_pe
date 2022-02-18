@@ -62,11 +62,11 @@ export const CustomerHistory = () => {
                 <TableRow>
                   <TableCell className="font-tittle">Negocio</TableCell>
                   <TableCell className="font-tittle">Servicio</TableCell>
-                  <TableCell className="font-tittle">Categoria</TableCell>
+                  <TableCell className="font-tittle">Categoría</TableCell>
                   <TableCell className="font-tittle">Precio</TableCell>
                   <TableCell className="font-tittle">Fecha</TableCell>
                   <TableCell className="font-tittle">Hora</TableCell>
-                  <TableCell className="font-tittle">Duracion</TableCell>
+                  <TableCell className="font-tittle">Duración</TableCell>
                   <TableCell className="font-tittle">Código</TableCell>
                   <TableCell className="font-tittle">Estado</TableCell>
                 </TableRow>
