@@ -147,7 +147,7 @@ export const Footer = () => {
             aria-label="facebook"
             color="inherit"
             style={{ marginRight: "10px" }}
-            href="https://www.facebook.com/Separalo-pe-114080404377277"
+            href="https://www.facebook.com/Separalo.pe"
             target="_blank"
           >
             <img
@@ -247,7 +247,7 @@ export const Footer = () => {
                     aria-label="facebook"
                     color="inherit"
                     style={{ marginRight: "15px" }}
-                    href="https://www.facebook.com/Separalo-pe-114080404377277"
+                    href="https://www.facebook.com/Separalo.pe"
                     target="_blank"
                   >
                     <img
