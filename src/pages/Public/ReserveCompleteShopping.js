@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -9,6 +9,14 @@ export const ReserveCompleteShopping = () => {
 
   const { shoppingDetails } = useSelector((state) => state.shoppingDone);
   const { logged } = useSelector((state) => state.auth);
+
+  const [windowWith, setWindowWith] = useState(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener("resize", function (event) {
+      setWindowWith(window.innerWidth);
+    });
+  }, [windowWith]);
 
   useEffect(() => {
     if (shoppingDetails.length < 1) history.push("/");
@@ -59,34 +67,104 @@ export const ReserveCompleteShopping = () => {
                     className="reserve-details-container"
                   >
                     <div>
-                      <p className="reserve-place">{tradeName}</p>
+                      <p className="reserve-place">{tradeName.toUpperCase()}</p>
                     </div>
                     <div className="reserve-subtitle">
-                      <p>Dirección: {addressBusiness}</p>
-                      <p>Código de reserva: {codeReservation}</p>
+                      <p style={{ fontWeight: "bold" }}>{addressBusiness}</p>
+                      <p>
+                        Código de reserva:{" "}
+                        <span style={{ fontWeight: "bold" }}>
+                          {codeReservation}
+                        </span>
+                      </p>
                     </div>
                     <div className="reserve-rows">
                       <div className="reserve-row">
                         <div className="reserve-row-element">
-                          <p>Nombre del servicio:</p>
-                          <p style={{ fontWeight: "bold" }}>{titleService}</p>
+                          <p>
+                            Nombre del servicio:{" "}
+                            <span
+                              style={{
+                                fontWeight: "bold",
+                                display: windowWith > 768 ? "none" : "",
+                              }}
+                            >
+                              {titleService}
+                            </span>
+                          </p>
+                          <p
+                            style={{
+                              fontWeight: "bold",
+                              display: windowWith <= 768 ? "none" : "",
+                            }}
+                          >
+                            {titleService}
+                          </p>
                         </div>
                         <div className="reserve-row-element">
-                          <p>Categoría:</p>
-                          <p style={{ fontWeight: "bold" }}>{nameCategory}</p>
+                          <p>
+                            Categoría:{" "}
+                            <span
+                              style={{
+                                fontWeight: "bold",
+                                display: windowWith > 768 ? "none" : "",
+                              }}
+                            >
+                              {nameCategory}
+                            </span>
+                          </p>
+                          <p
+                            style={{
+                              fontWeight: "bold",
+                              display: windowWith <= 768 ? "none" : "",
+                            }}
+                          >
+                            {nameCategory}
+                          </p>
                         </div>
                       </div>
                       <hr />
                       <div className="reserve-row">
                         <div className="reserve-row-element">
-                          <p>Fecha de su cita:</p>
-                          <p style={{ fontWeight: "bold" }}>
+                          <p>
+                            Fecha de tu reserva:{" "}
+                            <span
+                              style={{
+                                fontWeight: "bold",
+                                display: windowWith > 768 ? "none" : "",
+                              }}
+                            >
+                              {dateReservation}
+                            </span>
+                          </p>
+                          <p
+                            style={{
+                              fontWeight: "bold",
+                              display: windowWith <= 768 ? "none" : "",
+                            }}
+                          >
                             {dateReservation}
                           </p>
                         </div>
                         <div className="reserve-row-element">
-                          <p>Hora de su cita:</p>
-                          <p style={{ fontWeight: "bold" }}>
+                          <p>
+                            Hora de tu reserva:{" "}
+                            <span
+                              style={{
+                                fontWeight: "bold",
+                                display: windowWith > 768 ? "none" : "",
+                              }}
+                            >
+                              {timeReservation}
+                            </span>
+                          </p>
+                          <p
+                            style={{
+                              fontWeight: "bold",
+                              display: windowWith <= 768 ? "none" : "",
+                            }}
+                          >
+                            {" "}
                             {timeReservation}
                           </p>
                         </div>
@@ -94,14 +172,46 @@ export const ReserveCompleteShopping = () => {
                       <hr />
                       <div className="reserve-row">
                         <div className="reserve-row-element">
-                          <p>Duración de su cita:</p>
-                          <p style={{ fontWeight: "bold" }}>
+                          <p>
+                            Duración de tu reserva:{" "}
+                            <span
+                              style={{
+                                fontWeight: "bold",
+                                display: windowWith > 768 ? "none" : "",
+                              }}
+                            >
+                              {durationReservation}
+                            </span>{" "}
+                          </p>
+                          <p
+                            style={{
+                              fontWeight: "bold",
+                              display: windowWith <= 768 ? "none" : "",
+                            }}
+                          >
                             {durationReservation}
                           </p>
                         </div>
                         <div className="reserve-row-element">
-                          <p>Costo por la cita:</p>
-                          <p style={{ fontWeight: "bold", color: "#5829dd" }}>
+                          <p>
+                            Costo por reserva:{" "}
+                            <span
+                              style={{
+                                fontWeight: "bold",
+                                display: windowWith > 768 ? "none" : "",
+                                color: "#5829dd",
+                              }}
+                            >
+                              {price}
+                            </span>{" "}
+                          </p>
+                          <p
+                            style={{
+                              fontWeight: "bold",
+                              color: "#5829dd",
+                              display: windowWith <= 768 ? "none" : "",
+                            }}
+                          >
                             {price}
                           </p>
                         </div>
@@ -111,15 +221,22 @@ export const ReserveCompleteShopping = () => {
                 )
               )}
           </div>
-          <span className="mensaje">
+          <span
+            className="mensaje"
+            style={{
+              width: windowWith <= 768 ? "90%" : "",
+              textAlign: windowWith <= 768 ? "center" : "",
+            }}
+          >
             Notificaremos al negocio el pago de tu reserva, recibirás un
             recordatorio por correo electrónico 1 hora antes de tu cita.
           </span>
           <Button
             size="large"
-            color="inherit"
+            color="secondary"
             variant="contained"
-            className="btn-primary_reserva"
+            className="btn-primary"
+            style={{ width: windowWith <= 768 ? "90%" : "" }}
             fullWidth
             onClick={handleRedirect}
           >
