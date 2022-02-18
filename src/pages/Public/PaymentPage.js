@@ -63,6 +63,13 @@ export const PaymentPage = () => {
           var myMessage = "";
 
           switch (code) {
+            case "PSP_108":
+              myMessage =
+                "Su token a excedido los 15 minutos, favor de generar uno nuevo";
+              console.log(event.errorCode);
+              console.log(event.errorMessage, "mensaje error");
+              break;
+
             case "CLIENT_300":
               myMessage =
                 "Más de uno de los campos registrados son incorrectos. Regístralo nuevamente";
@@ -81,6 +88,7 @@ export const PaymentPage = () => {
             case "CLIENT_303":
               myMessage =
                 "El código de seguridad registrado es incorrecto. Regístralo nuevamente";
+              console.log(event.errorCode, "codigo error");
               break;
 
             case "CLIENT_304":
@@ -97,12 +105,14 @@ export const PaymentPage = () => {
               myMessage =
                 event.detailedErrorMessage ||
                 "Ha ocurrido un error. Intenta nuevamente en unos minutos";
+              console.log(event.errorCode);
+              console.log(event.errorMessage, "mensaje error");
               break;
           }
 
           setError(true);
 
-          console.log(event);
+          // console.log(event);
           document.getElementsByClassName("customerror")[0].innerText =
             myMessage;
         });
