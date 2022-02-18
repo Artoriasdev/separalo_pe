@@ -95,7 +95,7 @@ export const PasswordOTP = () => {
                 if (values.otp.trim().length < 1) {
                   errors.otp = REQUIRED;
                 } else if (values.otp.length < 5) {
-                  errors.otp = "*El código debe ser mayor a 5 dígitos";
+                  errors.otp = "*El código debe ser de 5 dígitos";
                 }
 
                 return errors;
