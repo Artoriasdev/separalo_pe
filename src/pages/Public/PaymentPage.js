@@ -100,6 +100,10 @@ export const PaymentPage = () => {
               myMessage =
                 "Estamos teniendo problemas con la pasarela de pagos. Intenta nuevamente en unos minutos";
               break;
+            case "PSP_641":
+              myMessage =
+                "La transacción a sido rechazada. Error en autenticación. Intenta nuevamente en unos minutos";
+              break;
 
             default:
               myMessage =
