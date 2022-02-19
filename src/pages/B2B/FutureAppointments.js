@@ -256,7 +256,7 @@ export const FutureAppointments = () => {
                           paddingTop: "0",
                         }}
                       >
-                        Historial de citas
+                        Citas confirmadas
                       </CardContent>
                       <CardContent className="font-tittle">
                         {titleService}
