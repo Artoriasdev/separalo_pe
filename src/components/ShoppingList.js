@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -72,6 +72,10 @@ export const ShoppingList = () => {
   const handleClose = () => {
     setOpened(false);
   };
+
+  useEffect(() => {
+    dispatch(cuponClear());
+  }, []);
 
   const handleReserveDelete = () => {
     if (logged) {
