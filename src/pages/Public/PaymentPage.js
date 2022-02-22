@@ -102,7 +102,7 @@ export const PaymentPage = () => {
               break;
             case "PSP_641":
               myMessage =
-                "La transacción a sido rechazada. Error en autenticación. Intenta nuevamente en unos minutos";
+                "La transacción ha sido rechazada. Error en autenticación. Intenta nuevamente en unos minutos";
               break;
 
             default:
