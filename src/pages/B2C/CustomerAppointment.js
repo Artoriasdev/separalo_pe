@@ -141,13 +141,14 @@ export const CustomerAppointment = () => {
                   }) => (
                     <div className="shop-card" key={codeReservation}>
                       <div className="shop-card-title">
-                        <p>Negocio</p>
+                        <p style={{ width: "38%" }}>Negocio</p>
                         <div
                           style={{
                             display: "flex",
-                            flexDirection: "column",
+                            flexDirection: "row",
                             alignItems: "flex-end",
                             justifyContent: "center",
+                            alignItems: "center",
                           }}
                         >
                           {tradeName}
