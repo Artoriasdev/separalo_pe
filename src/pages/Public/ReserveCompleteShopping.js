@@ -70,7 +70,17 @@ export const ReserveCompleteShopping = () => {
                       <p className="reserve-place">{tradeName.toUpperCase()}</p>
                     </div>
                     <div className="reserve-subtitle">
-                      <p style={{ fontWeight: "bold" }}>{addressBusiness}</p>
+                      <p style={{ fontWeight: "bold" }}>
+                        <span
+                          style={{
+                            fontWeight: "normal",
+                            display: windowWith > 768 ? "none" : "",
+                          }}
+                        >
+                          Dirección:
+                        </span>{" "}
+                        {addressBusiness}
+                      </p>
                       <p>
                         Código de reserva:{" "}
                         <span style={{ fontWeight: "bold" }}>
@@ -148,7 +158,7 @@ export const ReserveCompleteShopping = () => {
                         </div>
                         <div className="reserve-row-element">
                           <p>
-                            Hora de tu reserva:{" "}
+                            Horario de tu reserva:{" "}
                             <span
                               style={{
                                 fontWeight: "bold",
