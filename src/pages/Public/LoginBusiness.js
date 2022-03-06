@@ -43,9 +43,7 @@ export const LoginBusiness = () => {
                 workflow: params.B,
               }}
               validationSchema={Yup.object({
-                username: Yup.string()
-                  .email("Correo invalido")
-                  .required(EMAIL_INVALID),
+                username: Yup.string().email(EMAIL_INVALID).required(REQUIRED),
                 password: Yup.string().required(REQUIRED),
               })}
               onSubmit={(values, { setSubmitting }) => {
