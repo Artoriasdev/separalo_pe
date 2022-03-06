@@ -44,6 +44,7 @@ export const BusinessProfile = () => {
   const { token } = useSelector((state) => state.auth.data);
   const { data } = useSelector((state) => state.businessData);
   const { uploaded, response } = useSelector((state) => state.imageUpload);
+  const [windowWith, setWindowWith] = useState(window.innerWidth);
 
   const [opened, setOpened] = useState(false);
   const [message, setMessage] = useState("");
@@ -63,6 +64,12 @@ export const BusinessProfile = () => {
       setMessage(response);
     }
   }, [uploaded, response]);
+
+  useEffect(() => {
+    window.addEventListener("resize", function (event) {
+      setWindowWith(window.innerWidth);
+    });
+  }, [windowWith]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -240,7 +247,7 @@ export const BusinessProfile = () => {
                 )}
               </div>
             </div>
-            <p>
+            <p style={{ display: windowWith > 768 ? "" : "none" }}>
               *Tamaño recomendado para las imágenes: Logotipo: 300 x 250px.
               Banner 1024 x 580px. *Formato en JPG o PNG. *Debe pesar menos de
               1mb
@@ -273,6 +280,22 @@ export const BusinessProfile = () => {
                 )}
               </div>
             </div>
+          </div>
+          <div>
+            <p
+              style={{
+                display: windowWith > 768 ? "none" : "",
+                fontSize: "14px",
+                color: "rgba(35, 35, 35, 0.6)",
+                textAlign: "center",
+                lineHeight: "16px",
+              }}
+            >
+              *Tamaño recomendado para las imágenes: Logotipo: 300 x 250px.
+              <br />
+              Banner 1024 x 580px. *Formato en JPG o PNG. <br /> *Debe pesar
+              menos de 1mb
+            </p>
           </div>
           <AppBar
             position="static"

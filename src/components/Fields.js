@@ -306,7 +306,7 @@ export const MySearchHomeInput = ({ label, ...props }) => {
   };
   const { business } = useSelector((state) => state.search);
   return (
-    <div>
+    <div className="autocomplete-container">
       <OutlinedInput
         {...props}
         fullWidth
@@ -318,6 +318,7 @@ export const MySearchHomeInput = ({ label, ...props }) => {
           </InputAdornment>
         }
         placeholder={label}
+        style={{ maxWidth: "216px" }}
       />
       {business && (
         <Paper className="autocomplete">
