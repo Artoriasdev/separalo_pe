@@ -15,6 +15,14 @@ export const reservation = (reserveModel) => {
       const { data } = await handleRegisterReservationInvited(reserveModel);
       if (data.response === "true") {
         JSON.stringify(localStorage.setItem("email", reserveModel.email));
+        JSON.stringify(localStorage.setItem("name_invited", reserveModel.name));
+        JSON.stringify(
+          localStorage.setItem("lastname_invited", reserveModel.lastName)
+        );
+        JSON.stringify(
+          localStorage.setItem("cell_invited", reserveModel.mobile)
+        );
+
         dispatch(emailReservation(reserveModel.email));
         dispatch(reserve(data));
         dispatch(checkShoppingItemsInvited(reserveModel.email));
