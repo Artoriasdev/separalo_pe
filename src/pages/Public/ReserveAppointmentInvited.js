@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 
-import { Formik, Form } from "formik";
+import { Formik, Form, useFormikContext, ErrorMessage } from "formik";
 
 import { MyFormikDialog, MyModal } from "../../components/Modal";
 import {
@@ -11,7 +11,7 @@ import {
   MySelect,
   MyTextInput,
 } from "../../components/Fields";
-import { MenuItem } from "@mui/material";
+import { MenuItem, TextField } from "@mui/material";
 import { handleRegexDisable } from "../../utils/utilitaries";
 import { serviceById } from "../../actions/serviceById";
 import { hoursId } from "../../actions/hoursById";
@@ -24,6 +24,121 @@ import {
   REQUIRED,
 } from "../../utils/constants";
 import { EMAIL_REGEXP } from "../../utils/regexp";
+
+const InvitedFields = () => {
+  const { values, errors, touched, handleBlur, handleChange, setFieldValue } =
+    useFormikContext();
+
+  useEffect(() => {
+    setFieldValue("nombre", localStorage.getItem("name_invited") || "", true);
+    setFieldValue(
+      "apellido",
+      localStorage.getItem("lastname_invited") || "",
+      true
+    );
+    setFieldValue("celular", localStorage.getItem("cell_invited") || "", true);
+    setFieldValue("correo", localStorage.getItem("email") || "", true);
+  }, []);
+
+  return (
+    <>
+      <div className="files">
+        <div className="txt-left-nomid">
+          <TextField
+            name="nombre"
+            className="TxtField"
+            variant="outlined"
+            label="Nombre"
+            fullWidth
+            value={values.nombre}
+            error={errors.nombre && touched.nombre}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            style={{
+              marginBottom: "5px",
+            }}
+          />
+          <ErrorMessage
+            className="error bottom"
+            name="nombre"
+            component="div"
+          />
+        </div>
+
+        <div className="txt-right-nomid">
+          <TextField
+            name="apellido"
+            type="text"
+            className="TxtField"
+            variant="outlined"
+            label="Apellidos"
+            fullWidth
+            value={values.apellido}
+            error={errors.apellido && touched.apellido}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            style={{
+              marginBottom: "5px",
+            }}
+          />
+          <ErrorMessage
+            className="error bottom"
+            name="apellido"
+            component="div"
+          />
+        </div>
+      </div>
+      <div className="files">
+        <div className="txt-left-nomid">
+          <TextField
+            name="correo"
+            className="TxtField"
+            variant="outlined"
+            label="Correo electrónico"
+            fullWidth
+            value={values.correo}
+            error={errors.correo && touched.correo}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            style={{ marginBottom: "5px" }}
+            onInput={handleRegexDisable("")} // TODO haz el manejo correcto con NUMBER_REGEXP
+          />
+          <ErrorMessage
+            className="error bottom"
+            name="correo"
+            component="div"
+          />
+        </div>
+
+        <div className="txt-right-nomid">
+          <TextField
+            name="celular"
+            className="TxtField"
+            variant="outlined"
+            label="Número de celular"
+            fullWidth
+            value={values.celular}
+            error={errors.celular && touched.celular}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            style={{
+              marginBottom: "5px",
+            }}
+            inputProps={{
+              maxLength: 9,
+            }}
+            onInput={handleRegexDisable("[0-9]")}
+          />
+          <ErrorMessage
+            className="error bottom"
+            name="celular"
+            component="div"
+          />
+        </div>
+      </div>
+    </>
+  );
+};
 
 export const ReserveAppointmentInvited = () => {
   const params = useParams();
@@ -139,63 +254,7 @@ export const ReserveAppointmentInvited = () => {
                   setTermsModal={setTermsModal}
                   text="hola"
                 />
-                <div className="files">
-                  <div className="txt-left-nomid">
-                    <MyTextInput
-                      label="Nombre"
-                      name="nombre"
-                      type="text"
-                      error={errors.nombre && touched.nombre}
-                      fullWidth
-                      style={{
-                        marginBottom: "5px",
-                      }}
-                    />
-                  </div>
-
-                  <div className="txt-right-nomid">
-                    <MyTextInput
-                      label="Apellidos"
-                      name="apellido"
-                      type="text"
-                      error={errors.apellido && touched.apellido}
-                      fullWidth
-                      style={{
-                        marginBottom: "5px",
-                      }}
-                    />
-                  </div>
-                </div>
-                <div className="files">
-                  <div className="txt-left-nomid">
-                    <MyTextInput
-                      name="correo"
-                      label="Correo electrónico"
-                      placeholder="jane@gmail.com"
-                      error={errors.correo && touched.correo}
-                      fullWidth
-                      style={{
-                        marginBottom: "5px",
-                      }}
-                    />
-                  </div>
-                  <div className="txt-right-nomid">
-                    <MyTextInput
-                      name="celular"
-                      label="Número de celular"
-                      type="text"
-                      fullWidth
-                      error={errors.celular && touched.celular}
-                      inputProps={{
-                        maxLength: 9,
-                      }}
-                      style={{
-                        marginBottom: "5px",
-                      }}
-                      onInput={handleRegexDisable("[0-9]")}
-                    />
-                  </div>
-                </div>
+                <InvitedFields />
 
                 <div className="files">
                   <div className="txt-left-nomid">

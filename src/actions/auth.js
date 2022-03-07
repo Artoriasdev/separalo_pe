@@ -19,6 +19,21 @@ export const login = (infoLogin, workflow) => {
       } else if (info.data.response === "true") {
         const { data } = info.data;
         dispatch(loginSync(data, workflow));
+        if (localStorage.getItem("log_invited") === "true") {
+          history.push(
+            `/customer/reserve/${localStorage.getItem(
+              "service_id"
+            )}/${localStorage.getItem("business_id")}/${localStorage.getItem(
+              "category_id"
+            )}`
+          );
+        }
+
+        localStorage.removeItem("service_id");
+        localStorage.removeItem("business_id");
+        localStorage.removeItem("category_id");
+        localStorage.removeItem("log_invited");
+
         localStorage.setItem("data", JSON.stringify(data));
         localStorage.setItem("workflow", JSON.stringify(workflow));
         dispatch(finishChecking());
