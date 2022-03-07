@@ -116,10 +116,6 @@ export const ShoppingList = () => {
       dispatch(paymentInvited(email));
       dispatch(startChecking());
     }
-    setTimeout(() => {
-      dispatch(finishChecking());
-      history.push("/payment");
-    }, 2500);
   };
 
   return (

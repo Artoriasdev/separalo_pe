@@ -5,6 +5,7 @@ import {
 import { types } from "../types/types";
 import { modalOpen } from "./modal";
 import history from "../helpers/history";
+import { finishChecking } from "./checking";
 
 export const payment = (token) => {
   return async (dispatch) => {
@@ -12,6 +13,8 @@ export const payment = (token) => {
       const { data } = await handleCreatePayment(token);
       if (data.response === "true") {
         dispatch(paymentData(data.data));
+        dispatch(finishChecking());
+        history.push("/payment");
       } else if (data.response === "false") {
         dispatch(modalOpen(data.message));
       }
@@ -29,6 +32,8 @@ export const paymentInvited = (email) => {
       if (data.response === "true") {
         console.log(data);
         dispatch(paymentData(data.data));
+        dispatch(finishChecking());
+        history.push("/payment");
       } else if (data.response === "false") {
         dispatch(modalOpen(data.message));
       }
