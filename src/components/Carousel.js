@@ -1,7 +1,7 @@
 import { Paper } from "@mui/material";
 import React from "react";
 import Carousel from "react-material-ui-carousel";
-import Image from "../assets/images/separalo_image.jpg";
+import Image from "../assets/images/Banner_web_3.jpg";
 
 function Project(props) {
   return (

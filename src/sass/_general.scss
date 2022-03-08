@@ -1214,7 +1214,7 @@ button {
   width: 100%;
   min-height: 315px;
   @include mobile {
-    min-height: 240px;
+    min-height: 50vw;
   }
 
   .Project {
@@ -1226,19 +1226,20 @@ button {
     border-radius: 0 !important;
 
     .image-container {
-      width: 100%;
-      height: 100%;
-      @include mobile {
-        display: flex;
-        justify-content: center;
+      display: flex;
+      justify-content: center;
+      // width: 100%;
+      // height: 100%;
+      @include tablet {
       }
     }
     img {
       width: auto;
       height: auto;
       @include mobile {
-        width: 155%;
+        width: 200%;
         height: 100%;
+        margin-right: 20%;
       }
     }
   }
