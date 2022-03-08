@@ -6,9 +6,10 @@ import {
 import { modalOpen, modalRedirect } from "./modal";
 import history from "../helpers/history";
 
-export const passwordRecovery = (recoveryModel) => {
+export const passwordRecovery = (recoveryModel, setSend) => {
   return async (dispatch) => {
     try {
+      setSend(true);
       const { data } = await handleGeneratePasswordRecovery(recoveryModel);
       if (data.response === "true") {
         dispatch(modalOpen(data.message));
@@ -16,6 +17,7 @@ export const passwordRecovery = (recoveryModel) => {
         localStorage.setItem("Recover email", recoveryModel.email);
       } else if (data.response === "false") {
         dispatch(modalOpen(data.message));
+        setSend(false);
       }
     } catch (error) {
       console.log(error);

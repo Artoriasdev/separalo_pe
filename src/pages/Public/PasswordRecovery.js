@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 
@@ -16,6 +16,7 @@ import {
 } from "../../utils/constants";
 
 export const PasswordRecovery = () => {
+  const [send, setSend] = useState(false);
   const dispatch = useDispatch();
   const params = useParams();
   const history = useHistory();
@@ -70,7 +71,7 @@ export const PasswordRecovery = () => {
                 RecoveryModel.workflow = params.value;
 
                 (async () => {
-                  dispatch(passwordRecovery(RecoveryModel));
+                  dispatch(passwordRecovery(RecoveryModel, setSend));
                 })();
               }}
             >
@@ -112,7 +113,7 @@ export const PasswordRecovery = () => {
                     color="primary"
                     variant="contained"
                     className="btn-primary"
-                    disabled={isSubmitting}
+                    disabled={send}
                     style={{
                       width: "80%",
                       margin: "10px auto",
