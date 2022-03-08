@@ -333,7 +333,7 @@ const VerticalBar = (props) => {
           <div
             style={{ textAlign: "center" }}
             dangerouslySetInnerHTML={{
-              __html: ` <h3>Mostrando datos en las fechas de</h3> <p>${time}</p> `,
+              __html: ` <h4 style="font-size:13px;" >Mostrando datos en las fechas de</h4> <p>${time}</p> `,
             }}
           />
           <IconButton
@@ -378,7 +378,7 @@ const VerticalBar = (props) => {
       <Bar data={data} options={options} />
 
       <TableContainer className="table">
-        <Table sx={{ minWidth: 650 }}>
+        <Table sx={{ minWidth: 150 }}>
           <TableHead className="table-head">
             <TableRow>
               <TableCell className="font-tittle">Servicio</TableCell>
@@ -400,7 +400,7 @@ const VerticalBar = (props) => {
                         ? serviceName
                         : null}
                     </TableCell>
-                    <TableCell className="font">
+                    <TableCell className="font" style={{ minWidth: "100px" }}>
                       {props.venta === 1
                         ? quantityService
                         : props.venta === 2

@@ -61,7 +61,7 @@ export const BusinessReports = () => {
           </Link>
         </Breadcrumbs>
         <h1>Mis reportes</h1>
-        <h3 className="register__subtitle">
+        <h3 className="register__subtitle" style={{ fontSize: "14px" }}>
           Estos son los reportes obtenidos hasta la fecha <br />
           Podrá ver los resultados diarios, semanales y mensuales
         </h3>

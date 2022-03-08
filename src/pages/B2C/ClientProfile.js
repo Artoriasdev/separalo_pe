@@ -255,8 +255,8 @@ export const ClientProfile = () => {
                   "*El número de celular debe iniciar con el dígito 9 y debe ser de 9 dígitos .";
               }
 
-              if (!values.correo) {
-                errors.correo = "";
+              if (values.correo.trim().length < 1) {
+                errors.correo = REQUIRED;
               } else if (!EMAIL_REGEXP.test(values.correo)) {
                 errors.correo = EMAIL_INVALID;
               } else if (values.correo.length < E_MINLENGTH) {

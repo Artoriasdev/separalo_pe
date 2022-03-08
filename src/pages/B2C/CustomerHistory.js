@@ -194,7 +194,7 @@ export const CustomerHistory = () => {
                           <p>{codeReservation} </p>
                         </div>
                         <div className="shop-card-text">
-                          <p className="shop-card-bold">Estado*:</p>
+                          <p className="shop-card-bold">Estado</p>
                           <p>{state} </p>
                         </div>
                       </div>
