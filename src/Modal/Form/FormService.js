@@ -994,9 +994,9 @@ export const FormService = ({ value, close }) => {
             setDomingo(true);
           } else {
             (async () => {
-              console.log(formModel);
-              close();
-              dispatch(registerService(formModel, token));
+              // console.log(formModel);
+
+              dispatch(registerService(formModel, token, close));
             })();
           }
         }}
