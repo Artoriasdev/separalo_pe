@@ -175,30 +175,36 @@ export const PastAppointments = () => {
                       }}
                     >
                       <div className="service-card-text">
-                        <p style={{ fontWeight: "bold" }}>Categoría</p>
-                        <p>{category} </p>
+                        <p style={{ fontWeight: "bold", margin: "0" }}>
+                          Categoría
+                        </p>
+                        <p style={{ marginTop: "5px" }}>{category} </p>
                       </div>
                       <div className="service-card-text">
-                        <p style={{ fontWeight: "bold" }}>Servicio</p>
-                        <p>{titleService} </p>
+                        <p style={{ fontWeight: "bold", margin: "0" }}>
+                          Servicio
+                        </p>
+                        <p style={{ marginTop: "5px" }}>{titleService} </p>
                       </div>
                       <div className="service-card-text">
-                        <p style={{ fontWeight: "bold" }}>Fecha</p>
-                        <p> {dateReservation} </p>
+                        <p style={{ fontWeight: "bold", margin: "0" }}>Fecha</p>
+                        <p style={{ marginTop: "5px" }}> {dateReservation} </p>
                       </div>
                       <div className="service-card-text">
-                        <p style={{ fontWeight: "bold" }}>Hora</p>
-                        <p>{timeReservation} </p>
+                        <p style={{ fontWeight: "bold", margin: "0" }}>Hora</p>
+                        <p style={{ marginTop: "5px" }}>{timeReservation} </p>
                       </div>
                       <div className="service-card-text">
-                        <p style={{ fontWeight: "bold" }}>
+                        <p style={{ fontWeight: "bold", margin: "0" }}>
                           Nombres y apellidos
                         </p>
-                        <p>{nameCustomer}</p>
+                        <p style={{ marginTop: "5px" }}>{nameCustomer}</p>
                       </div>
                       <div className="service-card-text">
-                        <p style={{ fontWeight: "bold" }}>Número celular</p>
-                        <p>{mobileCustomer}</p>
+                        <p style={{ fontWeight: "bold", margin: "0" }}>
+                          Número celular
+                        </p>
+                        <p style={{ marginTop: "5px" }}>{mobileCustomer}</p>
                       </div>
 
                       <div className="service-button">

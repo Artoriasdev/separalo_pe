@@ -961,19 +961,24 @@ export const ServiceDetail = () => {
                     size="large"
                     color="primary"
                     variant="contained"
-                    className="btn-primary"
-                    onClick={() => handleClose(1)}
+                    className="btn-primary_reserva"
+                    style={{
+                      margin: "5px 10px",
+                      minWidth: "105px",
+                    }}
+                    onClick={() => handleClose(2)}
                   >
-                    Aceptar
+                    Cancelar
                   </Button>
                   <Button
                     size="large"
                     color="primary"
                     variant="contained"
                     className="btn-primary"
-                    onClick={() => handleClose(2)}
+                    style={{ margin: "5px 10px", minWidth: "105px" }}
+                    onClick={() => handleClose(1)}
                   >
-                    Rechazar
+                    Aceptar
                   </Button>
                 </>
               ) : (
@@ -996,7 +1001,7 @@ export const ServiceDetail = () => {
           separator={<NavigateNext fontSize="medium" />}
           aria-label="breadcrumb"
           className="font"
-          style={{ marginLeft: "50px" }}
+          style={{ marginLeft: "5vw" }}
         >
           <Link href="/" color="textPrimary" style={{ textDecoration: "none" }}>
             Inicio

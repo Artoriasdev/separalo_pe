@@ -44,7 +44,7 @@ export const ServiceAppointment = () => {
         separator={<NavigateNext fontSize="medium" />}
         aria-label="breadcrumb"
         className="font"
-        style={{ marginLeft: "50px" }}
+        style={{ marginLeft: "3vw" }}
       >
         <Link
           color="textPrimary"

@@ -143,24 +143,35 @@ export const ServiceListTable = ({ list, page, params }) => {
                     }}
                   >
                     <div className="service-card-text">
-                      <p style={{ fontWeight: "bold" }}>Categoría</p>
-                      <p>{category} </p>
+                      <p style={{ fontWeight: "bold", margin: "0" }}>
+                        Categoría
+                      </p>
+                      <p style={{ marginTop: "0" }}>{category} </p>
                     </div>
                     <div className="service-card-text">
-                      <p style={{ fontWeight: "bold" }}>Servicio</p>
-                      <p>{title} </p>
+                      <p style={{ fontWeight: "bold", margin: "0" }}>
+                        Servicio
+                      </p>
+                      <p style={{ marginTop: "0" }}>{title} </p>
                     </div>
                     <div className="service-card-text">
-                      <p style={{ fontWeight: "bold" }}>Duración</p>
-                      <p> {duration} </p>
+                      <p style={{ fontWeight: "bold", margin: "0" }}>
+                        Duración
+                      </p>
+                      <p style={{ marginTop: "0" }}> {duration} </p>
                     </div>
                     <div className="service-card-text">
-                      <p style={{ fontWeight: "bold" }}>Precio</p>
+                      <p style={{ fontWeight: "bold", margin: "0" }}>Precio</p>
                       <p>{currencySymbol + " " + price} </p>
                     </div>
-                    <div className="service-card-text">
-                      <p style={{ fontWeight: "bold" }}>Descripción</p>
-                      <p>{description}</p>
+                    <div
+                      style={{ marginTop: "0" }}
+                      className="service-card-text"
+                    >
+                      <p style={{ fontWeight: "bold", margin: "0" }}>
+                        Descripción
+                      </p>
+                      <p style={{ marginTop: "0" }}>{description}</p>
                     </div>
                     <div className="service-button">
                       <button
