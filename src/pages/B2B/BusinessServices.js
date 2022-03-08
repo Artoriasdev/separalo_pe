@@ -9,6 +9,7 @@ import Container from "../../Modal/Container/ContainerService";
 import { MyModal } from "../../components/Modal";
 import { serviceList } from "../../actions/serviceList";
 import { ServiceListTable } from "../../components/ServiceListTable";
+import { modalRedirectFinished } from "../../actions/modal";
 
 export const BusinessServices = () => {
   const history = useHistory();
@@ -16,11 +17,12 @@ export const BusinessServices = () => {
   const { redirect } = useSelector((state) => state.modal);
   const { id } = useSelector((state) => state.auth.data);
 
-  if (redirect) {
-    history.go();
-  }
-
   const dispatch = useDispatch();
+
+  if (redirect) {
+    dispatch(serviceList(id));
+    dispatch(modalRedirectFinished());
+  }
 
   const handleClick = (id) => {
     switch (id) {
