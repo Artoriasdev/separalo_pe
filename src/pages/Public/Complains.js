@@ -298,16 +298,21 @@ export const Complains = () => {
               if (values.numDocumento.trim().length < 1) {
                 errors.numDocumento = REQUIRED;
               } else if (
-                values.numDocumento.length < values.minLengthValue ||
-                values.numDocumento.trim().length < values.minLengthValue
+                values.numDocumento.trim().length < values.minLengthValue &&
+                values.tipoDocumento !== "01"
               ) {
                 errors.numDocumento = `*El número de documento debe tener un minimo de ${values.minLengthValue} dígitos`;
+              } else if (
+                values.numDocumento.trim().length < values.minLengthValue &&
+                values.tipoDocumento === "01"
+              ) {
+                errors.numDocumento = `*El número de documento debe de tener ${values.minLengthValue} dígitos`;
               }
 
               if (values.celular.length < 1) {
                 errors.celular = REQUIRED;
               } else if (
-                values.celular.length <= 9 &&
+                values.celular.length < 9 ||
                 !values.celular.startsWith("9")
               ) {
                 errors.celular =

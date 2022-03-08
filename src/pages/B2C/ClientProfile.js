@@ -12,6 +12,7 @@ import {
   EMAIL_INVALID,
   EMAIL_MINLENGTH,
   E_MINLENGTH,
+  REQUIRED,
 } from "../../utils/constants";
 import { MyModal } from "../../components/Modal";
 import { documents } from "../../actions/documents";
@@ -241,8 +242,18 @@ export const ClientProfile = () => {
               minLengthValue: 1,
               ingreso: "",
             }}
-            validate={(values, props) => {
+            validate={(values) => {
               const errors = {};
+
+              if (values.celular.length < 1) {
+                errors.celular = REQUIRED;
+              } else if (
+                values.celular.length < 9 ||
+                !values.celular.startsWith("9")
+              ) {
+                errors.celular =
+                  "*El número de celular debe iniciar con el dígito 9 y debe ser de 9 dígitos .";
+              }
 
               if (!values.correo) {
                 errors.correo = "";
@@ -254,20 +265,19 @@ export const ClientProfile = () => {
               if (!values.numeroDocumento) {
                 errors.numeroDocumento = "";
               } else if (
-                values.numeroDocumento.length < values.minLengthValue ||
-                values.numeroDocumento.trim().length < values.minLengthValue
+                (values.numeroDocumento.length < values.minLengthValue ||
+                  values.numeroDocumento.trim().length <
+                    values.minLengthValue) &&
+                values.tipoDocumento !== "01"
               ) {
                 errors.numeroDocumento = `*El número de documento debe ser mínimo de ${values.minLengthValue} dígitos`;
-              }
-
-              if (!values.celular) {
-                errors.numCelular = "";
               } else if (
-                values.celular.length <= 9 &&
-                !values.celular.startsWith("9")
+                (values.numeroDocumento.length < values.minLengthValue ||
+                  values.numeroDocumento.trim().length <
+                    values.minLengthValue) &&
+                values.tipoDocumento === "01"
               ) {
-                errors.celular =
-                  "*El número de celular debe iniciar con el dígito 9 y debe ser de 9 dígitos .";
+                errors.numeroDocumento = `*El número de documento debe de tener ${values.minLengthValue} dígitos`;
               }
 
               return errors;

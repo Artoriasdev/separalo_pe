@@ -254,15 +254,21 @@ export const RegisterCustomer = () => {
               if (values.nroDocumento.trim().length < 1) {
                 errors.nroDocumento = REQUIRED;
               } else if (
-                values.nroDocumento.trim().length < values.minLengthValue
+                values.nroDocumento.trim().length < values.minLengthValue &&
+                values.documentos !== "01"
               ) {
                 errors.nroDocumento = `*El número de documento debe tener un mínimo de ${values.minLengthValue} dígitos`;
+              } else if (
+                values.nroDocumento.trim().length < values.minLengthValue &&
+                values.documentos === "01"
+              ) {
+                errors.nroDocumento = `*El número de documento debe de tener ${values.minLengthValue} dígitos`;
               }
 
               if (values.celular.length < 1) {
                 errors.celular = REQUIRED;
               } else if (
-                values.celular.length <= 9 &&
+                values.celular.length < 9 ||
                 !values.celular.startsWith("9")
               ) {
                 errors.celular =

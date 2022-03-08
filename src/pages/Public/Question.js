@@ -62,7 +62,7 @@ export const Question = () => {
     createData(
       "1",
       "¿Qué es sepáralo.pe?",
-      "Somos una plataforma que tiene como objetivo tu bienestar y crecimiento personal, poniendo a tu disposición distintos especialistas que te brindarán sus servicios de manera virtual."
+      "Somos una plataforma que tiene como objetivo tu bienestar y crecimiento personal, poniendo a tu disposición distintos especialistas que te brindarán sus servicios."
     ),
     createData(
       "2",
@@ -87,7 +87,7 @@ export const Question = () => {
     createData(
       "6",
       "¿Qué pasa si el prestador de servicio no se presentó en el horario reservado y ya pagué el servicio?",
-      "La tolerancia será de 10 minutos de iniciada la sesión. Si este no se conectó a la sesión pactada, entonces deberás tomarle un print de pantalla a la sesión donde se vea la fecha y hora, y enviarlo a soporte@sepáralo.pe. Luego de revisar la información enviada, te estaremos devolviendo el costo para que puedas reservar otra sesión."
+      "La tolerancia será de 10 minutos de iniciada la sesión. Si este acudió a la cita pactada, entonces deberás tomarle un print de pantalla a la sesión donde se vea la fecha y hora, y enviarlo a soporte@sepáralo.pe. Luego de revisar la información enviada, te estaremos devolviendo el costo para que puedas reservar otra sesión."
     ),
   ];
 
