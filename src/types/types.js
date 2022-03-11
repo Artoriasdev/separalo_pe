@@ -13,6 +13,7 @@ export const types = {
   modalRedirect: "[Modal] Modal Redirect",
   modalRedirectDone: "[Modal] Modal Redirect done",
   modalError: "[Modal] Modal Error Display",
+  modalErrorClose: "[Modal] Modal Error Display",
 
   dialogOpen: "[Dialog] Dialog opened",
   dialogClose: "[Dialog] Dialog closed",

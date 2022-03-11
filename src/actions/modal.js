@@ -17,3 +17,6 @@ export const modalRedirectFinished = () => ({
 export const modalErr = () => ({
   type: types.modalError,
 });
+export const modalErrClose = () => ({
+  type: types.modalErrorClose,
+});

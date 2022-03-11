@@ -11,7 +11,11 @@ import {
 } from "@mui/material";
 import { MyButton } from "./Fields";
 import { useDispatch, useSelector } from "react-redux";
-import { modalClose, modalRedirectFinished } from "../actions/modal";
+import {
+  modalClose,
+  modalErrClose,
+  modalRedirectFinished,
+} from "../actions/modal";
 import { useFormikContext } from "formik";
 import { makeStyles } from "@mui/styles";
 import { useHistory } from "react-router";
@@ -37,7 +41,9 @@ const useStyles = makeStyles({
 });
 
 export const MyModal = ({ link }) => {
-  const { opened, message, redirect } = useSelector((state) => state.modal);
+  const { opened, message, redirect, error } = useSelector(
+    (state) => state.modal
+  );
   const history = useHistory();
   const dispatch = useDispatch();
   const handleClose = () => {
@@ -46,6 +52,12 @@ export const MyModal = ({ link }) => {
       history.push(link);
       dispatch(modalRedirectFinished());
     }
+  };
+  const handleRedirectLogin = () => {
+    dispatch(modalClose());
+    dispatch(modalErrClose());
+
+    history.push("/login/C");
   };
 
   return (
@@ -73,14 +85,25 @@ export const MyModal = ({ link }) => {
               {message}
             </Typography>
 
-            <MyButton
-              size="large"
-              color="primary"
-              variant="contained"
-              onClick={handleClose}
-            >
-              Aceptar
-            </MyButton>
+            {error ? (
+              <MyButton
+                size="large"
+                color="primary"
+                variant="contained"
+                onClick={handleRedirectLogin}
+              >
+                Iniciar sesión
+              </MyButton>
+            ) : (
+              <MyButton
+                size="large"
+                color="primary"
+                variant="contained"
+                onClick={handleClose}
+              >
+                Aceptar
+              </MyButton>
+            )}
           </Box>
         </Fade>
       </Modal>

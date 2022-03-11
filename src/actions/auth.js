@@ -27,12 +27,27 @@ export const login = (infoLogin, workflow) => {
               "category_id"
             )}`
           );
+          localStorage.removeItem("service_id");
+          localStorage.removeItem("business_id");
+          localStorage.removeItem("category_id");
+          localStorage.removeItem("log_invited");
+        } else if (localStorage.getItem("email_registered") !== null) {
+          if (localStorage.getItem("email_registered") === infoLogin.username) {
+            history.push(
+              `/customer/reserve/${localStorage.getItem(
+                "service_id"
+              )}/${localStorage.getItem("business_id")}/${localStorage.getItem(
+                "category_id"
+              )}`
+            );
+          } else {
+            history.push("/");
+          }
+          localStorage.removeItem("service_id");
+          localStorage.removeItem("business_id");
+          localStorage.removeItem("category_id");
+          localStorage.removeItem("email_registered");
         }
-
-        localStorage.removeItem("service_id");
-        localStorage.removeItem("business_id");
-        localStorage.removeItem("category_id");
-        localStorage.removeItem("log_invited");
 
         localStorage.setItem("data", JSON.stringify(data));
         localStorage.setItem("workflow", JSON.stringify(workflow));

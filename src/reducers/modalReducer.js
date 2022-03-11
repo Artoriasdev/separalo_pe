@@ -35,6 +35,11 @@ export const modalReducer = (state = initialState, action) => {
         ...state,
         error: true,
       };
+    case types.modalErrorClose:
+      return {
+        ...state,
+        error: false,
+      };
     default:
       return state;
   }

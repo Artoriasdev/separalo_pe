@@ -4,16 +4,27 @@ import {
   handleRegisterReservationInvited,
 } from "../helpers/handlers";
 import { types } from "../types/types";
-import { modalOpen, modalRedirect } from "./modal";
+import { modalErr, modalOpen, modalRedirect } from "./modal";
 import history from "../helpers/history";
 import { emailReservation } from "./reservationEmailInvited";
 import { checkShoppingItemsInvited } from "./shoppingCar";
 
-export const reservation = (reserveModel) => {
+export const reservation = (reserveModel, ...rest) => {
   return async (dispatch) => {
     try {
-      const { data } = await handleRegisterReservationInvited(reserveModel);
-      if (data.response === "true") {
+      const data = await handleRegisterReservationInvited(reserveModel);
+      console.log(data);
+      if (data.status === 206) {
+        JSON.stringify(
+          localStorage.setItem("email_registered", reserveModel.email)
+        );
+        localStorage.setItem("service_id", rest[0]);
+        localStorage.setItem("business_id", rest[1]);
+        localStorage.setItem("category_id", rest[2]);
+
+        dispatch(modalErr());
+        dispatch(modalOpen(data.data.message));
+      } else if (data.data.response === "true") {
         JSON.stringify(localStorage.setItem("email", reserveModel.email));
         JSON.stringify(localStorage.setItem("name_invited", reserveModel.name));
         JSON.stringify(
@@ -24,14 +35,14 @@ export const reservation = (reserveModel) => {
         );
 
         dispatch(emailReservation(reserveModel.email));
-        dispatch(reserve(data));
+        dispatch(reserve(data.data));
         dispatch(checkShoppingItemsInvited(reserveModel.email));
         dispatch(
           modalOpen("¡Su reserva ha sido registrada de manera exitosa!")
         );
         dispatch(modalRedirect());
-      } else if (data.response === "false") {
-        dispatch(modalOpen(data.message));
+      } else if (data.data.response === "false") {
+        dispatch(modalOpen(data.data.message));
       }
     } catch (error) {
       console.log(error);

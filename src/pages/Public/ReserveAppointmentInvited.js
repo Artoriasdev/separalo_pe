@@ -243,7 +243,14 @@ export const ReserveAppointmentInvited = () => {
               reserveModel.reservationDate = values.fechaDisponible;
               reserveModel.reservationTime = values.horarioDisponible;
 
-              dispatch(reservation(reserveModel));
+              dispatch(
+                reservation(
+                  reserveModel,
+                  params.id,
+                  params.businessId,
+                  params.categoryId
+                )
+              );
             }}
           >
             {({ isSubmitting, errors, touched, values }) => (
