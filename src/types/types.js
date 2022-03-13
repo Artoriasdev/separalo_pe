@@ -90,4 +90,8 @@ export const types = {
 
   saveEmail: "[Reservation] Reservation invited email saved",
   deleteEmail: "[Reservation] Reservation invited email deleted",
+
+  emailInvited: "[Email] Email Invited",
+  emailClient: "[Email] Email Client",
+  Reserved: "[Reservation] Reservation completed",
 };

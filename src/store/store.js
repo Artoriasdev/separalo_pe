@@ -37,6 +37,7 @@ import { cuponMessage } from "../reducers/cuponMessage";
 import { paymentReducer } from "../reducers/paymentReducer";
 import { banksUpdateReducer } from "../reducers/banksUpdateReducer";
 import { reservationEmailInvitedReducer } from "../reducers/reservationEmailInvitedReducer";
+import { checkEmail } from "../reducers/checkEmailReducer";
 
 const composeEnhancers =
   (typeof window !== "undefined" &&
@@ -81,6 +82,7 @@ const reducers = combineReducers({
   cupon: cuponMessage,
   payment: paymentReducer,
   reservationEmailInvited: reservationEmailInvitedReducer,
+  businessReservation: checkEmail,
 });
 
 export const store = createStore(
