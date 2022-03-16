@@ -431,7 +431,7 @@ const FormFields = ({
             margin: "10px 0",
           }}
         >
-          <Table sx={{ minWidth: 650 }}>
+          <Table sx={{ minWidth: 100 }}>
             <TableHead
               style={{
                 background: "#f3f3f3",

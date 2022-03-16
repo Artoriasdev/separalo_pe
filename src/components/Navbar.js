@@ -39,7 +39,11 @@ const Navbar = () => {
     <header className="header">
       <Box sx={{ flexGrow: 1 }}>
         <AppBar className="header" position="static">
-          <Toolbar className="bar" variant="dense">
+          <Toolbar
+            className="bar"
+            variant="dense"
+            style={{ padding: "0", margin: "0" }}
+          >
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <Button
                 className="font buttonHeader__figure"

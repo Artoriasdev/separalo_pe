@@ -274,7 +274,7 @@ const FormFields = ({
           }}
           className="modal-table"
         >
-          <Table sx={{ minWidth: 650 }}>
+          <Table sx={{ minWidth: 150 }}>
             <TableHead
               style={{
                 background: "#f3f3f3",

@@ -37,11 +37,11 @@ export const MyTextInput = ({ label, ...props }) => {
       <TextField
         label={label}
         variant="outlined"
-        className={
-          meta.touched && meta.error
-            ? "animate__animated animate__shakeX"
-            : null
-        }
+        // className={
+        //   meta.touched && meta.error
+        //     ? "animate__animated animate__shakeX"
+        //     : null
+        // }
         {...field}
         {...props}
       />
@@ -65,11 +65,11 @@ export const MyPasswordInput = ({ label, ...props }) => {
       <OutlinedInput
         {...field}
         {...props}
-        className={
-          meta.touched && meta.error
-            ? "animate__animated animate__shakeX"
-            : null
-        }
+        // className={
+        //   meta.touched && meta.error
+        //     ? "animate__animated animate__shakeX"
+        //     : null
+        // }
         autoComplete="off"
         type={show ? "text" : "password"}
         endAdornment={
@@ -113,11 +113,11 @@ export const MyCheckbox = ({
   return (
     <div>
       <FormControlLabel
-        className={
-          !values.checkbox && touched.checkbox
-            ? "animate__animated animate__shakeX"
-            : null
-        }
+        // className={
+        //   !values.checkbox && touched.checkbox
+        //     ? "animate__animated animate__shakeX"
+        //     : null
+        // }
         control={
           <Checkbox
             {...props}
@@ -188,11 +188,11 @@ export const MySelect = ({ children, label, despachador, ...props }) => {
         displayEmpty
         {...field}
         {...props}
-        className={
-          meta.touched && meta.error
-            ? "animate__animated animate__shakeX"
-            : null
-        }
+        // className={
+        //   meta.touched && meta.error
+        //     ? "animate__animated animate__shakeX"
+        //     : null
+        // }
       >
         {children}
       </Select>
@@ -263,11 +263,11 @@ export const MyDocumentSelect = ({
         displayEmpty
         {...field}
         {...props}
-        className={
-          meta.touched && meta.error
-            ? "animate__animated animate__shakeX"
-            : null
-        }
+        // className={
+        //   meta.touched && meta.error
+        //     ? "animate__animated animate__shakeX"
+        //     : null
+        // }
       >
         {children}
       </Select>

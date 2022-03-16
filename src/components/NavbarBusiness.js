@@ -108,52 +108,59 @@ export const NavbarBusines = () => {
       onClose={handleMobileMenuClose}
       style={{
         maxWidth: "210px",
-        textAlign: "center",
         marginLeft: "12px",
       }}
     >
-      <Button
-        className="font  buttonHeader"
+      <MenuItem
         onClick={() => handleRedirect(data.listMenu[1].idMenu)}
-        style={{
-          textTransform: "capitalize",
-          color: "black",
-        }}
+        className="font"
+        style={{ justifyContent: "flex-end" }}
       >
+        {/* <ListItemText primary="Cerrar sesión" className="font-p" /> */}
         {data.listMenu[1].nameMenu}
-      </Button>
-      <Button
-        className="font buttonHeader"
+      </MenuItem>
+      <MenuItem
         onClick={() => handleRedirect(data.listMenu[2].idMenu)}
-        style={{
-          textTransform: "capitalize",
-          color: "black",
-        }}
+        className="font"
+        style={{ justifyContent: "flex-end" }}
       >
+        {/* <ListItemText primary="Cerrar sesión" className="font-p" /> */}
         {data.listMenu[2].nameMenu}
-      </Button>
-      <Button
-        className="font buttonHeader"
+      </MenuItem>
+      <MenuItem
         onClick={() => handleRedirect(data.listMenu[3].idMenu)}
-        style={{
-          textTransform: "capitalize",
-          color: "black",
-        }}
+        className="font"
+        style={{ justifyContent: "flex-end" }}
       >
+        {/* <ListItemText primary="Cerrar sesión" className="font-p" /> */}
         {data.listMenu[3].nameMenu}
-      </Button>
-      <Button
-        className="font buttonHeader"
+      </MenuItem>
+      <MenuItem
         onClick={() => handleRedirect(data.listMenu[0].idMenu)}
-        style={{
-          textTransform: "capitalize",
-          color: "black",
-        }}
+        className="font"
+        style={{ justifyContent: "flex-end" }}
       >
+        {/* <ListItemText primary="Cerrar sesión" className="font-p" /> */}
         {data.listMenu[0].nameMenu}
-      </Button>
+      </MenuItem>
+      <MenuItem
+        onClick={() => handleRedirect(7)}
+        className="font"
+        style={{ justifyContent: "flex-end" }}
+      >
+        {/* <ListItemText primary="Cerrar sesión" className="font-p" /> */}
+        Cambiar contraseña
+      </MenuItem>
+      <MenuItem
+        onClick={handleLogout}
+        className="font"
+        style={{ justifyContent: "flex-end" }}
+      >
+        {/* <ListItemText primary="Cerrar sesión" className="font-p" /> */}
+        Cerrar sesión
+      </MenuItem>
 
-      <Button
+      {/* <Button
         className="font"
         onClick={handleClick}
         style={{
@@ -171,17 +178,7 @@ export const NavbarBusines = () => {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
-      >
-        <MenuItem
-          style={{ marginRight: "10px" }}
-          onClick={() => handleRedirect(7)}
-        >
-          <ListItemText primary="Cambiar contraseña" />
-        </MenuItem>
-        <MenuItem onClick={handleLogout}>
-          <ListItemText primary="Cerrar sesión" />
-        </MenuItem>
-      </StyledMenuSettings>
+      ></StyledMenuSettings> */}
     </Menu>
   );
 
@@ -193,12 +190,18 @@ export const NavbarBusines = () => {
           position="static"
           style={{ padding: "0 20px" }}
         >
-          <Toolbar className="bar" variant="dense">
+          <Toolbar
+            className="bar"
+            variant="dense"
+            style={{ margin: "0", padding: "0" }}
+          >
             <Button
               className="font  buttonHeader"
               onClick={handleRedirectHomeBusiness}
               style={{
                 textTransform: "none",
+                paddingLeft: "30px",
+                marginTop: "-5px",
               }}
             >
               <img
@@ -284,8 +287,6 @@ export const NavbarBusines = () => {
                 aria-haspopup="true"
                 onClick={handleMobileMenuOpen}
                 style={{
-                  marginLeft: "20px",
-                  marginRight: "-20px",
                   paddingLeft: "0",
                   paddingRight: "0",
                   color: "black",
