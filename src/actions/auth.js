@@ -7,6 +7,7 @@ import { types } from "../types/types";
 import { finishChecking, startChecking } from "./checking";
 import { modalOpen } from "./modal";
 import history from "../helpers/history";
+import { reservationLogout } from "./checkEmail";
 
 export const login = (infoLogin, workflow) => {
   return async (dispatch) => {
@@ -111,6 +112,7 @@ export const logout = () => {
     setTimeout(() => {
       try {
         dispatch(logoutSync());
+        dispatch(reservationLogout());
         dispatch(finishChecking());
       } catch (error) {
         console.log(error);

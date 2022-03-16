@@ -37,3 +37,7 @@ const invitedEmail = (payload) => ({
 export const reservationCompleted = () => ({
   type: types.Reserved,
 });
+
+export const reservationLogout = () => ({
+  type: types.ReserveLogout,
+});

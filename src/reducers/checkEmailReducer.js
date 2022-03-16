@@ -26,6 +26,12 @@ export const checkEmail = (state = initialState, action) => {
         disabled: true,
         message: "",
       };
+    case types.ReserveLogout:
+      return {
+        data: {},
+        disabled: true,
+        message: "",
+      };
     default:
       return state;
   }

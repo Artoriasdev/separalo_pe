@@ -94,4 +94,5 @@ export const types = {
   emailInvited: "[Email] Email Invited",
   emailClient: "[Email] Email Client",
   Reserved: "[Reservation] Reservation completed",
+  ReserveLogout: "[Reservation] Clear info",
 };
