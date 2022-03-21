@@ -193,7 +193,7 @@ export const NavbarBusines = () => {
           <Toolbar
             className="bar"
             variant="dense"
-            style={{ margin: "0", padding: "0" }}
+            // style={{ margin: "0", padding: "0" }}
           >
             <Button
               className="font  buttonHeader"

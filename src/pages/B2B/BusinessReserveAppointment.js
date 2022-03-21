@@ -228,7 +228,7 @@ export const BusinessReserveAppointment = () => {
               reserveModel.reservationTime = values.horarioDisponible;
 
               if (disabled) {
-                dispatch(reservationClient(reserveModel, token));
+                dispatch(reservationBusiness(reserveModel, token));
               } else {
                 dispatch(reservationBusiness(reserveModel, token));
               }

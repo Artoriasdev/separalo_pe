@@ -42,7 +42,7 @@ const Navbar = () => {
           <Toolbar
             className="bar"
             variant="dense"
-            style={{ padding: "0", margin: "0" }}
+            // style={{ padding: "0", margin: "0" }}
           >
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <Button
