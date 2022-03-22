@@ -22,15 +22,18 @@ import {
 } from "@mui/material";
 
 import {
+  checkShoppingItems,
   cuponClear,
   shoppingCarDelete,
   shoppingCarDeleteInvited,
   shoppingDiscount,
+  shoppingDiscountInvited,
 } from "../actions/shoppingCar";
 import { payment, paymentInvited } from "../actions/payment";
 import { finishChecking, startChecking } from "../actions/checking";
 import Delete from "../assets/images/Delete.svg";
 import { CustomizedTooltips, TriggersTooltips } from "../components/ToolTip";
+import { checkEmailReservation } from "../actions/reservationEmailInvited";
 
 const theme = createTheme({
   breakpoints: {
@@ -64,8 +67,11 @@ export const ShoppingList = () => {
   const { shoppingCarItems } = useSelector((state) => state.shoppingCar);
   const { show, valid, message } = useSelector((state) => state.cupon);
   const { email } = useSelector((state) => state.reservationEmailInvited);
+  const { coupon } = useSelector((state) => state.cupon);
+
   const [opened, setOpened] = useState(false);
   const [selected, setSelected] = useState();
+  const data = localStorage.getItem("data");
 
   var values;
 
@@ -75,6 +81,11 @@ export const ShoppingList = () => {
 
   useEffect(() => {
     dispatch(cuponClear());
+    if (logged) {
+      dispatch(checkShoppingItems(token));
+    } else if (data === null) {
+      dispatch(checkEmailReservation());
+    }
   }, []);
 
   const handleReserveDelete = () => {
@@ -100,7 +111,14 @@ export const ShoppingList = () => {
   };
 
   const handleDiscount = () => {
-    dispatch(shoppingDiscount(values));
+    if (logged) {
+      dispatch(shoppingDiscount(values, token));
+    } else if (
+      localStorage.getItem("email") !== null ||
+      localStorage.getItem("email") !== ""
+    ) {
+      dispatch(shoppingDiscountInvited(values));
+    }
   };
 
   const handleReserveMore = () => {
@@ -110,10 +128,10 @@ export const ShoppingList = () => {
   const handleReservePayment = () => {
     // dispatch(shoppingCarDone(shoppingCarItems));
     if (logged) {
-      dispatch(payment(token));
+      dispatch(payment(token, coupon));
       dispatch(startChecking());
     } else {
-      dispatch(paymentInvited(email));
+      dispatch(paymentInvited(email, coupon));
       dispatch(startChecking());
     }
   };
@@ -211,6 +229,7 @@ export const ShoppingList = () => {
                       price,
                       nameCategory,
                       timeReservation,
+                      discount,
                     }) => {
                       return (
                         <TableRow key={preCodeReservation}>
@@ -250,7 +269,7 @@ export const ShoppingList = () => {
                             align="left"
                             style={{ color: "#5950A2", fontWeight: "bold" }}
                           >
-                            -S/ {"0.00"}
+                            {discount}
                           </TableCell>
                           <TableCell className="font">
                             {state === "Caducado" ? (
@@ -287,6 +306,7 @@ export const ShoppingList = () => {
                     nameCategory,
                     timeReservation,
                     preCodeReservation,
+                    discount,
                   }) => {
                     return (
                       <div className="shop-card" key={preCodeReservation}>
@@ -328,7 +348,7 @@ export const ShoppingList = () => {
                           <div className="shop-card-text">
                             <p className="shop-card-bold">Dsctos.</p>
                             <p style={{ color: "#5950A2", fontWeight: "bold" }}>
-                              {"-S/ 0.00"}{" "}
+                              {discount}
                             </p>
                           </div>
                           <div className="shop-card-text">
@@ -396,11 +416,15 @@ export const ShoppingList = () => {
           <div className="payment-container">
             <div className="totals">
               <p>Subtotal </p>
-              <p>{shoppingCarItems[0] && shoppingCarItems[0].sumPrice}</p>
+              <p>{shoppingCarItems[0] && shoppingCarItems[0].subTotal}</p>
             </div>
             <div className="totals">
               <p>Descuento </p>
-              <p>-S/ {"0.00"}</p>
+              <p>
+                {shoppingCarItems[0]?.discountTotal
+                  ? shoppingCarItems[0]?.discountTotal
+                  : "-S/ 0.00"}
+              </p>
             </div>
             <div className="totals" style={{ color: "#5950A2" }}>
               <p style={{ fontWeight: "bold" }}>Total a pagar </p>

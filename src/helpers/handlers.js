@@ -1090,14 +1090,14 @@ export const handleGetShoppingCart = (tk) => {
   return rspApi;
 };
 
-export const handleCreatePayment = (tk) => {
+export const handleCreatePayment = (tk, cupon) => {
   var headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
     Authorization: `Bearer ${tk}`,
   };
 
-  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/payment/createPayment`;
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/payment/createPayment/${cupon}`;
 
   const rspApi = axios
     .get(linkDocumentsApi, {
@@ -1112,14 +1112,14 @@ export const handleCreatePayment = (tk) => {
   return rspApi;
 };
 
-export const handleCreatePaymentInvited = (email) => {
+export const handleCreatePaymentInvited = (email, cupon) => {
   var headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
     Authorization: ``,
   };
 
-  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/payment/createPaymentInvited/${email}`;
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/payment/createPaymentInvited/${email}/${cupon}`;
 
   const rspApi = axios
     .get(linkDocumentsApi, {
@@ -1252,6 +1252,48 @@ export const handleValidateCustomer = (email, token) => {
   };
 
   let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/customer/validateCustomer/${email}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+export const handleValidateCoupon = (coupon, token) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/coupon/validateCoupon/${coupon}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+export const handleValidateCouponInvited = (email, coupon) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: ``,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/coupon/validateCouponInvited/${email}/${coupon}`;
 
   const rspApi = axios
     .get(linkDocumentsApi, {

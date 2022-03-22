@@ -7,10 +7,10 @@ import { modalOpen } from "./modal";
 import history from "../helpers/history";
 import { finishChecking } from "./checking";
 
-export const payment = (token) => {
+export const payment = (token, cupon) => {
   return async (dispatch) => {
     try {
-      const { data } = await handleCreatePayment(token);
+      const { data } = await handleCreatePayment(token, cupon);
       if (data.response === "true") {
         dispatch(paymentData(data.data));
         dispatch(finishChecking());
@@ -19,16 +19,17 @@ export const payment = (token) => {
         dispatch(modalOpen(data.message));
       }
     } catch (error) {
+      dispatch(finishChecking());
       console.log(error);
       history.push("/error");
     }
   };
 };
 
-export const paymentInvited = (email) => {
+export const paymentInvited = (email, cupon) => {
   return async (dispatch) => {
     try {
-      const { data } = await handleCreatePaymentInvited(email);
+      const { data } = await handleCreatePaymentInvited(email, cupon);
       if (data.response === "true") {
         console.log(data);
         dispatch(paymentData(data.data));
@@ -38,6 +39,7 @@ export const paymentInvited = (email) => {
         dispatch(modalOpen(data.message));
       }
     } catch (error) {
+      dispatch(finishChecking());
       console.log(error);
       history.push("/error");
     }

@@ -3,6 +3,8 @@ import {
   handleDeleteShoppingCartItemInvited,
   handleGetShoppingCart,
   handleGetShoppingCartInvited,
+  handleValidateCoupon,
+  handleValidateCouponInvited,
 } from "../helpers/handlers";
 import { types } from "../types/types";
 import { modalOpen } from "./modal";
@@ -94,35 +96,42 @@ export const shoppingCarItemsPayed = () => ({
   type: types.shoppingCarItemsPayed,
 });
 
-export const shoppingDiscount = (code) => {
+export const shoppingDiscountInvited = (email, code) => {
   return async (dispatch) => {
     try {
-      const codesList = [
-        "SEPARALO01",
-        "SEPARALO02",
-        "SEPARALO03",
-        "SEPARALO04",
-      ];
-      if (codesList.includes(code)) {
-        dispatch(discount(3.0));
-        dispatch(cuponValid("Este cupón es válido"));
-      } else {
-        dispatch(cuponInvalid("Este cupón es inválido"));
+      const { data } = await handleValidateCouponInvited(email, code);
+      if (data.response === "true") {
+        dispatch(cuponValid(code, data.message));
+        dispatch(shoppingCarLoad(data.data));
+      } else if (data.response === "false") {
+        dispatch(cuponInvalid(data.message));
       }
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const shoppingDiscount = (code, token) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await handleValidateCoupon(code, token);
+      if (data.response === "true") {
+        dispatch(cuponValid(code, data.message));
+        dispatch(shoppingCarLoad(data.data));
+      } else if (data.response === "false") {
+        dispatch(cuponInvalid(data.message));
+      }
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
 };
 
-const discount = (amount) => ({
-  type: types.shoppingCarDiscount,
-  payload: amount,
-});
-
-const cuponValid = (message) => ({
+const cuponValid = (code, message) => ({
   type: types.cuponValid,
-  payload: message,
+  payload: { message: message, coupon: code },
 });
 const cuponInvalid = (message) => ({
   type: types.cuponInvalid,

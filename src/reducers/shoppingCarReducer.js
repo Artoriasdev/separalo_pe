@@ -30,16 +30,6 @@ export const shoppingCarReducer = (state = initialState, action) => {
         ...state,
         shoppingCarItems: items,
       };
-
-    case types.shoppingCarDiscount:
-      return {
-        ...state,
-        shoppingCarItems: state.shoppingCarItems.map((item) =>
-          item.titleService === "Chancha 69"
-            ? { ...item, discount: action.payload }
-            : item
-        ),
-      };
     case types.clientLogout:
       return {
         shoppingCarItems: [],

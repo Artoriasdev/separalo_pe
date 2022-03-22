@@ -3,6 +3,7 @@ const initialState = {
   show: false,
   valid: false,
   message: "",
+  coupon: "noCoupon",
 };
 
 export const cuponMessage = (state = initialState, action) => {
@@ -11,13 +12,15 @@ export const cuponMessage = (state = initialState, action) => {
       return {
         show: true,
         valid: true,
-        message: action.payload,
+        message: action.payload.message,
+        coupon: action.payload.coupon,
       };
     case types.cuponInvalid:
       return {
         show: true,
         valid: false,
         message: action.payload,
+        coupon: "noCoupon",
       };
 
     case types.cuponEmpty:
@@ -25,6 +28,7 @@ export const cuponMessage = (state = initialState, action) => {
         show: false,
         valid: false,
         message: "",
+        coupon: "noCoupon",
       };
     default:
       return state;
