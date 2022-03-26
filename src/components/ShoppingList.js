@@ -117,7 +117,7 @@ export const ShoppingList = () => {
       localStorage.getItem("email") !== null ||
       localStorage.getItem("email") !== ""
     ) {
-      dispatch(shoppingDiscountInvited(values));
+      dispatch(shoppingDiscountInvited(localStorage.getItem("email"), values));
     }
   };
 
