@@ -38,6 +38,8 @@ import { paymentReducer } from "../reducers/paymentReducer";
 import { banksUpdateReducer } from "../reducers/banksUpdateReducer";
 import { reservationEmailInvitedReducer } from "../reducers/reservationEmailInvitedReducer";
 import { checkEmail } from "../reducers/checkEmailReducer";
+import { bannerReducer } from "../reducers/bannerReducer";
+import { businessReportsReducer } from "../reducers/businessReportsReducer";
 
 const composeEnhancers =
   (typeof window !== "undefined" &&
@@ -83,6 +85,8 @@ const reducers = combineReducers({
   payment: paymentReducer,
   reservationEmailInvited: reservationEmailInvitedReducer,
   businessReservation: checkEmail,
+  banner: bannerReducer,
+  businessReports: businessReportsReducer,
 });
 
 export const store = createStore(

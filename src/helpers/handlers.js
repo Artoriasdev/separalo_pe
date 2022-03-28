@@ -1307,3 +1307,69 @@ export const handleValidateCouponInvited = (email, coupon) => {
     });
   return rspApi;
 };
+
+export const handleGetPromotionalAds = () => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: ``,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/generic/getPromotionalAds`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleSales = (token, date, fecha) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/report/sales/${date}/${fecha}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};
+
+export const handleGetSalesConsolidate = (token, date, fecha) => {
+  var headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+
+  let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/report/salesConsolidate/${date}/${fecha}`;
+
+  const rspApi = axios
+    .get(linkDocumentsApi, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch(({ response }) => {
+      return response;
+    });
+  return rspApi;
+};

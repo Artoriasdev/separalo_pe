@@ -33,15 +33,8 @@ import { registerCustomer } from "../../actions/register";
 import { termsLoad } from "../../actions/termsLoad";
 
 const FormMayus = () => {
-  const { values, errors, touched, handleBlur, setFieldValue } =
+  const { values, errors, touched, handleBlur, handleChange } =
     useFormikContext();
-
-  const handleMayus = (e) => {
-    const value = e.target.value;
-    const formField = e.target.name;
-
-    setFieldValue(formField, value.toUpperCase(), true);
-  };
 
   return (
     <div className="files">
@@ -56,7 +49,7 @@ const FormMayus = () => {
           value={values.nombre}
           error={!!errors.nombre && touched.nombre}
           onBlur={handleBlur}
-          onChange={handleMayus}
+          onChange={handleChange}
         />
         <ErrorMessage className="error" name="nombre" component="div" />
       </div>
@@ -71,7 +64,7 @@ const FormMayus = () => {
           value={values.apellido}
           error={!!errors.apellido && touched.apellido}
           onBlur={handleBlur}
-          onChange={handleMayus}
+          onChange={handleChange}
         />
         <ErrorMessage className="error" name="apellido" component="div" />
       </div>

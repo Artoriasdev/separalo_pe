@@ -56,7 +56,6 @@ export const MyModal = ({ link }) => {
   const handleRedirectLogin = () => {
     dispatch(modalClose());
     dispatch(modalErrClose());
-
     history.push("/login/C");
   };
 

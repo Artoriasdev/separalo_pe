@@ -1,6 +1,7 @@
 import { Paper } from "@mui/material";
 import React from "react";
 import Carousel from "react-material-ui-carousel";
+import { useSelector } from "react-redux";
 import Image from "../assets/images/Banner_web_3.jpg";
 
 function Project(props) {
@@ -8,29 +9,22 @@ function Project(props) {
     <Paper className="Project" elevation={0}>
       <div
         className="image-container"
-        style={{
-          //   position: "relative",
-          height: "100%",
-          width: "100%",
-          //   textAlign: "center",
-        }}
+        // style={{
+        //   //   position: "relative",
+        //   height: "100%",
+        //   width: "100%",
+        //   //   textAlign: "center",
+        // }}
       >
-        <img src={props.item.link} alt="¡logo separalo.pe!" />
+        <img src={props.item.promotionImgUrl} alt={props.item.description} />
       </div>
     </Paper>
   );
 }
 
-const items = [
-  {
-    id: "30%",
-    link: Image,
-    category: "4",
-    service: "3",
-  },
-];
-
 const MyProjectsExample = () => {
+  const { Adds } = useSelector((state) => state.banner);
+
   return (
     <div style={{ color: "#494949" }}>
       <Carousel
@@ -44,14 +38,14 @@ const MyProjectsExample = () => {
         cycleNavigation={true}
         fullHeightHover={true}
         swipe={true}
-        key={items.index}
+        key={Adds.index}
         navButtonsProps={{
           style: {
             backgroundColor: "#ffdd00",
           },
         }}
       >
-        {items.map((item, index) => {
+        {Adds.map((item, index) => {
           return <Project item={item} key={index} />;
         })}
       </Carousel>

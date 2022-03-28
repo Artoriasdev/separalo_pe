@@ -13,7 +13,7 @@ export const types = {
   modalRedirect: "[Modal] Modal Redirect",
   modalRedirectDone: "[Modal] Modal Redirect done",
   modalError: "[Modal] Modal Error Display",
-  modalErrorClose: "[Modal] Modal Error Display",
+  modalErrorClose: "[Modal] Modal Error Display Close",
 
   dialogOpen: "[Dialog] Dialog opened",
   dialogClose: "[Dialog] Dialog closed",
@@ -95,4 +95,11 @@ export const types = {
   emailClient: "[Email] Email Client",
   Reserved: "[Reservation] Reservation completed",
   ReserveLogout: "[Reservation] Clear info",
+
+  BannerAdds: "[Banner] Banner Adds obtained",
+
+  BusinessReportsMonth: "[Business] Business Reports Month",
+  BusinessReportsDays: "[Business] Business Reports Days",
+  BusinessReportsSales: "[Business] Business Reports Sales",
+  BusinessReportsClear: "[Business] Business Reports Clear",
 };

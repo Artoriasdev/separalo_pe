@@ -73,7 +73,7 @@ export const ShoppingList = () => {
   const [selected, setSelected] = useState();
   const data = localStorage.getItem("data");
 
-  var values;
+  const [values, setValues] = useState("");
 
   const handleClose = () => {
     setOpened(false);
@@ -104,7 +104,7 @@ export const ShoppingList = () => {
 
   const handleInputChange = ({ target }) => {
     const val = target.value;
-    values = val;
+    setValues(val);
     if (val === "") {
       dispatch(cuponClear());
     }

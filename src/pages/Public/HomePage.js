@@ -12,6 +12,7 @@ import trb4 from "../../assets/images/Transforma tu negocio 273 x 271.jpg";
 import { MySearchHomeInput } from "../../components/Fields";
 import { loadSearch } from "../../actions/search";
 import { ItemCategory } from "../../components/ItemCategory";
+import { loadBanners } from "../../actions/banner";
 
 export const HomePage = () => {
   // const history = useHistory();
@@ -26,6 +27,10 @@ export const HomePage = () => {
       setWindowWith(window.innerWidth);
     });
   }, [windowWith]);
+
+  useEffect(() => {
+    dispatch(loadBanners());
+  }, []);
 
   const handleInputChange = ({ target }) => {
     const val = target.value;

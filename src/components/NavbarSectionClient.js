@@ -221,11 +221,11 @@ export const NavbarSectionClient = () => {
             backgroundColor: anchorEl ? "#5829dd" : "transparent",
             color: anchorEl ? "white" : "black",
             textTransform: "capitalize",
-            width: "200px",
+            width: "auto",
             marginTop: "-4px",
           }}
         >
-          {data && data.firstName}
+          Bienvenido, {data && data.firstName + " " + data.lastName}
         </Button>
         <StyledMenu
           id="customized-menu"
