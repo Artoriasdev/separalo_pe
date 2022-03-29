@@ -6,12 +6,18 @@ export const loadReports = (token, date, fecha) => {
   return async (dispatch) => {
     try {
       const { data } = await handleSales(token, date, fecha);
-      if (data.data.listMonths !== undefined) {
+      // console.log(data.data, "data.data");
+      // console.log(data, "data total");
+
+      if (fecha === "M" && data.data !== undefined) {
         dispatch(reportsMonth(data.data));
-      } else if (data.data.listDays) {
+      } else if (fecha === "M" && data.data === undefined) {
+        dispatch(reportsMonth({ rankOfTime: date, listMonths: [] }));
+      } else if (fecha === "D" && data.data !== undefined) {
         dispatch(reportsDays(data.data));
+      } else if (fecha === "D" && data.data === undefined) {
+        dispatch(reportsDays({ rankOfTime: date, listDays: [] }));
       }
-      console.log(data);
     } catch (error) {
       console.log(error);
       history.push("/error");
@@ -23,7 +29,7 @@ export const loadSales = (token, date, fecha) => {
     try {
       const { data } = await handleGetSalesConsolidate(token, date, fecha);
       dispatch(sales(data.data));
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       console.log(error);
       history.push("/error");

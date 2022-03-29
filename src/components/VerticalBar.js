@@ -11,9 +11,8 @@ import {
   TableRow,
 } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-
-import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { loadReports, loadSales } from "../actions/businessReports";
 
 /*eslint no-extend-native: ["off", { "exceptions": ["Object"] }]*/
 Date.prototype.addDays = function (days) {
@@ -26,19 +25,20 @@ Date.prototype.restDays = function (days) {
   date.setDate(date.getDate() - days);
   return date;
 };
-Date.prototype.addYear = function (year) {
+Date.prototype.addYear = function (months) {
   const date = new Date(this.valueOf());
-  date.setFullYear(date.getFullYear() + year);
+  date.setMonth(date.getMonth() + months);
   return date;
 };
-Date.prototype.restYear = function (year) {
+Date.prototype.restYear = function (months) {
   const date = new Date(this.valueOf());
-  date.setFullYear(date.getFullYear() - year);
+  date.setMonth(date.getMonth() - months);
   return date;
 };
 
 const VerticalBar = (props) => {
   const { token } = useSelector((state) => state.auth.data);
+
   // const semanas = ["Semana 1", "Semana 2", "Semana 3", "Semana 4"];
   const dias = [
     "Lunes",
@@ -69,6 +69,10 @@ const VerticalBar = (props) => {
   const [date, setDate] = useState(
     today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate()
   );
+  const dispatch = useDispatch();
+  const { listMonth, listDays, sales, rankOfTime } = useSelector(
+    (state) => state.businessReports
+  );
 
   var year = today.getFullYear();
   const [time, setTime] = useState("");
@@ -97,119 +101,65 @@ const VerticalBar = (props) => {
     "rgba(100, 100, 99, 0.2)",
   ];
 
-  const handleSales = () => {
-    var headers = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    };
+  // if (data.rankOfTime !== undefined) {
+  //   // console.log("Esta ejecutando");
+  //   if (props.fecha === "D") {
+  //     for (let i = 0; i < data.listDays.length; i++) {
+  //       labelTest.push(data.listDays[i].nameDaySpanish);
+  //       if (props.venta === 1) {
+  //         setLabel("Cantidad de ventas");
+  //         numberTest.push(JSON.parse(data.listDays[i].totalQuantityDay));
+  //         setTextoVentas("Cantidad");
+  //       } else if (props.venta === 2) {
+  //         setLabel("S/.");
+  //         numberTest.push(JSON.parse(data.listDays[i].totalMountDay));
+  //         setTextoVentas("Ventas");
+  //       }
+  //     }
+  //     for (let i = 0; i < 7; i++) {
+  //       if (!labelTest.includes(dias[i])) {
+  //         labelTest.splice(i, 0, dias[i]);
+  //         numberTest.splice(i, 0, 0);
+  //       }
+  //     }
+  //     setLabels(labelTest);
+  //     setNumbers(numberTest);
+  //     setTime(data.rankOfTime);
+  //   } else if (props.fecha === "M") {
+  //     for (let i = 0; i < data.listMonths.length; i++) {
+  //       labelTest.push(data.listMonths[i].nameMonthSpanish);
+  //       if (props.venta === 1) {
+  //         setLabel("Cantidad de ventas");
+  //         numberTest.push(JSON.parse(data.listMonths[i].totalQuantityMonth));
+  //         setTextoVentas("Cantidad");
+  //       } else if (props.venta === 2) {
+  //         setLabel("S/.");
+  //         numberTest.push(JSON.parse(data.listMonths[i].totalMountMonth));
+  //         setTextoVentas("Ventas");
+  //       }
+  //     }
+  //     for (let i = 0; i < 12; i++) {
+  //       if (!labelTest.includes(meses[i])) {
+  //         labelTest.splice(i, 0, meses[i]);
+  //         numberTest.splice(i, 0, 0);
+  //       }
+  //     }
+  //     setLabels(labelTest);
+  //     setNumbers(numberTest);
+  //     setTime(data.rankOfTime + " del " + year);
+  //   }
+  //   // else if (props.fecha === "S") {
+  //   //   setTime("Octubre");
+  //   // }
 
-    let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/report/sales/${date}/${props.fecha}`;
-
-    const rspApi = axios
-      .get(linkDocumentsApi, {
-        headers: headers,
-      })
-      .then((response) => {
-        const { data } = response.data;
-        console.log(data);
-        if (data.rankOfTime !== undefined) {
-          // console.log("Esta ejecutando");
-          if (props.fecha === "D") {
-            for (let i = 0; i < data.listDays.length; i++) {
-              labelTest.push(data.listDays[i].nameDaySpanish);
-              if (props.venta === 1) {
-                setLabel("Cantidad de ventas");
-                numberTest.push(JSON.parse(data.listDays[i].totalQuantityDay));
-                setTextoVentas("Cantidad");
-              } else if (props.venta === 2) {
-                setLabel("S/.");
-                numberTest.push(JSON.parse(data.listDays[i].totalMountDay));
-                setTextoVentas("Ventas");
-              }
-            }
-            for (let i = 0; i < 7; i++) {
-              if (!labelTest.includes(dias[i])) {
-                labelTest.splice(i, 0, dias[i]);
-                numberTest.splice(i, 0, 0);
-              }
-            }
-            setLabels(labelTest);
-            setNumbers(numberTest);
-            setTime(data.rankOfTime);
-          } else if (props.fecha === "M") {
-            for (let i = 0; i < data.listMonths.length; i++) {
-              labelTest.push(data.listMonths[i].nameMonthSpanish);
-              if (props.venta === 1) {
-                setLabel("Cantidad de ventas");
-                numberTest.push(
-                  JSON.parse(data.listMonths[i].totalQuantityMonth)
-                );
-                setTextoVentas("Cantidad");
-              } else if (props.venta === 2) {
-                setLabel("S/.");
-                numberTest.push(JSON.parse(data.listMonths[i].totalMountMonth));
-                setTextoVentas("Ventas");
-              }
-            }
-            for (let i = 0; i < 12; i++) {
-              if (!labelTest.includes(meses[i])) {
-                labelTest.splice(i, 0, meses[i]);
-                numberTest.splice(i, 0, 0);
-              }
-            }
-            setLabels(labelTest);
-            setNumbers(numberTest);
-            setTime(data.rankOfTime + " del " + year);
-          }
-          // else if (props.fecha === "S") {
-          //   setTime("Octubre");
-          // }
-
-          // console.log(data);
-          // console.log(labelTest);
-          // console.log(numberTest);
-        } else if (data.listDays === undefined) {
-          setLabels([]);
-          setNumbers([]);
-          setTime("");
-        }
-
-        return response;
-      })
-      .catch((error) => {
-        console.log(error);
-        setLabels([]);
-        setNumbers([]);
-        setTime("");
-      });
-    return rspApi;
-  };
-
-  const handleGetSalesConsolidate = () => {
-    var headers = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-
-    let linkDocumentsApi = `${process.env.REACT_APP_PATH_SERVICE}/report/salesConsolidate/${date}/${props.fecha}`;
-
-    const rspApi = axios
-      .get(linkDocumentsApi, {
-        headers: headers,
-      })
-      .then((response) => {
-        const { data } = response.data;
-        setListData(data);
-
-        return response;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    return rspApi;
-  };
+  //   // console.log(data);
+  //   // console.log(labelTest);
+  //   // console.log(numberTest);
+  // } else if (data.listDays === undefined) {
+  //   setLabels([]);
+  //   setNumbers([]);
+  //   setTime("");
+  // }
 
   const handleDates = (id) => {
     if (props.fecha === "D") {
@@ -240,7 +190,7 @@ const VerticalBar = (props) => {
     } else if (props.fecha === "M") {
       if (id === 1) {
         const dat = new Date(longDates);
-        const longDate = dat.restYear(1);
+        const longDate = dat.restYear(6);
         setLongDates(longDate);
         const shorDate =
           longDate.getFullYear() +
@@ -252,7 +202,7 @@ const VerticalBar = (props) => {
         setDate(shorDate);
       } else if (id === 2) {
         const dat = new Date(longDates);
-        const longDate = dat.addYear(1);
+        const longDate = dat.addYear(6);
         setLongDates(longDate);
         const shorDate =
           longDate.getFullYear() +
@@ -283,10 +233,55 @@ const VerticalBar = (props) => {
 
   useEffect(() => {
     if (props.fecha !== "" && props.venta !== 0) {
-      handleSales();
-      handleGetSalesConsolidate();
+      dispatch(loadReports(token, date, props.fecha));
+      dispatch(loadSales(token, date, props.fecha));
     }
   }, [props.fecha, props.venta, date]);
+
+  useEffect(() => {
+    if (props.fecha === "D" && props.venta === 2) {
+      let valLabel = listDays.map((list) => {
+        return list.nameDaySpanish;
+      });
+      let valData = listDays.map((list) => {
+        return JSON.parse(list.totalMountDay);
+      });
+      setLabels(valLabel);
+      setNumbers(valData);
+      setTextoVentas("Ventas");
+    } else if (props.fecha === "D" && props.venta === 1) {
+      let valLabel = listDays.map((list) => {
+        return list.nameDaySpanish;
+      });
+      let valData = listDays.map((list) => {
+        return JSON.parse(list.totalQuantityDay);
+      });
+      setLabels(valLabel);
+      setTextoVentas("Cantidad");
+      setNumbers(valData);
+    } else if (props.fecha === "M" && props.venta === 2) {
+      let valLabel = listMonth.map((list) => {
+        return list.nameMonthSpanish;
+      });
+      let valData = listMonth.map((list) => {
+        return JSON.parse(list.totalMountMonth);
+      });
+      setLabels(valLabel);
+      setNumbers(valData);
+      setTextoVentas("Ventas");
+    } else if (props.fecha === "M" && props.venta === 1) {
+      let valLabel = listMonth.map((list) => {
+        return list.nameMonthSpanish;
+      });
+      let valData = listMonth.map((list) => {
+        return JSON.parse(list.totalQuantityMonth);
+      });
+      setLabels(valLabel);
+      setNumbers(valData);
+      setTextoVentas("Cantidad");
+    }
+    setTime(rankOfTime);
+  }, [props.fecha, listDays, listMonth, props.venta]);
 
   const data = {
     labels: labels,
@@ -386,8 +381,8 @@ const VerticalBar = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {listData &&
-              listData.map(
+            {sales &&
+              sales.map(
                 ({
                   serviceName,
                   mountTotalFormat,
