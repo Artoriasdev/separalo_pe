@@ -239,26 +239,32 @@ const VerticalBar = (props) => {
   }, [props.fecha, props.venta, date]);
 
   useEffect(() => {
-    if (props.fecha === "D" && props.venta === 2) {
-      let valLabel = listDays.map((list) => {
-        return list.nameDaySpanish;
-      });
-      let valData = listDays.map((list) => {
-        return JSON.parse(list.totalMountDay);
-      });
-      setLabels(valLabel);
-      setNumbers(valData);
-      setTextoVentas("Ventas");
-    } else if (props.fecha === "D" && props.venta === 1) {
-      let valLabel = listDays.map((list) => {
-        return list.nameDaySpanish;
-      });
-      let valData = listDays.map((list) => {
-        return JSON.parse(list.totalQuantityDay);
-      });
-      setLabels(valLabel);
-      setTextoVentas("Cantidad");
-      setNumbers(valData);
+    if (props.fecha === "D") {
+      if (listDays.length > 0) {
+        for (let i = 0; i < listDays.length; i++) {
+          labelTest.push(listDays[i].nameDaySpanish);
+          if (props.venta === 1) {
+            setLabel("Cantidad de ventas");
+            numberTest.push(JSON.parse(listDays[i].totalQuantityDay));
+            setTextoVentas("Cantidad");
+          } else if (props.venta === 2) {
+            setLabel("S/.");
+            numberTest.push(JSON.parse(listDays[i].totalMountDay));
+            setTextoVentas("Ventas");
+          }
+        }
+        for (let i = 0; i < 7; i++) {
+          if (!labelTest.includes(dias[i])) {
+            labelTest.splice(i, 0, dias[i]);
+            numberTest.splice(i, 0, 0);
+          }
+        }
+        setLabels(labelTest);
+        setNumbers(numberTest);
+      } else {
+        setLabels([]);
+        setNumbers([]);
+      }
     } else if (props.fecha === "M" && props.venta === 2) {
       let valLabel = listMonth.map((list) => {
         return list.nameMonthSpanish;
@@ -280,7 +286,7 @@ const VerticalBar = (props) => {
       setNumbers(valData);
       setTextoVentas("Cantidad");
     }
-    setTime(rankOfTime);
+    setTime(date);
   }, [props.fecha, listDays, listMonth, props.venta]);
 
   const data = {
