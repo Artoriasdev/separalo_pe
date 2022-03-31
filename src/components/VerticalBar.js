@@ -266,27 +266,37 @@ const VerticalBar = (props) => {
         setNumbers([]);
       }
     } else if (props.fecha === "M" && props.venta === 2) {
-      let valLabel = listMonth.map((list) => {
-        return list.nameMonthSpanish;
-      });
-      let valData = listMonth.map((list) => {
-        return JSON.parse(list.totalMountMonth);
-      });
-      setLabels(valLabel);
-      setNumbers(valData);
+      if (listMonth.length > 0) {
+        let valLabel = listMonth.map((list) => {
+          return list.nameMonthSpanish;
+        });
+        let valData = listMonth.map((list) => {
+          return JSON.parse(list.totalMountMonth);
+        });
+        setLabels(valLabel);
+        setNumbers(valData);
+      } else {
+        setLabels([]);
+        setNumbers([]);
+      }
       setTextoVentas("Ventas");
     } else if (props.fecha === "M" && props.venta === 1) {
-      let valLabel = listMonth.map((list) => {
-        return list.nameMonthSpanish;
-      });
-      let valData = listMonth.map((list) => {
-        return JSON.parse(list.totalQuantityMonth);
-      });
-      setLabels(valLabel);
-      setNumbers(valData);
+      if (listMonth.length > 0) {
+        let valLabel = listMonth.map((list) => {
+          return list.nameMonthSpanish;
+        });
+        let valData = listMonth.map((list) => {
+          return JSON.parse(list.totalQuantityMonth);
+        });
+        setLabels(valLabel);
+        setNumbers(valData);
+      } else {
+        setLabels([]);
+        setNumbers([]);
+      }
       setTextoVentas("Cantidad");
     }
-    setTime(date);
+    setTime(rankOfTime);
   }, [props.fecha, listDays, listMonth, props.venta]);
 
   const data = {
