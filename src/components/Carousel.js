@@ -5,6 +5,10 @@ import { useSelector } from "react-redux";
 import Image from "../assets/images/Banner_web_3.jpg";
 
 function Project(props) {
+  const handleRedirect = () => {
+    window.open(props.item.promotionRedirectUrl, "_blank");
+  };
+
   return (
     <Paper className="Project" elevation={0}>
       <div
@@ -16,7 +20,11 @@ function Project(props) {
         //   //   textAlign: "center",
         // }}
       >
-        <img src={props.item.promotionImgUrl} alt={props.item.description} />
+        <img
+          src={props.item.promotionImgUrl}
+          alt={props.item.description}
+          onClick={() => handleRedirect()}
+        />
       </div>
     </Paper>
   );
