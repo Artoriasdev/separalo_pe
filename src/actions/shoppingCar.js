@@ -105,6 +105,7 @@ export const shoppingDiscountInvited = (email, code) => {
         dispatch(shoppingCarLoad(data.data));
       } else if (data.response === "false") {
         dispatch(cuponInvalid(data.message));
+        dispatch(checkShoppingItemsInvited(email));
       }
       console.log(data);
     } catch (error) {
@@ -121,6 +122,7 @@ export const shoppingDiscount = (code, token) => {
         dispatch(shoppingCarLoad(data.data));
       } else if (data.response === "false") {
         dispatch(cuponInvalid(data.message));
+        dispatch(checkShoppingItems(token));
       }
       console.log(data);
     } catch (error) {

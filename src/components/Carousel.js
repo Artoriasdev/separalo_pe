@@ -11,19 +11,12 @@ function Project(props) {
 
   return (
     <Paper className="Project" elevation={0}>
-      <div
-        className="image-container"
-        // style={{
-        //   //   position: "relative",
-        //   height: "100%",
-        //   width: "100%",
-        //   //   textAlign: "center",
-        // }}
-      >
+      <div className="image-container">
         <img
           src={props.item.promotionImgUrl}
           alt={props.item.description}
           onClick={() => handleRedirect()}
+          style={{ cursor: "pointer" }}
         />
       </div>
     </Paper>
