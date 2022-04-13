@@ -103,7 +103,7 @@ export const ShoppingList = () => {
   };
 
   const handleInputChange = ({ target }) => {
-    const val = target.value;
+    const val = target.value.toUpperCase();
     setValues(val);
     if (val === "") {
       dispatch(cuponClear());
@@ -394,6 +394,9 @@ export const ShoppingList = () => {
                 style={{ marginTop: "0" }}
                 variant="outlined"
                 onChange={handleInputChange}
+                inputProps={{
+                  maxLength: 20,
+                }}
                 fullWidth
               />
               {show ? (
