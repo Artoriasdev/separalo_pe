@@ -340,12 +340,26 @@ export const Footer = () => {
               <p className="p">Copyright © 2021 Separalope</p>
               <button
                 className="font-p"
+                onClick={() => handleModalTerm(1)}
+                style={{ marginTop: "20px" }}
+              >
+                Terminos y condiciones
+              </button>
+              <button
+                className="font-p"
+                onClick={() => handleRedirect(1)}
+                style={{ marginTop: "20px" }}
+              >
+                Preguntas frecuentes
+              </button>
+              <button
+                className="font-p"
                 onClick={() => handleRedirect(2)}
                 style={{ marginTop: "20px" }}
               >
                 Libro de reclamaciones
               </button>
-              {renderMobileMenu}
+              {/* {renderMobileMenu} */}
             </div>
           </Toolbar>
         </Container>

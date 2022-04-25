@@ -21,11 +21,7 @@ export const ItemCategory = () => {
     >
       {categorys &&
         categorys.map(({ id, image, name, description }) => (
-          <div
-            className="flip-home"
-            onClick={() => handleRedirect(id)}
-            key={id}
-          >
+          <div className="flip-home" key={id}>
             <Flippy
               flipOnHover={true}
               flipOnClick={false}
@@ -38,7 +34,10 @@ export const ItemCategory = () => {
                   backgroundImage: `url(${image})`,
                 }}
               ></FrontSide>
-              <BackSide className="flip-home-back">
+              <BackSide
+                className="flip-home-back"
+                onClick={() => handleRedirect(id)}
+              >
                 <div dangerouslySetInnerHTML={{ __html: description }} />
               </BackSide>
             </Flippy>

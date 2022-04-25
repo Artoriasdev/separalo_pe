@@ -104,7 +104,12 @@ export const CustomerHistory = () => {
                         </TableCell>
                         <TableCell className="font">{titleService}</TableCell>
                         <TableCell className="font">{nameCategory}</TableCell>
-                        <TableCell className="font">{price}</TableCell>
+                        <TableCell
+                          className="font"
+                          style={{ minWidth: "100px" }}
+                        >
+                          {price}
+                        </TableCell>
                         <TableCell className="font">
                           {dateReservation}
                         </TableCell>

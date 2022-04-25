@@ -43,7 +43,7 @@ export const MenuServicesBusiness = () => {
         />
       )}
 
-      <div className="page-container" style={{ width: "90%", margin: " auto" }}>
+      <div className="page-container" style={{ width: "90%", margin: "auto" }}>
         <div className="logo-container-services">
           <img
             src={categorysByServices[0] && categorysByServices[0].logoBusiness}
@@ -56,7 +56,10 @@ export const MenuServicesBusiness = () => {
         </div>
         <div style={{ width: "100%", marginBottom: "30px" }}>
           <div className="service">
-            <div className="service-description">
+            <div
+              className="service-description"
+              style={{ marginTop: windowWith > 768 ? "-50px" : "" }}
+            >
               <h3>
                 {categorysByServices[0] &&
                   categorysByServices[0].businessAddress}
