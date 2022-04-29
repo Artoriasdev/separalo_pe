@@ -394,6 +394,12 @@ const VerticalBar = (props) => {
             <TableRow>
               <TableCell className="font-tittle">Servicio</TableCell>
               <TableCell className="font-tittle">{textoVentas}</TableCell>
+              {props.venta === 2 ? (
+                <>
+                  <TableCell className="font-tittle">Descuentos</TableCell>
+                  <TableCell className="font-tittle">Total Final</TableCell>
+                </>
+              ) : null}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -401,11 +407,15 @@ const VerticalBar = (props) => {
               sales.map(
                 ({
                   serviceName,
-                  mountTotalFormat,
-                  mountTotal,
+                  totalSalesFormat,
+                  totalSales,
                   quantityService,
+                  totalDiscounts,
+                  totalFinalPrice,
+                  totalDiscountsFormat,
+                  totalFinalPriceFormat,
                 }) => (
-                  <TableRow key={mountTotal}>
+                  <TableRow key={totalSales}>
                     <TableCell className="font">
                       {props.fecha !== "" && props.venta !== 0
                         ? serviceName
@@ -415,9 +425,25 @@ const VerticalBar = (props) => {
                       {props.venta === 1
                         ? quantityService
                         : props.venta === 2
-                        ? mountTotalFormat
+                        ? totalSalesFormat
                         : null}
                     </TableCell>
+                    {props.venta === 2 ? (
+                      <>
+                        <TableCell
+                          className="font"
+                          style={{ minWidth: "100px" }}
+                        >
+                          {totalDiscountsFormat}
+                        </TableCell>
+                        <TableCell
+                          className="font"
+                          style={{ minWidth: "100px" }}
+                        >
+                          {totalFinalPriceFormat}
+                        </TableCell>
+                      </>
+                    ) : null}
                   </TableRow>
                 )
               )}
