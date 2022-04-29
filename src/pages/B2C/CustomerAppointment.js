@@ -66,6 +66,7 @@ export const CustomerAppointment = () => {
                   <TableCell className="font-tittle">Fecha</TableCell>
                   <TableCell className="font-tittle">Hora</TableCell>
                   <TableCell className="font-tittle">Duración</TableCell>
+                  <TableCell className="font-tittle">Descuentos</TableCell>
                   <TableCell className="font-tittle">Código</TableCell>
                   <TableCell className="font-tittle">Estado</TableCell>
                 </TableRow>
@@ -84,6 +85,7 @@ export const CustomerAppointment = () => {
                       durationReservation,
                       state,
                       codeReservation,
+                      totalDiscountsFormat,
                     }) => (
                       <TableRow key={codeReservation}>
                         <TableCell className="font">
@@ -119,6 +121,9 @@ export const CustomerAppointment = () => {
                           {durationReservation}
                         </TableCell>
                         <TableCell className="font">
+                          {totalDiscountsFormat}
+                        </TableCell>
+                        <TableCell className="font">
                           {codeReservation}{" "}
                         </TableCell>
                         <TableCell className="font">{state}</TableCell>
@@ -143,6 +148,7 @@ export const CustomerAppointment = () => {
                     durationReservation,
                     state,
                     codeReservation,
+                    totalDiscountsFormat,
                   }) => (
                     <div className="shop-card" key={codeReservation}>
                       <div className="shop-card-title">
@@ -188,6 +194,10 @@ export const CustomerAppointment = () => {
                         <div className="shop-card-text">
                           <p className="shop-card-bold">Duración:</p>
                           <p>{durationReservation} </p>
+                        </div>
+                        <div className="shop-card-text">
+                          <p className="shop-card-bold">Descuentos:</p>
+                          <p>{totalDiscountsFormat} </p>
                         </div>
                         <div className="shop-card-text">
                           <p className="shop-card-bold">Código:</p>
